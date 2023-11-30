@@ -1,24 +1,52 @@
 import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar.js";
+import './style.css'
+import Pricing from './components/pages/Pricing.js';
+import About from './components/pages/About.js';
+import Home from './components/pages/Home.js';
+
+import { Component } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
+  /*
+  console.log(window.location)
+  let component
+  switch (window.location.pathname) {
+    case "/":
+      component = <Home />
+      break
+    case "/pricing":
+      component = <Pricing />
+      break;
+    case "/about":
+      component = <About />
+      break;
+    default:
+      break;
+  }
+  */
+ /*
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <div className='container'>
+        {component}
+      </div>
+    </>
+  );
+  */
+  return (
+    <>
+      <Navbar />
+      <div className='container'>
+        <Routes>
+          <Route path = "/" element={<Home />} />
+          <Route path = "/pricing" element={<Pricing />} />
+          <Route path = "/about" element={<About />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
