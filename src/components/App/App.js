@@ -34,6 +34,8 @@ import Subcategory from '../Category/Subcategory';
             <Route path="/" element={<Home />} />
             <Route path="/api/subcategories/1" element={<Subcategory id = "1" />} />
             <Route path="/api/subcategories/2" element={<Subcategory id = "2" />} />
+            <Route path="/api/subcategories/3" element={<Subcategory id = "3" />} />
+            <Route path="/api/subcategories/4" element={<Subcategory id = "4" />} />
           </Routes>
           </BrowserRouter>
         </div>

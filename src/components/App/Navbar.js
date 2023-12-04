@@ -52,37 +52,34 @@ export default function Navbar() {
         </div>
       );
         */
-      const sub_categories = [{id: '1',     name: 'sub1'}, {id: "2", name: 'sub2'} ]
+      //const sub_categories = [{id: '1',     name: 'sub1'}, {id: "2", name: 'sub2'} ]
    
       const my_cats = [{
         "name": "Reading",
         "sub_categories": [
             {
                 "id": "1",
-                "name": "sub1"
+                "name": "sub_cat1"
             },
             {
                 "id": "2",
-                "name": "sub2"
+                "name": "sub_cat2"
             }
         ]},
         {
           "name": "Grammar",
           "sub_categories": [
               {
-                  "id": "1",
-                  "name": "sub3"
+                  "id": "3",
+                  "name": "sub_cat3"
               },
               {
-                  "id": "2",
-                  "name": "sub4"
+                  "id": "4",
+                  "name": "sub_cat4"
               }
           ]}
       ]
 
-      my_cats.forEach(cat => {
-        console.log("BBBBBBBBB"+cat.name)
-      })
     
     return (
         <>
@@ -96,6 +93,7 @@ export default function Navbar() {
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             {my_cats.map(cat => 
               <Category
+              key={cat.id}
               className='nav-links'
               name={cat.name} sub_categories={cat.sub_categories} >
               {cat.name}</Category>

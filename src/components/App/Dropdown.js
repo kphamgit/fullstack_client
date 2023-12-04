@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 //import menu_items from './MenuItems.js';
 import './Dropdown.css';
 import { Link } from 'react-router-dom';
+import Subcategory from '../Category/Subcategory';
 
 export default function Dropdown({sub_categories}) {
   const [click, setClick] = useState(false);
@@ -9,7 +10,7 @@ export default function Dropdown({sub_categories}) {
   const handleClick = () => setClick(!click);
   
   console.log(
-     "QQQQQQQQQQQQ in Dropdown",sub_categories
+     "QQQQQQQQQQQQ in Dropdown sub_categories array = ",sub_categories
   )
   /*
   const menu_items = [
@@ -40,7 +41,7 @@ export default function Dropdown({sub_categories}) {
               <Link
                 className="dropdown-link"
                 to= {ilink}
-                onClick={() => setClick(false)}
+                onClick={() => {console.log("on click item id = "+item.id); setClick(false)} }
               >
                 {item.name}
               </Link>
