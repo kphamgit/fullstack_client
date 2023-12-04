@@ -8,6 +8,9 @@ export default function Dropdown({sub_categories}) {
 
   const handleClick = () => setClick(!click);
   
+  console.log(
+     "QQQQQQQQQQQQ in Dropdown",sub_categories
+  )
   /*
   const menu_items = [
     {

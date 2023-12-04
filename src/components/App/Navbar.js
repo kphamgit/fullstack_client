@@ -9,12 +9,14 @@ import axios from 'axios'
 import './Navbar.css'
 import Dropdown from './Dropdown.js'
 import Subcategory from '../Category/Subcategory.js'
+import Category from '../Category/Category.js'
 
 export default function Navbar() {
     const [click, setClick] = useState(false)
-    const [dropdown, setDropdown] = useState(false)
+    //const [dropdown, setDropdown] = useState(false)
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false);
+    /*
     const onMouseEnter = () => {
         if (window.innerWidth < 960) {
           setDropdown(false);
@@ -30,7 +32,7 @@ export default function Navbar() {
           setDropdown(false);
         }
       };
-
+      */
       const [post, setPost] = useState([]);
 
       useEffect(() => {
@@ -52,6 +54,36 @@ export default function Navbar() {
         */
       const sub_categories = [{id: '1',     name: 'sub1'}, {id: "2", name: 'sub2'} ]
    
+      const my_cats = [{
+        "name": "Reading",
+        "sub_categories": [
+            {
+                "id": "1",
+                "name": "sub1"
+            },
+            {
+                "id": "2",
+                "name": "sub2"
+            }
+        ]},
+        {
+          "name": "Grammar",
+          "sub_categories": [
+              {
+                  "id": "1",
+                  "name": "sub3"
+              },
+              {
+                  "id": "2",
+                  "name": "sub4"
+              }
+          ]}
+      ]
+
+      my_cats.forEach(cat => {
+        console.log("BBBBBBBBB"+cat.name)
+      })
+    
     return (
         <>
         <nav className='navbar'>
@@ -62,21 +94,16 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={click ? faTimes : faBars } />
             </div>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-   
-          <li
-            className='nav-item'
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-          >
-            <span
-              to='/services'
+            {my_cats.map(cat => 
+              <Category
               className='nav-links'
-            >
-              Services 
-              <FontAwesomeIcon icon = {faCaretDown} />
-            </span>
-            {dropdown && <Dropdown sub_categories={sub_categories}/>}
-          </li>
+              name={cat.name} sub_categories={cat.sub_categories} >
+              {cat.name}</Category>
+             
+              
+      )}
+          
+        
         </ul>
         </nav>
         </>

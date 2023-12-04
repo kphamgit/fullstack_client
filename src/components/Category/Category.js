@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
-import Dropdown from './Dropdown';
-import '../Navbar/Navbar.css'
-
+//import Dropdown from './Dropdown';
+import Dropdown from '../App/Dropdown';
+//import '../Navbar/Navbar.css'
+import '../App/Navbar.css'
 export default function Category ({name, sub_categories}) {
     //const {name} = props
     const [dropdown, setDropdown] = useState(false);
@@ -24,12 +25,12 @@ export default function Category ({name, sub_categories}) {
       };
 
     return (
-        <li className='nav-item'
+        <span className='nav-item'
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}>
             <span className='nav-links'>{name}</span>
         {dropdown && <Dropdown sub_categories = {sub_categories}/>}
-        </li>
+        </span>
         //<Link to='/'>{name}</Link>
     )
 }
