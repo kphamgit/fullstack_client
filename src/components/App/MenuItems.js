@@ -1,12 +1,12 @@
 const MenuItems = [
   {
     title: 'First Grammar',
-    path: '/subcategory',
+    path: '/api/subcategories/1',
     cName: 'dropdown-link'
   },
   {
     title: 'Next Grammar',
-    path: '/subcategory',
+    path: '/api/subcategories/2',
     cName: 'dropdown-link'
   },
 ];

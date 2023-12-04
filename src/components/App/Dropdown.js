@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import menu_items from './MenuItems.js';
+//import menu_items from './MenuItems.js';
 import './Dropdown.css';
 import { Link } from 'react-router-dom';
 
@@ -7,20 +7,22 @@ export default function Dropdown({sub_categories}) {
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
+  
   /*
   const menu_items = [
     {
       title: 'First Grammar',
-      path: '/subcategory',
+      path: '/api/subcategories/1',
       cName: 'dropdown-link'
     },
     {
       title: 'Next Grammar',
-      path: '/subcategory',
+      path: '/api/subcategories/2',
       cName: 'dropdown-link'
     },
   ];
   */
+  //const isub_categories = [{id: '1', name: 'sub1'}, {id: "2", name: 'sub2'} ]
   return (
     <>
       <ul
