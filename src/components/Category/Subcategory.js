@@ -7,6 +7,7 @@ export default function Subcategory({id}) {
 
   const [post, setPost] = useState([]);
   console.log(" 1) in subcate... id ="+id)
+  
   const url = "http://localhost:5000/api/subcategories/"+id
   console.log(" 2) in subcate... url ="+url)
   useEffect(() => {

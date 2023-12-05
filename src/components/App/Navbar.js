@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useRoutes } from 'react-router-dom'
+//import { useRoutes } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -7,8 +7,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import './Navbar.css'
-import Dropdown from './Dropdown.js'
-import Subcategory from '../Category/Subcategory.js'
+//import Dropdown from './Dropdown.js'
+//import Subcategory from '../Category/Subcategory.js'
 import Category from '../Category/Category.js'
 
 export default function Navbar() {
@@ -16,23 +16,7 @@ export default function Navbar() {
     //const [dropdown, setDropdown] = useState(false)
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false);
-    /*
-    const onMouseEnter = () => {
-        if (window.innerWidth < 960) {
-          setDropdown(false);
-        } else {
-          setDropdown(true);
-        }
-      };
-    
-      const onMouseLeave = () => {
-        if (window.innerWidth < 960) {
-          setDropdown(false);
-        } else {
-          setDropdown(false);
-        }
-      };
-      */
+   
       const [post, setPost] = useState([]);
 
       useEffect(() => {
@@ -41,45 +25,7 @@ export default function Navbar() {
         });
       }, []);
 
-      console.log("XXXXXXXXXXXX in Navbar post = ",post)
-    /*
-      if (!post) return null;
-    
-      return (
-        <div>
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
-        </div>
-      );
-        */
-      //const sub_categories = [{id: '1',     name: 'sub1'}, {id: "2", name: 'sub2'} ]
-   
-      const my_cats = [{
-        "name": "Reading",
-        "sub_categories": [
-            {
-                "id": "1",
-                "name": "sub_cat1"
-            },
-            {
-                "id": "2",
-                "name": "sub_cat2"
-            }
-        ]},
-        {
-          "name": "Grammar",
-          "sub_categories": [
-              {
-                  "id": "3",
-                  "name": "sub_cat3"
-              },
-              {
-                  "id": "4",
-                  "name": "sub_cat4"
-              }
-          ]}
-      ]
-
+      //console.log("XXXXXXXXXXXX in Navbar post = ",post)
     
     return (
         <>
@@ -91,17 +37,14 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={click ? faTimes : faBars } />
             </div>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            {my_cats.map(cat => 
+            {post.map(cat => 
+             <li key={cat.name}>
               <Category
-              key={cat.id}
               className='nav-links'
               name={cat.name} sub_categories={cat.sub_categories} >
               {cat.name}</Category>
-             
-              
+              </li>
       )}
-          
-        
         </ul>
         </nav>
         </>

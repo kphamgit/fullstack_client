@@ -11,13 +11,19 @@ import Home from '../Home/Home';
 import axios from 'axios';
 import Subcategory from '../Category/Subcategory';
 
+
 //function App() {
   export default function App() {
+
   const { token, setToken } = useToken();
   //const [data, setData] = useState([]);
-  function logout(){
-    setToken("")   
-  }
+  
+    
+    async function logout(credentials) {
+      setToken("")
+      fetch('http://localhost:5000/logout')
+    }
+  
 
     if(!token) {
         return <Login setToken={setToken} />
