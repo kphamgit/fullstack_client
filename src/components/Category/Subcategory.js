@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+//import { sub_categories } from '../../../../../server/models';
 
 
 export default function Subcategory({id}) {
@@ -8,7 +9,7 @@ export default function Subcategory({id}) {
   const [post, setPost] = useState([]);
   console.log(" 1) in subcate... id ="+id)
   
-  const url = "http://localhost:5000/api/subcategories/"+id
+  const url = "http://localhost:5000/api/sub_categories/"+id
   console.log(" 2) in subcate... url ="+url)
   useEffect(() => {
     console.log(" 3) in sub_cat useEffect. About to call axios")
@@ -22,6 +23,11 @@ export default function Subcategory({id}) {
   return(
     <>
     <h2>In sub category </h2>
+    <ul>
+      <li>
+        {post.name}
+      </li>
+    </ul>
     <h2>{post.test}</h2>
     </>
   );

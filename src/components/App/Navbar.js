@@ -24,7 +24,7 @@ export default function Navbar() {
       const { token, setToken } = useContext(Context);
 
       useEffect(() => {
-        axios.get("http://localhost:5000/categories").then((response) => {
+        axios.get("http://localhost:5000/api/categories").then((response) => {
           //alert(token)
           //setToken(response.data)
           setPost(response.data);
