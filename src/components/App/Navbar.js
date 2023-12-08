@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 //import { useRoutes } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,6 +10,8 @@ import './Navbar.css'
 //import Dropdown from './Dropdown.js'
 //import Subcategory from '../Category/Subcategory.js'
 import Category from '../Category/Category.js'
+import Logout from '../Login/Logout.js'
+import { Context } from './App.js'
 
 export default function Navbar() {
     const [click, setClick] = useState(false)
@@ -19,8 +21,12 @@ export default function Navbar() {
    
       const [post, setPost] = useState([]);
 
+      const { token, setToken } = useContext(Context);
+
       useEffect(() => {
         axios.get("http://localhost:5000/categories").then((response) => {
+          //alert(token)
+          //setToken(response.data)
           setPost(response.data);
         });
       }, []);
@@ -33,6 +39,7 @@ export default function Navbar() {
             <Link to='/' className='navabar-logo'>
                 EPIC
             </Link>
+            <Logout />
             <div className='menu-icon' onClick={handleClick}>
                 <FontAwesomeIcon icon={click ? faTimes : faBars } />
             </div>

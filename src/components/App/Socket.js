@@ -1,6 +1,11 @@
+import React from "react";
 import io from "socket.io-client"
+import { useState, useEffect } from "react";
+import InputText from "./InputText";
+
 const socket = io.connect("http://localhost:5000");
-export default function App() {
+export default function Socket() {
+    
       //Room State
   const [room, setRoom] = useState("");
 
@@ -15,19 +20,35 @@ export default function App() {
   };
 
   const sendMessage = () => {
-    socket.emit("send_message", { message, room });
+    alert("send.rrrrrrrrrrr..")
+    socket.emit("chat", { message: "my message"});
   };
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
+    socket.on("chat_response", (data) => {
+      console.log("receive chat response ",data)
+      //setMessageReceived(data.message);
     });
-  }, [socket]);
+  }, []);
 
-  return(
-    <>
-    <h2>In sub category </h2>
-    <h2>{post.test}</h2>
-    </>
+  return (
+    <div>
+      <input
+        placeholder="Room Number..."
+        onChange={(event) => {
+          setRoom(event.target.value);
+        }}
+      />
+      <button onClick={joinRoom}> Join Room</button>
+      <input
+        placeholder="Message..."
+        onChange={(event) => {
+          setMessage(event.target.value);
+        }}
+      />
+      <button onClick={sendMessage}> Send Message</button>
+      <h1> Message:</h1>
+      {messageReceived}
+    </div>
   );
 }

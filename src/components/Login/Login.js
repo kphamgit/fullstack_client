@@ -13,18 +13,29 @@ async function loginUser(credentials) {
  })
    .then(data => data.json())
 }
-
-export default function Login({ setToken }) {
+ 
+export default function Login({ setToken, setLoggedInname }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
+    const data = await loginUser({
       username,
       password
     });
-    setToken(token);
+    //const test = {...token}
+    console.log(" in Login.js token test ="+data.token)
+    //console.log("in Login.js token = ",token, " username = ",username)
+    //token can be: "error: User does not exist" or {error: "Wrong password"}
+    //data.token ? setToken(data) : console.log("Login.js token returned UNDEFINED (error)")
+    if(!data.token) { 
+      console.log("Login.js token returned UNDEFINED (error)")
+    }
+    else {
+      setToken(data);
+      setLoggedInname(username)
+    }
   }
   return(
     <div className="login-wrapper">

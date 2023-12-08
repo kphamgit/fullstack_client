@@ -7,4 +7,6 @@ import App from '../src/components/App/App.js'
 //ReactDOM.render(<App />, document.getElementById('root'));
 
 const root = createRoot( document.getElementById('root') )
-root.render(<App />);
+root.render(
+    <App />
+);
