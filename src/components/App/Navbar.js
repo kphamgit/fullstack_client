@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 //import { useRoutes } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -12,6 +12,10 @@ import './Navbar.css'
 import Category from '../Category/Category.js'
 import Logout from '../Login/Logout.js'
 import { Context } from './App.js'
+import Subcategory from '../Category/Subcategory.js'
+//import {Subcategory} from '../Category/Subcategory.js';
+
+
 
 export default function Navbar() {
     const [click, setClick] = useState(false)

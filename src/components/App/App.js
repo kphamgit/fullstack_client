@@ -24,6 +24,7 @@ import { ConfigProvider } from 'antd';
 
   const { token, setToken } = useToken();
   const [showchat, setShowchat] = useState(true);
+  //const [subcatselected, setSubcatselected] = useState('')
   const [loggedinname, setLoggedinname] = useState('')
 
   //const navigate = useNavigate()
@@ -62,6 +63,7 @@ import { ConfigProvider } from 'antd';
     function clearToken(chat){
         setToken('')
     }
+    const test = [1,7,4,5,6,8,9]
 //alert(showchat)
     if(!token) {
         return <Login setToken={setToken} setLoggedInname = {setLoggedinname}/>
@@ -77,10 +79,12 @@ import { ConfigProvider } from 'antd';
        
           <Routes>
             <Route path="/" element = {<ChatContainer username={loggedinname} />} />
-            <Route path="/subcategories/1" element={<Subcategory id = "1" />} />
-            <Route path="/subcategories/2" element={<Subcategory id = "2" />} />
-            <Route path="/subcategories/3" element={<Subcategory id = "3" />} />
-            <Route path="/subcategories/4" element={<Subcategory id = "4" />} />
+
+            {
+  test.map(id => (
+    <Route key={id} path={`/subcategories/${id}`} element={<Subcategory id = {id} />} />
+  ))
+}
           </Routes>
           </BrowserRouter>
           </Context.Provider>

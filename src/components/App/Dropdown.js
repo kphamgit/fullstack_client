@@ -10,6 +10,7 @@ export default function Dropdown({sub_categories}) {
   const [click, setClick] = useState(false);
 
   const { showchat, setShowchat } = useContext(Context);
+  const [subcatselected, setSubcatselected] = useState('')
 
   const handleClick = () => { 
       setClick(!click) 
@@ -51,7 +52,11 @@ export default function Dropdown({sub_categories}) {
               <Link
                 className="dropdown-link"
                 to= {ilink}
-                onClick={() => {console.log("Dropdown.js on click item id = "+item.id); setClick(false)} }
+                onClick={() => {console.log("Dropdown.js on click item id = "+item.id); 
+                      setClick(false)
+                      setSubcatselected(item.id)
+                    } 
+                    }
               >
                 {item.name}
               </Link>
