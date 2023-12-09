@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Navigate, useNavigate } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import './App.css'
 import Login from '../Login/Login'
 import useToken from './useToken';
@@ -16,6 +16,7 @@ import { faLadderWater } from '@fortawesome/free-solid-svg-icons';
 //import Socket from './Socket'
 import Logout from '../Login/Logout'
 import { ConfigProvider } from 'antd';
+import axios from 'axios';
 //const socket = io.connect("http://localhost:5000");
 
   export const Context = React.createContext()
@@ -24,10 +25,30 @@ import { ConfigProvider } from 'antd';
 
   const { token, setToken } = useToken();
   const [showchat, setShowchat] = useState(true);
-  //const [subcatselected, setSubcatselected] = useState('')
+  const [categories, setCategories] = useState([])
+  const [subcategories, setSubcategories] = useState([])
   const [loggedinname, setLoggedinname] = useState('')
 
   //const navigate = useNavigate()
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/categories").then((response) => {
+      //alert(token)
+      //setToken(response.data)
+      setCategories(response.data);
+      let all_sub_categories = []
+      response.data.forEach( category => {
+        category.sub_categories.forEach( sub_cat => {
+          all_sub_categories.push(sub_cat)
+        })
+        
+      })
+      console.log("XXXXXX sub categories", all_sub_categories)
+      setSubcategories(all_sub_categories)
+      //subcategories.map(id => {
+          //  console.log(id.id)
+      //})
+    });
+  }, []);
 
   //Room State
   //const [room, setRoom] = useState("");
@@ -63,7 +84,7 @@ import { ConfigProvider } from 'antd';
     function clearToken(chat){
         setToken('')
     }
-    const test = [1,7,4,5,6,8,9]
+    //const test = [7,4,5,6,8,9]
 //alert(showchat)
     if(!token) {
         return <Login setToken={setToken} setLoggedInname = {setLoggedinname}/>
@@ -75,14 +96,14 @@ import { ConfigProvider } from 'antd';
         <Context.Provider value = { {token, setToken, showchat, setShowchat} }>
         <BrowserRouter>
         
-        <Navbar />
+        <Navbar categories={categories}/>
        
           <Routes>
             <Route path="/" element = {<ChatContainer username={loggedinname} />} />
 
             {
-  test.map(id => (
-    <Route key={id} path={`/subcategories/${id}`} element={<Subcategory id = {id} />} />
+  subcategories.map(id => (
+    <Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />
   ))
 }
           </Routes>

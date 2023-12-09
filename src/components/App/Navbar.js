@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
+//import axios from 'axios'
 import './Navbar.css'
 //import Dropdown from './Dropdown.js'
 //import Subcategory from '../Category/Subcategory.js'
@@ -17,16 +17,17 @@ import Subcategory from '../Category/Subcategory.js'
 
 
 
-export default function Navbar() {
+export default function Navbar({categories}) {
     const [click, setClick] = useState(false)
     //const [dropdown, setDropdown] = useState(false)
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false);
    
-      const [post, setPost] = useState([]);
+      //const [post, setPost] = useState([]);
 
       const { token, setToken } = useContext(Context);
 
+      /*
       useEffect(() => {
         axios.get("http://localhost:5000/api/categories").then((response) => {
           //alert(token)
@@ -34,8 +35,9 @@ export default function Navbar() {
           setPost(response.data);
         });
       }, []);
-
+      */
       //console.log("XXXXXXXXXXXX in Navbar post = ",post)
+      
     
     return (
         <>
@@ -48,7 +50,7 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={click ? faTimes : faBars } />
             </div>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            {post.map(cat => 
+            {categories.map(cat => 
              <li key={cat.name}>
               <Category
               className='nav-links'
