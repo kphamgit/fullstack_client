@@ -11,11 +11,11 @@ export default function Subcategory({id}) {
   //console.log(" 1) in subcate... id ="+id)
   console.log("in sub_cat HERE")
   const url = "http://localhost:5000/api/sub_categories/"+id
-  //console.log(" 2) in subcate... url ="+url)
+  console.log(" 2) in subcate... url ="+url)
   useEffect(() => {
     console.log(" 3) in sub_cat useEffect. About to call axios")
     axios.get(url).then((response) => {
-      //console.log(' 4) subcate useEffect get response data=',response.data)
+      console.log(' 4) subcate useEffect get response data=',response.data)
       setPost(response.data);
       console.log("5) in sub_cat response data = ", response.data)
     });

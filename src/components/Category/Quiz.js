@@ -5,14 +5,6 @@ import { Context } from '../App/App.js'
 
 
 export default function Quiz(props) {
-
-    /*
-    const {quizid, setQuizid}  = useContext(Context);
-    
-    useEffect(() => {
-        setQuizid(props.quiz_content.id)
-    }, [quizid]);
-    */
     return(
         <>
         <h2>Quiz</h2>

@@ -19,14 +19,13 @@ import { ConfigProvider } from 'antd';
 import axios from 'axios';
 import QuizAttempt from './QuizAttempt';
 //const socket = io.connect("http://localhost:5000");
+import Profile from './Profile';
 
   export const Context = React.createContext()
 
   export default function App() {
 
   const { token, setToken } = useToken();
-  //const [showchat, setShowchat] = useState(true);
-  const [quizid, setQuizid] = useState('')
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
   const [loggedinname, setLoggedinname] = useState('')
@@ -52,49 +51,17 @@ import QuizAttempt from './QuizAttempt';
     });
   }, []);
 
-  //Room State
-  //const [room, setRoom] = useState("");
-
-  // Messages States
-  //const [message, setMessage] = useState("");
-  //const [messageReceived, setMessageReceived] = useState("");
-
-  //const joinRoom = () => {
-   // if (room !== "") {
-   //   socket.emit("join_room", room);
-   // }
- // };
-
-  //const sendMessage = () => {
-   // socket.emit("chat", { message: "hello" });
- // };
-
-  /*
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
-    });
-  }, []);
-  */
- /*
-    async function logout(credentials) {
-      setToken("")
-      fetch('http://localhost:5000/logout')
-      navigate('/')
-    }
-  */
     function clearToken(chat){
         setToken('')
     }
-    //const test = [7,4,5,6,8,9]
-//alert(showchat)
+
     if(!token) {
         return <Login setToken={setToken} setLoggedInname = {setLoggedinname}/>
       }
-  //console.log("in App.js showChat "+showchat)
+  
     return (
       <>
-        <Context.Provider value = { {token, setToken, loggedinname, setLoggedinname, quizid, setQuizid } }>
+        <Context.Provider value = { {token, setToken, loggedinname, setLoggedinname } }>
         <BrowserRouter>
         
         <Navbar categories={categories}/>
