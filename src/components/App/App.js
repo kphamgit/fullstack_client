@@ -17,6 +17,7 @@ import { faLadderWater } from '@fortawesome/free-solid-svg-icons';
 import Logout from '../Login/Logout'
 import { ConfigProvider } from 'antd';
 import axios from 'axios';
+import QuizAttempt from './QuizAttempt';
 //const socket = io.connect("http://localhost:5000");
 
   export const Context = React.createContext()
@@ -24,7 +25,8 @@ import axios from 'axios';
   export default function App() {
 
   const { token, setToken } = useToken();
-  const [showchat, setShowchat] = useState(true);
+  //const [showchat, setShowchat] = useState(true);
+  const [quizid, setQuizid] = useState('')
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
   const [loggedinname, setLoggedinname] = useState('')
@@ -42,7 +44,7 @@ import axios from 'axios';
         })
         
       })
-      console.log("XXXXXX sub categories", all_sub_categories)
+      //console.log("XXXXXX sub categories", all_sub_categories)
       setSubcategories(all_sub_categories)
       //subcategories.map(id => {
           //  console.log(id.id)
@@ -92,8 +94,7 @@ import axios from 'axios';
   //console.log("in App.js showChat "+showchat)
     return (
       <>
-        
-        <Context.Provider value = { {token, setToken, showchat, setShowchat} }>
+        <Context.Provider value = { {token, setToken, loggedinname, setLoggedinname, quizid, setQuizid } }>
         <BrowserRouter>
         
         <Navbar categories={categories}/>
@@ -106,6 +107,8 @@ import axios from 'axios';
     <Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />
   ))
 }
+
+          <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={loggedinname} />} />
           </Routes>
           </BrowserRouter>
           </Context.Provider>

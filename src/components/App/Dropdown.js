@@ -9,14 +9,14 @@ import { faL } from '@fortawesome/free-solid-svg-icons';
 export default function Dropdown({sub_categories}) {
   const [click, setClick] = useState(false);
 
-  const { showchat, setShowchat } = useContext(Context);
+  //const { showchat, setShowchat } = useContext(Context);
   const [subcatselected, setSubcatselected] = useState('')
 
   const handleClick = () => { 
       setClick(!click) 
       //console.log(" show chat"+showchat)
-      setShowchat(false)
-      console.log("show chat "+showchat)
+      //setShowchat(false)
+      //console.log("show chat "+showchat)
       console.log("in handleClick Dropdown")
   };
   

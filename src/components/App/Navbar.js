@@ -24,8 +24,8 @@ export default function Navbar({categories}) {
     const closeMobileMenu = () => setClick(false);
    
       //const [post, setPost] = useState([]);
-
-      const { token, setToken } = useContext(Context);
+      //loggedinname, setLoggedinname
+      const { token, setToken, loggedinname, setLoggedinname } = useContext(Context);
 
       /*
       useEffect(() => {
@@ -42,8 +42,9 @@ export default function Navbar({categories}) {
     return (
         <>
         <nav className='navbar'>
+            <div>{loggedinname}</div>
             <Link to='/' className='navabar-logo'>
-                EPIC
+               HOME
             </Link>
             <Logout />
             <div className='menu-icon' onClick={handleClick}>

@@ -5,7 +5,7 @@ import InputText from './InputText';
 //import UserLogin from './UserLogin';
 
 export default function ChatContainer(props) {
-    console.log("hererererere"+props.username)
+    console.log("hererererere username from props"+props.username)
     let socketio  = socketIOClient("http://localhost:5000")
     const [chats , setChats] = useState([])
     const [user, setUser] = useState(localStorage.getItem("user"))
