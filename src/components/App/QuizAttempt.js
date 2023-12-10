@@ -48,7 +48,7 @@ export default function QuizAttempt(props) {
         <>
         <h2>QuizAttempt</h2>
         <div>{props.username}</div>
-        <div>{myhtml}</div>
+        <div dangerouslySetInnerHTML={{ __html: myhtml }}></div>
         </>
     )
 }

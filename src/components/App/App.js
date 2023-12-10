@@ -19,7 +19,7 @@ import { ConfigProvider } from 'antd';
 import axios from 'axios';
 import QuizAttempt from './QuizAttempt';
 //const socket = io.connect("http://localhost:5000");
-import Profile from './Profile';
+
 
   export const Context = React.createContext()
 
