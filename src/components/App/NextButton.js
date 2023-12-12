@@ -2,6 +2,15 @@ import React from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 
+import styled from 'styled-components'
+
+//const ilink = '/logout' 
+const Button = styled.button`
+background-color:brown;
+color:white;
+padding:5px 15px;
+`
+
 function NextButton({questionattempt, childToParent, setHTMLcontent, updatequestionattempt }) {
 
     const [endofquiz, setEndofquiz] = useState(false)
@@ -24,8 +33,8 @@ function NextButton({questionattempt, childToParent, setHTMLcontent, updatequest
     if (endofquiz) {
         return <h1>END OF QUIZ</h1>
     }
-    return (
-        <button  onClick={() => get_next_question()}>Next</button>
+    return ( 
+        <Button onClick={() => get_next_question()}>Next</Button>
     )
 }
 

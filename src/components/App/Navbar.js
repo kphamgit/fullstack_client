@@ -13,41 +13,55 @@ import Category from '../Category/Category.js'
 import Logout from '../Login/Logout.js'
 import { Context } from './App.js'
 import Subcategory from '../Category/Subcategory.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { turn_on , turn_off} from '../../redux/athome.js'
 //import {Subcategory} from '../Category/Subcategory.js';
+//import styled from 'styled-components'
+//import { useLocation } from 'react-router-dom'
 
-
+const linkStyle = {
+  margin: "1rem",
+  textDecoration: "none",
+  color: 'white'
+};
 
 export default function Navbar({categories}) {
     const [click, setClick] = useState(false)
-    //const [dropdown, setDropdown] = useState(false)
+    const athome = useSelector((state) => state.athomeflag.value)
+    const dispatch = useDispatch()
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false);
    
+    //const location = useLocation()
+    //console.log("CCCCCCCCCCCCCCCC"+location.pathname)
+    //const parts = location.pathname.split('/')
+    //const quizid = parts[parts.length-1]
       //const [post, setPost] = useState([]);
       //loggedinname, setLoggedinname
       const { token, setToken, loggedinname, setLoggedinname } = useContext(Context);
 
-      /*
-      useEffect(() => {
-        axios.get("http://localhost:5000/api/categories").then((response) => {
-          //alert(token)
-          //setToken(response.data)
-          setPost(response.data);
-        });
-      }, []);
-      */
-      //console.log("XXXXXXXXXXXX in Navbar post = ",post)
       
+     // useEffect(() => {
+     //   dispatch(turn_off())
+     // }, [athome]);
+      
+      //console.log("XXXXXXXXXXXX in Navbar post = ",post)
+      function handleClick1() {
+        console.log("HHHHHH")
+        //setAthome(!athome)
+      }
     
       const user = sessionStorage.getItem('user')
     return (
         <>
         <nav className='navbar'>
-            <div>{user}</div>
-            <Link to='/' className='navabar-logo'>
+        <div>&nbsp;{user}</div>
+            {!athome &&
+            <Link to='/' style={linkStyle} onClick={ () => dispatch(turn_on()) } >
                HOME
             </Link>
-            <Logout />
+    
+            }
             <div className='menu-icon' onClick={handleClick}>
                 <FontAwesomeIcon icon={click ? faTimes : faBars } />
             </div>
@@ -60,6 +74,7 @@ export default function Navbar({categories}) {
               {cat.name}</Category>
               </li>
       )}
+      <li className='nav-item'><Logout /></li>
         </ul>
         </nav>
         </>

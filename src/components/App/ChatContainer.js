@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from 'react'
 import socketIOClient from "socket.io-client";
 import ChatBoxReciever, { ChatBoxSender } from './ChatBox';
 import InputText from './InputText';
-//import UserLogin from './UserLogin';
 
 export default function ChatContainer(props) {
     console.log("hererererere username from props"+props.username)
     let socketio  = socketIOClient("http://localhost:5000")
     const [chats , setChats] = useState([])
     const [user, setUser] = useState(localStorage.getItem("user"))
+    //const [count, setCount] = useState(0)
+    //const {count} = useSelector((state) => state.counter)
     //const chatsRef = collection(db , "Messages")
     const messagesEndRef = useRef(null)
     const scrollToBottom = () => {
@@ -20,7 +21,6 @@ export default function ChatContainer(props) {
     }, [chats])
 
     useEffect(()=> {
-      console.log("IN HERERERER")
         socketio.on('chat', senderChats => {
             setChats(senderChats)
         })
@@ -65,15 +65,11 @@ export default function ChatContainer(props) {
          <div style={{display:'flex', flexDirection:"row", justifyContent: 'space-between'}} >
           <h4>Username: {props.username}</h4>
           <strong>Remember to Subscribe to  <a href='https://www.youtube.com/channel/UCmoQtgmJ2SHEAPCAR1Q8TBA'> My Channel</a></strong>
-          <p style={{color:"blue", cursor:'pointer'}} >Log Out</p>
            </div>
            <ChatsList
              />
            <InputText addMessage={addMessage} />
         </div>
-       
-        
-
     <div style={{margin:10 , display:'flex', justifyContent:'center'}} >
     <small style={{backgroundColor:'lightblue' , padding:5 , borderRadius:5}} >Interested in some 1 on 1 Coding Tutorials and Mentorship. Lets chat on Discord: <strong> kutlo_sek#5370 </strong></small>
         

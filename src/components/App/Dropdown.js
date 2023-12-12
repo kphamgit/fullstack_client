@@ -5,10 +5,14 @@ import { Link } from 'react-router-dom';
 import Subcategory from '../Category/Subcategory';
 import { Context } from './App';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { turn_off } from '../../redux/athome';
+
 
 export default function Dropdown({sub_categories}) {
   const [click, setClick] = useState(false);
-
+  const athome = useSelector((state) => state.athomeflag.value)
+  const dispatch = useDispatch()
   //const { showchat, setShowchat } = useContext(Context);
   const [subcatselected, setSubcatselected] = useState('')
 
@@ -17,7 +21,8 @@ export default function Dropdown({sub_categories}) {
       //console.log(" show chat"+showchat)
       //setShowchat(false)
       //console.log("show chat "+showchat)
-      console.log("in handleClick Dropdown")
+      console.log("in handleClick Dropdown at home ="+athome.toString())
+      dispatch(turn_off())
   };
   
  // console.log(

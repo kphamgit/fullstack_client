@@ -7,9 +7,11 @@ import QuestionAttempt from './QuestionAttempt.js'
 import QuestionResponse from "./QuestionResponse.js";
 import SubmitButton from "./SubmitButton.js";
 import NextButton from "./NextButton.js";
+import { useSelector } from "react-redux";
 
 export default function QuizAttempt(props) {
 
+    const question_attempt_response = useSelector((state) => state.question_attempt_reponse.value)
     const [myhtml, setMyhtml] = useState('')
     const [questionattempt, setQuestionattempt] = useState({})
     const [showquestionattempt, setShowquestionattempt] = useState(true)
@@ -50,7 +52,7 @@ export default function QuizAttempt(props) {
         <>
         <h2>QuizAttempt</h2>
         <div>{props.username}</div>
-        {showquestionattempt ? <QuestionAttempt myhtml={myhtml} /> : <QuestionResponse />}
+        {showquestionattempt ? <QuestionAttempt myhtml={myhtml} /> : <QuestionResponse response_content={question_attempt_response}/>}
         {showquestionattempt ? <SubmitButton questionattempt={questionattempt} childToParent ={childToParent}/> : <NextButton questionattempt= {questionattempt} childToParent ={childToParent} setHTMLcontent = {setHTMLcontent} updatequestionattempt ={updatequestionattempt}/>}
         </>
     )
