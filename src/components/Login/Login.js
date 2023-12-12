@@ -35,6 +35,7 @@ export default function Login({ setToken, setLoggedInname }) {
     else {
       setToken(data);
       setLoggedInname(username)
+      sessionStorage.setItem('user', username)
     }
   }
   return(

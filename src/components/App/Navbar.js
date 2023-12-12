@@ -39,10 +39,11 @@ export default function Navbar({categories}) {
       //console.log("XXXXXXXXXXXX in Navbar post = ",post)
       
     
+      const user = sessionStorage.getItem('user')
     return (
         <>
         <nav className='navbar'>
-            <div>{loggedinname}</div>
+            <div>{user}</div>
             <Link to='/' className='navabar-logo'>
                HOME
             </Link>

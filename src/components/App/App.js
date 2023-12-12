@@ -32,29 +32,25 @@ import QuizAttempt from './QuizAttempt';
 
   //const navigate = useNavigate()
   useEffect(() => {
+    console.log("USE EFFECT RAN log in name="+loggedinname)
     axios.get("http://localhost:5000/api/categories").then((response) => {
-      //alert(token)
-      //setToken(response.data)
       setCategories(response.data);
       let all_sub_categories = []
       response.data.forEach( category => {
         category.sub_categories.forEach( sub_cat => {
           all_sub_categories.push(sub_cat)
         })
-        
       })
-      //console.log("XXXXXX sub categories", all_sub_categories)
       setSubcategories(all_sub_categories)
-      //subcategories.map(id => {
-          //  console.log(id.id)
-      //})
     });
   }, []);
 
     function clearToken(chat){
         setToken('')
     }
-
+console.log("in App.js local storage user"+localStorage.getItem('user'))
+    //setLoggedinname(localStorage.getItem('user') )
+    const user = localStorage.getItem('user')
     if(!token) {
         return <Login setToken={setToken} setLoggedInname = {setLoggedinname}/>
       }
@@ -67,7 +63,7 @@ import QuizAttempt from './QuizAttempt';
         <Navbar categories={categories}/>
        
           <Routes>
-            <Route path="/" element = {<ChatContainer username={loggedinname} />} />
+            <Route path="/" element = {<ChatContainer username={user} />} />
 
             {
   subcategories.map(id => (
@@ -75,7 +71,7 @@ import QuizAttempt from './QuizAttempt';
   ))
 }
 
-          <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={loggedinname} />} />
+          <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={user} />} />
           </Routes>
           </BrowserRouter>
           </Context.Provider>

@@ -20,6 +20,7 @@ export default function ChatContainer(props) {
     }, [chats])
 
     useEffect(()=> {
+      console.log("IN HERERERER")
         socketio.on('chat', senderChats => {
             setChats(senderChats)
         })
