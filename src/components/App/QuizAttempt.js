@@ -7,17 +7,28 @@ import QuestionAttempt from './QuestionAttempt.js'
 import QuestionResponse from "./QuestionResponse.js";
 import SubmitButton from "./SubmitButton.js";
 import NextButton from "./NextButton.js";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setValue } from "../../redux/question.js";
+import {setId} from "../../redux/question_att_id.js"
+
 
 export default function QuizAttempt(props) {
 
     const question_attempt_response = useSelector((state) => state.question_attempt_reponse.value)
-    const [myhtml, setMyhtml] = useState('')
-    const [questionattempt, setQuestionattempt] = useState({})
+    //const [question, setQuestion] = useState({})
+    //const {question} = useSelector(question)
+    const question = useSelector((state) => state.question.value)
+    const question_attempt_id = useSelector((state) => state.question_attempt_id.value)
+    
+    //console.log("XXXXXXXXXXXXXXXXx",question)
+    //const [question_attempt_id, setQuestionattemptid] = useState(0)
+    const [quizattemptid, setQuizattemptid] = useState('')
     const [showquestionattempt, setShowquestionattempt] = useState(true)
 
-    const {loggedinname, setLoggedinname}  = useContext(Context);
-    console.log(" in Quiz attempt loggedinName ="+loggedinname) 
+    //const {loggedinname, setLoggedinname}  = useContext(Context);
+    //console.log(" in Quiz attempt loggedinName ="+loggedinname) 
+
+    const dispatch = useDispatch()
 
     const location = useLocation()
     const parts = location.pathname.split('/')
@@ -32,18 +43,22 @@ export default function QuizAttempt(props) {
         axios.get(url).then((response) => {
           console.log('  QuizAtt in useEffect response data=',response.data)
           //setPost(response.data);
-          setMyhtml(response.data.content_html)
-          setQuestionattempt(response.data.question_attempt)
+          //setQuestion(response.data.question)
+          dispatch(setValue(response.data.question))
+          dispatch(setId(response.data.question_attempt_id))
+          //setQuestionattemptid(response.data.question_attempt_id)
+          setQuizattemptid(response.data.quiz_attempt_id)
+          //setQuestionformat(response.data.question_format)
           //console.log("5) in QuizAtt response data = ", response.data)
         });
       }, [url]);
 
-    const setHTMLcontent = (childdata) => {
-      setMyhtml(childdata)
-    }
-    const updatequestionattempt = (childdata) => {
-      setQuestionattempt(childdata)
-    }
+    //const setMyQuestion = (childdata) => {
+     // setQuestion(childdata)
+    //}
+    //const updatequestionattempt = (childdata) => {
+     // setQuestionattempt(childdata)
+    //}
     const childToParent = (childdata) => {
       setShowquestionattempt(childdata);
     }
@@ -52,8 +67,8 @@ export default function QuizAttempt(props) {
         <>
         <h2>QuizAttempt</h2>
         <div>{props.username}</div>
-        {showquestionattempt ? <QuestionAttempt myhtml={myhtml} /> : <QuestionResponse response_content={question_attempt_response}/>}
-        {showquestionattempt ? <SubmitButton questionattempt={questionattempt} childToParent ={childToParent}/> : <NextButton questionattempt= {questionattempt} childToParent ={childToParent} setHTMLcontent = {setHTMLcontent} updatequestionattempt ={updatequestionattempt}/>}
+        {showquestionattempt ? <QuestionAttempt question={question} /> : <QuestionResponse response_content={question_attempt_response}/>}
+        {showquestionattempt ? <SubmitButton question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> : <NextButton quiz_attempt_id={quizattemptid} question_id={question.id} childToParent ={childToParent}  />}
         </>
     )
 }
