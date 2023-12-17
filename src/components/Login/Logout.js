@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 //import { Context } from '../App/App';
-import { Context } from '../App/App';
+//import { Context } from '../App/App';
 import styled from 'styled-components'
-//import { Button } from 'antd';
+import { setTokenValue } from '../../redux/token';
+import { useDispatch } from 'react-redux';
 
 //const ilink = '/logout' 
 const Button = styled.button`
@@ -13,22 +14,16 @@ padding:5px 15px;
 `
 
 export default function Logout () {
-
-    const { token, setToken } = useContext(Context);
-
-   
-
+    const dispatch = useDispatch()
     async function logout() {
         console.log("in logout")
-        setToken("")
-        //console.log(token)
+        dispatch(setTokenValue(''))
         fetch('http://localhost:5000/logout')
         navigate('/')
       }
 
     const navigate = useNavigate()
 
-    //alert("in Logout")
 return (
     <>
                 <div>

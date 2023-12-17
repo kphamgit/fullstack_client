@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import './App.css'
 import Login from '../Login/Login'
-import useToken from './useToken';
 import Navbar from './Navbar';
 //import Router from './routes/Router';
 import Home from '../Home/Home';
@@ -12,12 +11,11 @@ import Home from '../Home/Home';
 import Subcategory from '../Category/Subcategory';
 import ChatContainer from './ChatContainer';
 import { faLadderWater } from '@fortawesome/free-solid-svg-icons';
-//import io from "socket.io-client";
-//import Socket from './Socket'
-import Logout from '../Login/Logout'
-import { ConfigProvider } from 'antd';
+//import Logout from '../Login/Logout'
+//import { ConfigProvider } from 'antd';
 import axios from 'axios';
 import QuizAttempt from './QuizAttempt';
+import { useSelector } from "react-redux";
 //const socket = io.connect("http://localhost:5000");
 
 
@@ -25,39 +23,40 @@ import QuizAttempt from './QuizAttempt';
 
   export default function App() {
 
-  const { token, setToken } = useToken();
+  const token = useSelector((state) => state.token.value)
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
-  const [loggedinname, setLoggedinname] = useState('')
+
+  const uname = useSelector((state) => state.username.value)
 
   //const navigate = useNavigate()
   useEffect(() => {
-    console.log("USE EFFECT RAN log in name="+loggedinname)
-    axios.get("http://localhost:5000/api/categories").then((response) => {
-      setCategories(response.data);
-      let all_sub_categories = []
-      response.data.forEach( category => {
-        category.sub_categories.forEach( sub_cat => {
-          all_sub_categories.push(sub_cat)
+    //console.log("USE EFFECT RAN log in name="+loggedinname)
+    if (uname.length > 0 ) {
+      axios.get("http://localhost:5000/api/categories").then((response) => {
+        setCategories(response.data);
+        let all_sub_categories = []
+        response.data.forEach( category => {
+          category.sub_categories.forEach( sub_cat => {
+            all_sub_categories.push(sub_cat)
+          })
         })
-      })
-      setSubcategories(all_sub_categories)
-    });
-  }, []);
-
-    function clearToken(chat){
-        setToken('')
+        setSubcategories(all_sub_categories)
+      });
     }
+  }, [uname]);
+
+
 console.log("in App.js local storage user"+localStorage.getItem('user'))
     //setLoggedinname(localStorage.getItem('user') )
     const user = localStorage.getItem('user')
     if(!token) {
-        return <Login setToken={setToken} setLoggedInname = {setLoggedinname}/>
+        return <Login />
       }
   
     return (
       <>
-        <Context.Provider value = { {token, setToken, loggedinname, setLoggedinname } }>
+        
         <BrowserRouter>
         
         <Navbar categories={categories}/>
@@ -74,8 +73,7 @@ console.log("in App.js local storage user"+localStorage.getItem('user'))
           <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={user} />} />
           </Routes>
           </BrowserRouter>
-          </Context.Provider>
-
+        
         
       </>
     )

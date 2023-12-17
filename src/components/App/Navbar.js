@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState } from 'react'
 //import { useRoutes } from 'react-router-dom'
 import { Link, Route, Routes } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,8 +11,8 @@ import './Navbar.css'
 //import Subcategory from '../Category/Subcategory.js'
 import Category from '../Category/Category.js'
 import Logout from '../Login/Logout.js'
-import { Context } from './App.js'
-import Subcategory from '../Category/Subcategory.js'
+//import { Context } from './App.js'
+//import Subcategory from '../Category/Subcategory.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { turn_on , turn_off} from '../../redux/athome.js'
 //import {Subcategory} from '../Category/Subcategory.js';
@@ -30,27 +30,8 @@ export default function Navbar({categories}) {
     const athome = useSelector((state) => state.athomeflag.value)
     const dispatch = useDispatch()
     const handleClick = () => setClick(!click)
-    const closeMobileMenu = () => setClick(false);
+    //const closeMobileMenu = () => setClick(false);
    
-    //const location = useLocation()
-    //console.log("CCCCCCCCCCCCCCCC"+location.pathname)
-    //const parts = location.pathname.split('/')
-    //const quizid = parts[parts.length-1]
-      //const [post, setPost] = useState([]);
-      //loggedinname, setLoggedinname
-      const { token, setToken, loggedinname, setLoggedinname } = useContext(Context);
-
-      
-     // useEffect(() => {
-     //   dispatch(turn_off())
-     // }, [athome]);
-      
-      //console.log("XXXXXXXXXXXX in Navbar post = ",post)
-      function handleClick1() {
-        console.log("HHHHHH")
-        //setAthome(!athome)
-      }
-    
       const user = sessionStorage.getItem('user')
     return (
         <>

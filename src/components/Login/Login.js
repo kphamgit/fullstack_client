@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
+//import Context from '../App/App.js'
+import { useDispatch } from "react-redux";
+import { setName } from '../../redux/username';
+import { setTokenValue } from '../../redux/token';
 
 async function loginUser(credentials) {
   console.log("XXXXXXX credential"+JSON.stringify(credentials))
@@ -14,9 +18,11 @@ async function loginUser(credentials) {
    .then(data => data.json())
 }
  
-export default function Login({ setToken, setLoggedInname }) {
+export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  
+  const dispatch = useDispatch()
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -24,17 +30,14 @@ export default function Login({ setToken, setLoggedInname }) {
       username,
       password
     });
-    //const test = {...token}
-    console.log(" in Login.js token test ="+data.token)
-    //console.log("in Login.js token = ",token, " username = ",username)
-    //token can be: "error: User does not exist" or {error: "Wrong password"}
-    //data.token ? setToken(data) : console.log("Login.js token returned UNDEFINED (error)")
+    
+    console.log(" in Login.js token data =",data)
     if(!data.token) { 
       console.log("Login.js token returned UNDEFINED (error)")
     }
     else {
-      setToken(data);
-      setLoggedInname(username)
+      dispatch(setTokenValue(data.token));
+      dispatch(setName(username))
       sessionStorage.setItem('user', username)
     }
   }
@@ -58,6 +61,6 @@ export default function Login({ setToken, setLoggedInname }) {
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-};
+//Login.propTypes = {
+ // setToken: PropTypes.func.isRequired
+//};
