@@ -6,7 +6,6 @@ import questionReducer from './question.js'
 import questionAttemptIdReducer from './question_att_id.js'
 import usernameReducer from './username.js'
 import tokenReducer from './token.js'
-import environmentReducer from './environment.js'
 
 export default configureStore({
     reducer: {
