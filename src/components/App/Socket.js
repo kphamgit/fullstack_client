@@ -3,7 +3,15 @@ import io from "socket.io-client"
 import { useState, useEffect } from "react";
 import InputText from "./InputText";
 
-const socket = io.connect("http://localhost:5000");
+
+let url
+if (process.env.NODE_ENV === 'development') 
+  url = 'http://localhost:5000'
+else
+  url = 'https://fullstack-kp-f6a689f4a15c.herokuapp.com'
+
+const socket = io.connect(url);
+
 export default function Socket() {
     
       //Room State

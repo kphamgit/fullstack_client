@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
   export default function App() {
 
   const token = useSelector((state) => state.token.value)
+  //const environment = useSelector((state) => state.environment.value)
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
 
@@ -31,9 +32,13 @@ import { useSelector } from "react-redux";
 
   //const navigate = useNavigate()
   useEffect(() => {
-    //console.log("USE EFFECT RAN log in name="+loggedinname)
+    let url
+    if (process.env.NODE_ENV === 'development') 
+      url = 'http://localhost:5000/api/categories'
+    else
+      url = 'https://fullstack-kp-f6a689f4a15c.herokuapp.com/api/categories'
     if (uname.length > 0 ) {
-      axios.get("http://localhost:5000/api/categories").then((response) => {
+      axios.get(url).then((response) => {
         setCategories(response.data);
         let all_sub_categories = []
         response.data.forEach( category => {

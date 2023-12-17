@@ -6,9 +6,16 @@ import { useDispatch } from "react-redux";
 import { setName } from '../../redux/username';
 import { setTokenValue } from '../../redux/token';
 
+
 async function loginUser(credentials) {
-  console.log("XXXXXXX credential"+JSON.stringify(credentials))
- return fetch('http://localhost:5000/sessions', {
+  //console.log("XXXXXXX credential"+JSON.stringify(credentials))
+  let url
+  if (process.env.NODE_ENV === 'development') 
+    url = 'http://localhost:5000/sessions'
+  else
+    url = 'https://fullstack-kp-f6a689f4a15c.herokuapp.com/sessions'
+
+ return fetch(url, {
    method: 'POST',
    headers: {
      'Content-Type': 'application/json'
