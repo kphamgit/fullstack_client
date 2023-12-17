@@ -62,12 +62,14 @@ export default function QuizAttempt(props) {
     const childToParent = (childdata) => {
       setShowquestionattempt(childdata);
     }
-  
+    console.log("HEEEEEEEEEEEEEEEEEEE")
+    console.log(question)
     return(
         <>
         <h2>QuizAttempt</h2>
         <div>{props.username}</div>
-        {showquestionattempt ? <QuestionAttempt question={question} /> : <QuestionResponse response_content={question_attempt_response}/>}
+        <div>AAA</div>
+        {showquestionattempt ? <QuestionAttempt format={question.format}/> : <QuestionResponse response_content={question_attempt_response}/>}
         {showquestionattempt ? <SubmitButton question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> : <NextButton quiz_attempt_id={quizattemptid} question_id={question.id} childToParent ={childToParent}  />}
         </>
     )

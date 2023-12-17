@@ -18,7 +18,18 @@ function SubmitButton({question_attempt_id, question_format, childToParent}) {
     const process_question_attempt = () => {
         if (question_format == 1)
           user_answer = getClozeQuestionUserAnswer(question_format)
-          
+        else if (question_format == 6) {
+          const manswer = document.getElementsByClassName('word_scrambler_items')
+          console.log("BBBBBBBBBBBBBBBBBBBBBBBBB")
+          var temp_arr = []
+          for (let i = 0; i < manswer.length; i++) {
+            var mvalue = manswer[i].innerHTML
+            console.log("QQQQQQQQQQQQQQQQQQQQQQQ")
+            console.log(mvalue)
+            temp_arr.push(mvalue)
+          }
+          user_answer = temp_arr.join('/')
+        }
         //console.log("in process question atempt questionattempt = ", questionattempt)
         console.log("in process question atempt user answer = ", user_answer)
         var url = 'http://localhost:5000/api/question_attempts/' + question_attempt_id + '/process_attempt'

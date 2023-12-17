@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-function ClozeQuestionAttempt({question}) {
+function ClozeQuestionAttempt() {
 
+    const question = useSelector((state) => state.question.value)
     const [questionhtml, setQuestionhmtl] = useState('')
-
+    console.log("in ClozeQuestionAttempt question = ", question)
     function format_cloze_question_content(question) {
         let cloze_question_form = ''
          let isDropdown = false;
@@ -59,8 +61,9 @@ function ClozeQuestionAttempt({question}) {
 }
 
 useEffect( () => {
+    console.log("in ClozeQuestion...useEffect AAAAAAAAAAA", question)
     setQuestionhmtl(format_cloze_question_content(question))
-},[questionhtml])
+},[question])
 
   return (
     <>

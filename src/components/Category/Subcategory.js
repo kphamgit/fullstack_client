@@ -4,7 +4,6 @@ import axios from 'axios';
 //import { sub_categories } from '../../../../../server/models';
 import Unit from './Unit';
 
-
 export default function Subcategory({id}) {
 
   const [post, setPost] = useState([]);
@@ -29,6 +28,7 @@ export default function Subcategory({id}) {
   //
   return(
     <>
+
       {post.units && <ul>
         {post.units.map((unit) =>  
               (<li key = {unit.id}>

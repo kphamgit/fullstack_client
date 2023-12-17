@@ -62,17 +62,20 @@ export default function ChatContainer(props) {
        
          <div>
         
-         <div style={{display:'flex', flexDirection:"row", justifyContent: 'space-between'}} >
-          <h4>Username: {props.username}</h4>
-          <strong>Remember to Subscribe to  <a href='https://www.youtube.com/channel/UCmoQtgmJ2SHEAPCAR1Q8TBA'> My Channel</a></strong>
+         <div style={{backgroundColor:'cyan', display:'flex', flexDirection:"row", justifyContent: 'space-between'}} >
+          <div style={{backgroundColor:'green'}}>LEFT MOST</div>
+          <div style={{backgroundColor:'yellow', display:'flex', flexDirection:"row", justifyContent: 'space-between'}}>
+          <div style={{backgroundColor:'orange'}}>Username: {props.username}</div>
+          <div>Another Username: {props.username}</div>
+          </div>
+          <strong style={{backgroundColor:'green'}} >Remember to Subscribe to  <a href='https://www.youtube.com/channel/UCmoQtgmJ2SHEAPCAR1Q8TBA'> My Channel</a></strong>
            </div>
            <ChatsList
              />
            <InputText addMessage={addMessage} />
         </div>
-    <div style={{margin:10 , display:'flex', justifyContent:'center'}} >
-    <small style={{backgroundColor:'lightblue' , padding:5 , borderRadius:5}} >Interested in some 1 on 1 Coding Tutorials and Mentorship. Lets chat on Discord: <strong> kutlo_sek#5370 </strong></small>
-        
+        <div style={{margin:10 , display:'flex', justifyContent:'center'}} >
+        <small style={{backgroundColor:'lightblue' , padding:5 , borderRadius:5}} >Interested in some 1 on 1 Coding Tutorials and Mentorship. Lets chat on Discord: <strong> kutlo_sek#5370 </strong></small>    
     </div>
      
     </div>

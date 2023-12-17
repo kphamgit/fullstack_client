@@ -1,10 +1,12 @@
 import React from 'react'
 import WordsScrambler from './WordsScrambler'
 import { setAnswer } from '../../redux/answer.js'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-function ButtonSelectQuestionAttempt({content}) {
-console.log("XXXXXXXXXXXXXXXX",content)
+function ButtonSelectQuestionAttempt() {
+
+const question = useSelector((state) => state.question.value)
+
     const dispatch = useDispatch()
     //content.map((item, index) => {
        // console.log(item)
@@ -16,12 +18,12 @@ console.log("XXXXXXXXXXXXXXXX",content)
         console.log("XXXXXXXXX"+answer)
         dispatch(setAnswer(answer))
     }
-    const items = content.split('/')
+    const items = question.content.split('/')
 
   return (
     <>
     <div>ButtonSelectQuestionAttempt</div>
-    <div>{content}</div>
+    <div>{question.content}</div>
     <ul>
     {items.map(item => 
              <li key={item}>

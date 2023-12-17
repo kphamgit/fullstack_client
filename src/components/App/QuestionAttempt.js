@@ -1,19 +1,22 @@
 import React from 'react'
 import ButtonSelectQuestionAttempt from './ButtonSelectQA';
 import ClozeQuestionAttempt from './ClozeQA';
+import WordsScrambler from './WordsScrambler';
 
-function QuestionAttempt({question}) {
+function QuestionAttempt({format}) {
 
-  console.log(" in question attempt question =",question)
+  
   //if (question_format == 1) {
     //testFunction
   
   //}
-  switch (question.format) {
+  switch (format) {
     case 1:
-      return <ClozeQuestionAttempt question={question} />
+      return <ClozeQuestionAttempt />
     case 3:
-      return <ButtonSelectQuestionAttempt content={question.content }></ButtonSelectQuestionAttempt>
+      return <ButtonSelectQuestionAttempt />
+    case 6:
+      return <WordsScrambler />
     default:
       return <div>Question Attempt: Question_format error!</div>;
   }
