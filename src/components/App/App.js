@@ -6,7 +6,7 @@ import './App.css'
 import Login from '../Login/Login'
 import Navbar from './Navbar';
 //import Router from './routes/Router';
-import Home from '../Home/Home';
+//import Home from '../Home/Home';
 //import axios from 'axios';
 import Subcategory from '../Category/Subcategory';
 import ChatContainer from './ChatContainer';
@@ -15,8 +15,9 @@ import { faLadderWater } from '@fortawesome/free-solid-svg-icons';
 //import { ConfigProvider } from 'antd';
 import axios from 'axios';
 import QuizAttempt from './QuizAttempt';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 //const socket = io.connect("http://localhost:5000");
+import { setRootPath } from '../../redux/rootpath';
 
 
   export const Context = React.createContext()
@@ -27,16 +28,28 @@ import { useSelector } from "react-redux";
   //const environment = useSelector((state) => state.environment.value)
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
-
+  const rootpath = useSelector((state) => state.rootpath.value)
   const uname = useSelector((state) => state.username.value)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+  //console.log("BBBBBBBBBBBBBBBBBBBBBBBBB"+process.env.NODE_ENV)
+  if (process.env.NODE_ENV === "development") {
+      dispatch(setRootPath('http://localhost:5000'))
+  }
+  else if (process.env.NODE_ENV === "production") {
+      dispatch(setRootPath('https://fullstack-kp-f6a689f4a15c.herokuapp.com'))
+  }
+  else {
+    console.log("invalide NODE_ENV ")
+  }
+}, [dispatch]);
 
   //const navigate = useNavigate()
   useEffect(() => {
-    let url
-    if (process.env.NODE_ENV === 'development') 
-      url = 'http://localhost:5000/api/categories'
-    else
-      url = 'https://fullstack-kp-f6a689f4a15c.herokuapp.com/api/categories'
+    //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+rootpath)
+    let url = `${rootpath}/api/categories`
     if (uname.length > 0 ) {
       axios.get(url).then((response) => {
         setCategories(response.data);
@@ -49,7 +62,7 @@ import { useSelector } from "react-redux";
         setSubcategories(all_sub_categories)
       });
     }
-  }, [uname]);
+  }, [uname, rootpath]);
 
 
 console.log("in App.js local storage user"+localStorage.getItem('user'))
@@ -61,14 +74,10 @@ console.log("in App.js local storage user"+localStorage.getItem('user'))
   
     return (
       <>
-        
         <BrowserRouter>
-        
         <Navbar categories={categories}/>
-       
           <Routes>
             <Route path="/" element = {<ChatContainer username={user} />} />
-
             {
   subcategories.map(id => (
     <Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />

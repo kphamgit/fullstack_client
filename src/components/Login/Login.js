@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
 //import Context from '../App/App.js'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setName } from '../../redux/username';
 import { setTokenValue } from '../../redux/token';
+import { setRootPath } from '../../redux/rootpath';
 
+async function loginUser(rootpath, credentials) {
 
-async function loginUser(credentials) {
-  //console.log("XXXXXXX credential"+JSON.stringify(credentials))
-  let url
-  if (process.env.NODE_ENV === 'development') 
-    url = 'http://localhost:5000/sessions'
-  else
-    url = 'https://fullstack-kp-f6a689f4a15c.herokuapp.com/sessions'
-
+ let url =  rootpath + '/' + 'sessions'
  return fetch(url, {
    method: 'POST',
    headers: {
@@ -28,12 +23,12 @@ async function loginUser(credentials) {
 export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  
+  const rootpath = useSelector((state) => state.rootpath.value)
   const dispatch = useDispatch()
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const data = await loginUser({
+    const data = await loginUser(rootpath, {
       username,
       password
     });

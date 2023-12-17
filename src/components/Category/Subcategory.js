@@ -3,13 +3,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 //import { sub_categories } from '../../../../../server/models';
 import Unit from './Unit';
+import { useSelector } from 'react-redux';
 
 export default function Subcategory({id}) {
+
+  const rootpath = useSelector((state) => state.rootpath.value)
 
   const [post, setPost] = useState([]);
   //console.log(" 1) in subcate... id ="+id)
   console.log("in sub_cat HERE")
-  const url = "http://localhost:5000/api/sub_categories/"+id
+  const url = rootpath + "/" + "api/sub_categories" + '/' +id
   console.log(" 2) in subcate... url ="+url)
   useEffect(() => {
     console.log(" 3) in sub_cat useEffect. About to call axios")

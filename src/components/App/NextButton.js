@@ -15,10 +15,11 @@ padding:5px 15px;
 
 function NextButton({quiz_attempt_id, question_id, childToParent }) {
 
+    const rootpath = useSelector((state) => state.rootpath.value)
     const dispatch = useDispatch()
     const [endofquiz, setEndofquiz] = useState(false)
     const get_next_question = () => {
-        var url = 'http://localhost:5000/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + question_id
+        var url = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + question_id
         axios.get(url).then((response) => {
             console.log(' Next button... response data=',response.data)
             if (response.data.end_of_quiz) {

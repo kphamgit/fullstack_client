@@ -14,6 +14,7 @@ import {setId} from "../../redux/question_att_id.js"
 
 export default function QuizAttempt(props) {
 
+  const rootpath = useSelector((state) => state.rootpath.value)
     const question_attempt_response = useSelector((state) => state.question_attempt_reponse.value)
     //const [question, setQuestion] = useState({})
     //const {question} = useSelector(question)
@@ -36,7 +37,7 @@ export default function QuizAttempt(props) {
     
     const user = sessionStorage.getItem('user')
     
-    const url = "http://localhost:5000/api/quiz_attempts/find_create/" + quizid + '/' + user
+    const url = rootpath + "/api/quiz_attempts/find_create/" + quizid + '/' + user
     
     useEffect(() => {
         //console.log(" 3) in QuizAtt useEffect. About to call axios")

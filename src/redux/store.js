@@ -6,6 +6,7 @@ import questionReducer from './question.js'
 import questionAttemptIdReducer from './question_att_id.js'
 import usernameReducer from './username.js'
 import tokenReducer from './token.js'
+import rootpathReducer from './rootpath.js'
 
 export default configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
         answer: answerReducer,
         question: questionReducer,
         question_attempt_id: questionAttemptIdReducer,
-        token:tokenReducer
+        token:tokenReducer,
+        rootpath: rootpathReducer
     }
 })

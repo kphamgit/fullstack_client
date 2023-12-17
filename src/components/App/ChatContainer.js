@@ -2,15 +2,14 @@ import React, { useEffect, useState, useRef } from 'react'
 import socketIOClient from "socket.io-client";
 import ChatBoxReciever, { ChatBoxSender } from './ChatBox';
 import InputText from './InputText';
+import { useSelector } from 'react-redux';
 
 export default function ChatContainer(props) {
-    console.log("hererererere username from props"+props.username)
-    let socketio  = socketIOClient("http://localhost:5000")
+  const rootpath = useSelector((state) => state.rootpath.value)
+    //console.log("hererererere username from props"+props.username)
+    let socketio  = socketIOClient(rootpath)
     const [chats , setChats] = useState([])
     const [user, setUser] = useState(localStorage.getItem("user"))
-    //const [count, setCount] = useState(0)
-    //const {count} = useSelector((state) => state.counter)
-    //const chatsRef = collection(db , "Messages")
     const messagesEndRef = useRef(null)
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })

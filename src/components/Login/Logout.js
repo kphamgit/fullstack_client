@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 //import { Context } from '../App/App';
 import styled from 'styled-components'
 import { setTokenValue } from '../../redux/token';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //const ilink = '/logout' 
 const Button = styled.button`
@@ -14,11 +14,12 @@ padding:5px 15px;
 `
 
 export default function Logout () {
+    const rootpath = useSelector((state) => state.rootpath.value)
     const dispatch = useDispatch()
     async function logout() {
         console.log("in logout")
         dispatch(setTokenValue(''))
-        fetch('http://localhost:5000/logout')
+        fetch(rootpath + '/' + 'logout')
         navigate('/')
       }
 
