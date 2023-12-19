@@ -60,15 +60,6 @@ export default function ChatContainer(props) {
         
        
          <div>
-        
-         <div style={{backgroundColor:'cyan', display:'flex', flexDirection:"row", justifyContent: 'space-between'}} >
-          <div style={{backgroundColor:'green'}}>LEFT MOST</div>
-          <div style={{backgroundColor:'yellow', display:'flex', flexDirection:"row", justifyContent: 'space-between'}}>
-          <div style={{backgroundColor:'orange'}}>Username: {props.username}</div>
-          <div>Another Username: {props.username}</div>
-          </div>
-          <strong style={{backgroundColor:'green'}} >Remember to Subscribe to  <a href='https://www.youtube.com/channel/UCmoQtgmJ2SHEAPCAR1Q8TBA'> My Channel</a></strong>
-           </div>
            <ChatsList
              />
            <InputText addMessage={addMessage} />

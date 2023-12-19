@@ -1,21 +1,22 @@
 import React from "react";
 import Quiz from "./Quiz";
+import { ListGroup } from "react-bootstrap";
 
 export default function Unit(props) {
 
+   
     return(
-        <>
-        <h2>{props.content.name}</h2>
-        <ul>
-        {props.content.quizzes && <ul>
-        {props.content.quizzes.map((quiz) =>  
-              (<li key = {quiz.id}>
-                <Quiz quiz_content={quiz}/>
-              </li> 
-              )
-          )}
-      </ul>}
-        </ul>
-        </>
-    )
+      <>
+      <h4>{props.content.name}</h4>
+      {props.content.quizzes && <ListGroup>
+      {props.content.quizzes.map((quiz) =>  
+            (<ListGroup.Item key = {quiz.id}>
+              <Quiz quiz_content={quiz}/>
+            </ListGroup.Item> 
+            )
+        )}
+    </ListGroup>}
+      
+      </>
+  )
 }

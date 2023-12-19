@@ -7,10 +7,7 @@ import { Context } from '../App/App.js'
 export default function Quiz(props) {
     return(
         <>
-        <h2>Quiz</h2>
-        <div>{props.quiz_content.name}</div>
-        <div>{props.quiz_content.id}</div>
-        <Link to={`/quiz_attempts/take_quiz/${props.quiz_content.id}`} >Take quiz</Link>
+        <Link to={`/quiz_attempts/take_quiz/${props.quiz_content.id}`} >{props.quiz_content.name}</Link>
         </>
     )
 }

@@ -1,13 +1,17 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-//import { sub_categories } from '../../../../../server/models';
 import Unit from './Unit';
 import { useSelector } from 'react-redux';
+import { ListGroup } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { setSubcategory } from '../../redux/subcategory';
 
-export default function Subcategory({id}) {
+export default function Subcategory({id, name}) {
 
   const rootpath = useSelector((state) => state.rootpath.value)
+  const dispatch = useDispatch()
+  dispatch(setSubcategory(name))
 
   const [post, setPost] = useState([]);
   //console.log(" 1) in subcate... id ="+id)
@@ -22,21 +26,14 @@ export default function Subcategory({id}) {
       console.log("5) in sub_cat response data = ", response.data)
     });
   }, [url]);
-
-  console.log("6) in sub_cat post = ", post)
-  
-  const links = [{id: 1, name: 'Google'},
-      {id: 2, name: 'Facebook'}
-  ]
   //
   return(
     <>
-
-      {post.units && <ul>
+    {post.units && <ul>
         {post.units.map((unit) =>  
-              (<li key = {unit.id}>
+              (<ListGroup key = {unit.id}>
                 <Unit content={unit}/>
-              </li> 
+              </ListGroup> 
               )
           )}
       </ul>}

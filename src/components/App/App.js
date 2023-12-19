@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Navigate, useNavigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import './App.css'
@@ -18,6 +19,10 @@ import QuizAttempt from './QuizAttempt';
 import { useSelector, useDispatch} from "react-redux";
 //const socket = io.connect("http://localhost:5000");
 import { setRootPath } from '../../redux/rootpath';
+import NavbarComponent from './NavbarComponent';
+import ImageComponent from './ImageComponent';
+import Home from './Home';
+import Category from '../Category/Category';
 
 
   export const Context = React.createContext()
@@ -25,6 +30,7 @@ import { setRootPath } from '../../redux/rootpath';
   export default function App() {
 
   const token = useSelector((state) => state.token.value)
+  const subcategory = useSelector((state) => state.subcategory.value)
   //const environment = useSelector((state) => state.environment.value)
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -46,6 +52,11 @@ import { setRootPath } from '../../redux/rootpath';
   }
 }, [dispatch]);
 
+
+useEffect(() => {
+    console.log("this useEFFECT")
+},[subcategory])
+
   //const navigate = useNavigate()
   useEffect(() => {
     //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+rootpath)
@@ -53,6 +64,7 @@ import { setRootPath } from '../../redux/rootpath';
     if (uname.length > 0 ) {
       axios.get(url).then((response) => {
         setCategories(response.data);
+        console.log("XXXXXXXXXXXXXXX response data",response.data)
         let all_sub_categories = []
         response.data.forEach( category => {
           category.sub_categories.forEach( sub_cat => {
@@ -63,32 +75,41 @@ import { setRootPath } from '../../redux/rootpath';
       });
     }
   }, [uname, rootpath]);
+  subcategories.map(subcategory => (
+    console.log(subcategory.name)
+    //<Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />
+  ))
+const router = createBrowserRouter([
+    {
+      element: <NavbarComponent />,
+      children: [
+        {path: "/", element: <Home />},
+        {path: "/imageComponent", element: <ImageComponent />}
+      ]
+    }
+])
 
-
-console.log("in App.js local storage user"+localStorage.getItem('user'))
-    //setLoggedinname(localStorage.getItem('user') )
-    const user = localStorage.getItem('user')
     if(!token) {
         return <Login />
       }
-  
-    return (
-      <>
-        <BrowserRouter>
-        <Navbar categories={categories}/>
-          <Routes>
-            <Route path="/" element = {<ChatContainer username={user} />} />
-            {
-  subcategories.map(id => (
-    <Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />
-  ))
-}
-
-          <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={user} />} />
-          </Routes>
-          </BrowserRouter>
-        
-        
-      </>
-    )
+      return (
+        <>
+          <BrowserRouter>
+          <NavbarComponent categories={categories} />
+          <h2 style={{textAlign:"center"}}>{subcategory}</h2>
+            <Routes>
+              <Route path="/" element = {<Home />} />
+              {
+              subcategories.map(subcat => (
+                <Route key={subcat.id} path={`/sub_categories/${subcat.id}`} element={<Subcategory id = {subcat.id} name={subcat.name}/>} />
+              ))
+              }
+            <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username="kpham" />} />
+            </Routes>
+            </BrowserRouter>
+          
+          
+        </>
+      )
+   
   }

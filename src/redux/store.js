@@ -7,6 +7,7 @@ import questionAttemptIdReducer from './question_att_id.js'
 import usernameReducer from './username.js'
 import tokenReducer from './token.js'
 import rootpathReducer from './rootpath.js'
+import subcategoryReducer from "./subcategory.js"
 
 export default configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
         question: questionReducer,
         question_attempt_id: questionAttemptIdReducer,
         token:tokenReducer,
-        rootpath: rootpathReducer
+        rootpath: rootpathReducer,
+        subcategory: subcategoryReducer
     }
 })

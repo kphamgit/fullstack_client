@@ -10,6 +10,9 @@ import NextButton from "./NextButton.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setValue } from "../../redux/question.js";
 import {setId} from "../../redux/question_att_id.js"
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 export default function QuizAttempt(props) {
@@ -67,12 +70,18 @@ export default function QuizAttempt(props) {
     console.log(question)
     return(
         <>
-        <h2>QuizAttempt</h2>
-        <div>{props.username}</div>
-        <div>AAA</div>
+        <Container>
+      <Row>
+        
+        <Col xs={10}>2 of 3 (wider)
         {showquestionattempt ? <QuestionAttempt format={question.format}/> : <QuestionResponse response_content={question_attempt_response}/>}
         {showquestionattempt ? <SubmitButton question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> : <NextButton quiz_attempt_id={quizattemptid} question_id={question.id} childToParent ={childToParent}  />}
-        </>
+
+        </Col>
+        <Col xs={2}>3 of 3</Col>
+      </Row>
+    </Container>
+       </>
     )
 }
 
