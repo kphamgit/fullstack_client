@@ -45,7 +45,7 @@ export default function Login() {
   }
   return(
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Username</p>

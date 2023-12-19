@@ -10,11 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 //const ilink = '/logout' 
 
+/*
 const Button = styled.button`
 background-color:blue;
 color:white;
 padding:5px 15px;
 `
+*/
 
 export default function Logout () {
     const rootpath = useSelector((state) => state.rootpath.value)
@@ -22,16 +24,17 @@ export default function Logout () {
     async function logout() {
         console.log("in logout")
         dispatch(setTokenValue(''))
-        fetch(rootpath + '/' + 'logout')
+        fetch(`${rootpath}/logout`)
         navigate('/')
       }
 
     const navigate = useNavigate()
+    logout()
 
 return (
     <>
                 <div>
-                <Button onClick={logout}>Log out</Button>
+               ee
                 </div>
     </>
 )

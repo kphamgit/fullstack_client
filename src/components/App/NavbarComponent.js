@@ -6,8 +6,23 @@ import Container from 'react-bootstrap/Container';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css"
 import NavBarButton from './NavBarButton';
+import Button from 'react-bootstrap/Button';
+import { setTokenValue } from '../../redux/token';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function NavbarComponent({categories}) {
+  const rootpath = useSelector((state) => state.rootpath.value)
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+
+  async function logout() {
+    console.log("in logout")
+    dispatch(setTokenValue(''))
+    fetch(`${rootpath}/logout`)
+    navigate('/')
+  }
     return (
         <>
           <Navbar bg="primary" data-bs-theme="light">
@@ -19,7 +34,7 @@ function NavbarComponent({categories}) {
              <li key={cat.id}><NavBarButton title={cat.name} subcategories={cat.sub_categories}/>
               </li>
               )}
-              
+              <Button variant="Link" onClick={logout}>Log out</Button>
               </Nav>
             </Container>
           </Navbar>

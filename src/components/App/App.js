@@ -1,18 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Navigate, useNavigate } from 'react-router-dom';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+//import { createBrowserRouter } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import './App.css'
 import Login from '../Login/Login'
-import Navbar from './Navbar';
-//import Router from './routes/Router';
-//import Home from '../Home/Home';
-//import axios from 'axios';
 import Subcategory from '../Category/Subcategory';
 import ChatContainer from './ChatContainer';
-import { faLadderWater } from '@fortawesome/free-solid-svg-icons';
-//import Logout from '../Login/Logout'
 //import { ConfigProvider } from 'antd';
 import axios from 'axios';
 import QuizAttempt from './QuizAttempt';
@@ -20,9 +14,10 @@ import { useSelector, useDispatch} from "react-redux";
 //const socket = io.connect("http://localhost:5000");
 import { setRootPath } from '../../redux/rootpath';
 import NavbarComponent from './NavbarComponent';
-import ImageComponent from './ImageComponent';
+//import ImageComponent from './ImageComponent';
 import Home from './Home';
-import Category from '../Category/Category';
+//import Category from '../Category/Category';
+import Logout from '../Login/Logout';
 
 
   export const Context = React.createContext()
@@ -79,6 +74,7 @@ useEffect(() => {
     console.log(subcategory.name)
     //<Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />
   ))
+  /*
 const router = createBrowserRouter([
     {
       element: <NavbarComponent />,
@@ -88,7 +84,7 @@ const router = createBrowserRouter([
       ]
     }
 ])
-
+*/
     if(!token) {
         return <Login />
       }
@@ -99,6 +95,7 @@ const router = createBrowserRouter([
           <h2 style={{textAlign:"center"}}>{subcategory}</h2>
             <Routes>
               <Route path="/" element = {<Home />} />
+              <Route path="/logout" element = {<Logout />} />
               {
               subcategories.map(subcat => (
                 <Route key={subcat.id} path={`/sub_categories/${subcat.id}`} element={<Subcategory id = {subcat.id} name={subcat.name}/>} />
