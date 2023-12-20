@@ -12,13 +12,13 @@ export const mySlice = createSlice({
     clear: (state) => {
       state.value = ''
     },
-    setValue: (state, action) => {
+    setQuestion: (state, action) => {
       state.value = action.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { clear, setValue } = mySlice.actions
+export const { clear, setQuestion } = mySlice.actions
 
 export default mySlice.reducer

@@ -43,23 +43,17 @@ import Logout from '../Login/Logout';
       dispatch(setRootPath('https://fullstack-kp-f6a689f4a15c.herokuapp.com'))
   }
   else {
-    console.log("invalide NODE_ENV ")
+    console.log("invalid NODE_ENV ")
   }
 }, [dispatch]);
 
-
-useEffect(() => {
-    console.log("this useEFFECT")
-},[subcategory])
-
   //const navigate = useNavigate()
   useEffect(() => {
-    //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+rootpath)
+    //console.log("XXXXXXXXX"+rootpath)
     let url = `${rootpath}/api/categories`
     if (uname.length > 0 ) {
       axios.get(url).then((response) => {
         setCategories(response.data);
-        console.log("XXXXXXXXXXXXXXX response data",response.data)
         let all_sub_categories = []
         response.data.forEach( category => {
           category.sub_categories.forEach( sub_cat => {
@@ -70,21 +64,7 @@ useEffect(() => {
       });
     }
   }, [uname, rootpath]);
-  subcategories.map(subcategory => (
-    console.log(subcategory.name)
-    //<Route key={id.id} path={`/subcategories/${id.id}`} element={<Subcategory id = {id.id} />} />
-  ))
-  /*
-const router = createBrowserRouter([
-    {
-      element: <NavbarComponent />,
-      children: [
-        {path: "/", element: <Home />},
-        {path: "/imageComponent", element: <ImageComponent />}
-      ]
-    }
-])
-*/
+ 
     if(!token) {
         return <Login />
       }
@@ -101,7 +81,7 @@ const router = createBrowserRouter([
                 <Route key={subcat.id} path={`/sub_categories/${subcat.id}`} element={<Subcategory id = {subcat.id} name={subcat.name}/>} />
               ))
               }
-            <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username="kpham" />} />
+            <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={uname} />} />
             </Routes>
             </BrowserRouter>
           

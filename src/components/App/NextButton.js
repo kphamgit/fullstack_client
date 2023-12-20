@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { setValue } from "../../redux/question.js";
+import { setQuestion } from "../../redux/question.js";
 import { setId } from "../../redux/question_att_id.js";
 import styled from 'styled-components'
 
@@ -26,17 +26,20 @@ function NextButton({quiz_attempt_id, question_id, childToParent }) {
                     setEndofquiz(true)
             }
             else {
-                dispatch(setValue(response.data.question))
+                dispatch(setQuestion(response.data.question))
                 dispatch(setId(response.data.question_attempt_id))
                 childToParent(true)
             }
         });
     }
     if (endofquiz) {
-        return <h1>END OF QUIZ</h1>
+        return <h3>END OF QUIZ</h3>
     }
     return ( 
+        <>
+        <pre></pre>
         <Button onClick={() => get_next_question()}>Next</Button>
+        </>
     )
 }
 
