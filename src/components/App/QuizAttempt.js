@@ -39,7 +39,7 @@ export default function QuizAttempt(props) {
     useEffect(() => {
         //console.log(" 3) in QuizAttempt useEffect.********************** About to call axios")
         axios.get(url).then((response) => {
-          //console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
+          console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
  
           dispatch(setQuestion(response.data.question))
           dispatch(setId(response.data.question_attempt_id))

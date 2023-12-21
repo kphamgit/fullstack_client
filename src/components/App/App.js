@@ -72,13 +72,13 @@ import Logout from '../Login/Logout';
         <>
           <BrowserRouter>
           <NavbarComponent categories={categories} />
-          <h2 style={{textAlign:"center"}}>{subcategory}</h2>
+          <h4 style={{textAlign:"center"}}>{subcategory}</h4>
             <Routes>
               <Route path="/" element = {<Home />} />
               <Route path="/logout" element = {<Logout />} />
               {
               subcategories.map(subcat => (
-                <Route key={subcat.id} path={`/sub_categories/${subcat.id}`} element={<Subcategory id = {subcat.id} name={subcat.name}/>} />
+                <Route key={subcat.id} path={`/sub_categories/${subcat.id}/*`} element={<Subcategory id = {subcat.id} name={subcat.name}/>} />
               ))
               }
             <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={uname} />} />

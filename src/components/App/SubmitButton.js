@@ -18,9 +18,10 @@ function SubmitButton({question_attempt_id, question_format, childToParent}) {
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
     const dispatch = useDispatch()
     var user_answer =  useSelector((state) => state.answer.value)
+    //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
     const process_question_attempt = () => {
         if (question_format == 1)
-          user_answer = getClozeQuestionUserAnswer(question_format)
+          user_answer = getClozeQuestionUserAnswer()
         else if (question_format == 6) {
           const manswer = document.getElementsByClassName('word_scrambler_items')
           //console.log("BBBBBBBBBBBBBBBBBBBBBBBBB")
@@ -28,11 +29,13 @@ function SubmitButton({question_attempt_id, question_format, childToParent}) {
           for (let i = 0; i < manswer.length; i++) {
             var mvalue = manswer[i].innerHTML
             //console.log("QQQQQQQQQQQQQQQQQQQQQQQ")
-            console.log(mvalue)
+            //console.log("IIIIIIIIIII"+mvalue)
             temp_arr.push(mvalue)
           }
           user_answer = temp_arr.join('/')
+          //console.log("QQQQQQQQQQQQ",user_answer)
         }
+ 
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)
         var url = rootpath + '/api/question_attempts/' + question_attempt_id + '/process_attempt'
