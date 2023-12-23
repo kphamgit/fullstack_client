@@ -16,7 +16,7 @@ function ClozeQuestionAttempt() {
     //const [questionhtml, setQuestionhmtl] = useState('')
     //console.log("in ClozeQuestionAttempt question = ", question)
     function format_cloze_question_content(question) {
-        console.log(" calling format_cloze_question")
+        //console.log(" calling format_cloze_question")
         let cloze_question_form = ''
          let isDropdown = false;
              var regExp = /\[.*?\]/g

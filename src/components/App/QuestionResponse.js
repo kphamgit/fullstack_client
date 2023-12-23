@@ -4,7 +4,7 @@ import React from 'react'
 
 function QuestionResponse(props) {
 
-  console.log(props.response_content.question_attempt_results)
+  //console.log(props.response_content.question_attempt_results)
 
   return (
     <>

@@ -12,6 +12,7 @@ import {setId} from "../../redux/question_att_id.js"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { setEndOfQuiz } from '../../redux/endofquiz'
 
 
 export default function QuizAttempt(props) {
@@ -33,6 +34,9 @@ export default function QuizAttempt(props) {
     const quizid = parts[parts.length-1]
     
     const user = sessionStorage.getItem('user')
+
+    const end_of_quiz = useSelector((state) => state.endofquiz.value)
+    console.log(" quiz attempt end of quiz"+end_of_quiz)
     
     const url = rootpath + "/api/quiz_attempts/find_create/" + quizid + '/' + user
     
@@ -40,7 +44,7 @@ export default function QuizAttempt(props) {
         //console.log(" 3) in QuizAttempt useEffect.********************** About to call axios")
         axios.get(url).then((response) => {
           console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
- 
+          dispatch(setEndOfQuiz(false))
           dispatch(setQuestion(response.data.question))
           dispatch(setId(response.data.question_attempt_id))
           
@@ -60,8 +64,13 @@ export default function QuizAttempt(props) {
       <Row>
         <Col xs={10}>
         {showquestionattempt ? <QuestionAttempt format={question.format}/> : <QuestionResponse response_content={question_attempt_response}/>}
-        {showquestionattempt ? <SubmitButton question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> : <NextButton quiz_attempt_id={quizattemptid} question_id={question.id} childToParent ={childToParent}  />}
-
+        {showquestionattempt ? (
+            <SubmitButton quiz_attempt_id={quizattemptid} question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> 
+            )
+            : ( 
+              end_of_quiz ? <div>END OF QUIZ</div> : <NextButton quiz_attempt_id={quizattemptid} next_question_number={question.question_number +1} childToParent ={childToParent}  />
+            )
+        }
         </Col>
         <Col xs={2}></Col>
       </Row>

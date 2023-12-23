@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {setValue} from '../../redux/attemptResponse'
 import styled from 'styled-components'
 import getClozeQuestionUserAnswer from './GetClozeQuestionUAnswer'
+import { setEndOfQuiz } from '../../redux/endofquiz'
 
 
 const Button = styled.button`
@@ -12,14 +13,16 @@ color:white;
 padding:5px 15px;
 `
 
-function SubmitButton({question_attempt_id, question_format, childToParent}) {
+function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, childToParent}) {
   const rootpath = useSelector((state) => state.rootpath.value)
   
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
     const dispatch = useDispatch()
     var user_answer =  useSelector((state) => state.answer.value)
+    var endofquiz =  useSelector((state) => state.endofquiz.value)
+    console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
-    const process_question_attempt = () => {
+    const process_question_attempt = async () => {
         if (question_format == 1)
           user_answer = getClozeQuestionUserAnswer()
         else if (question_format == 6) {
@@ -38,15 +41,32 @@ function SubmitButton({question_attempt_id, question_format, childToParent}) {
  
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)
-        var url = rootpath + '/api/question_attempts/' + question_attempt_id + '/process_attempt'
+        var url1 = rootpath + '/api/question_attempts/' + question_attempt_id + '/process_attempt'
+        const firstRequest = await axios.post(url1,{user_answer: user_answer})
+        const data1 = firstRequest.data
+        console.log(" data1",data1)
+        dispatch(setValue(data1))
+        childToParent(false)
+        console.log("data1 question number"+data1.question_number)
+        const next_question_number = data1.question_number + 1
+        //if (!data1) {
+        var url2 = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + next_question_number
+        const secondRequest = await axios.get(url2)
+        console.log("CCCCCCCC",secondRequest.data)
+        if (secondRequest.data.end_of_quiz) {
+          console.log(" END OF QUIX")
+            dispatch(setEndOfQuiz(true))
+        }
+        /*
         axios.post(url,{user_answer: user_answer}
             ).then((response) => {
-            //console.log(' Submit... response data=',response.data)
+            console.log(' Submit... response data=',response.data)
             dispatch(setValue(response.data))
             //{user_answer: user_answer}
             //console.log("5) in QuizAtt response data = ", response.data)
             childToParent(false)
           });
+          */
     }
 
   return (
