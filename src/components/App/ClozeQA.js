@@ -7,16 +7,18 @@ function ClozeQuestionAttempt() {
     //console.log(" in ClozeQuestionAttempt component")
     const question = useSelector((state) => state.question.value)
     const [clozehtml, setClozehmtl] = useState('')
-    //let questionhtml = format_cloze_question_content(question)
     useEffect( () => {
-        //console.log("in ClozeQuestion...useEffect ****************question=", question)
         setClozehmtl(format_cloze_question_content(question))
     },[question])
     
-    //const [questionhtml, setQuestionhmtl] = useState('')
-    //console.log("in ClozeQuestionAttempt question = ", question)
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
     function format_cloze_question_content(question) {
-        //console.log(" calling format_cloze_question")
         let cloze_question_form = ''
          let isDropdown = false;
              var regExp = /\[.*?\]/g
@@ -42,17 +44,18 @@ function ClozeQuestionAttempt() {
                      let bracket_content = matches[bracket_index].substring(1, matches[bracket_index].length - 1)
                                              let name = `answer_${bracket_index}`
                      let id = `cloze_answer_${bracket_index}`
-                                         if (bracket_content.indexOf('^') >= 0 ) { //dropdown
-                                                 cloze_question_form += `<select class = "cloze_answer" name="${name}" id="${id}">`
-                                                 let words = bracket_content.split('/');
-                     self.shuffle(words).forEach( (word, index)  => {
-                         if (word.indexOf('^') >= 0 ) {
-                             cloze_question_form += `<option value="${word.trim().slice(1)}">${word.trim().slice(1)}</option>`
-                         }
-                         else {
-                             cloze_question_form += `<option value="${word}">${word}</option>`
-                         }
-                     })
+                    if (bracket_content.indexOf('^') >= 0 ) { //dropdown
+                        cloze_question_form += `<select class = "cloze_answer" name="${name}" id="${id}">`
+                        let words = bracket_content.split('/');
+                        shuffle(words)
+                        words.forEach( (word, index)  => {
+                            if (word.indexOf('^') >= 0 ) {
+                                 cloze_question_form += `<option value="${word.trim().slice(1)}">${word.trim().slice(1)}</option>`
+                            }
+                            else {
+                                 cloze_question_form += `<option value="${word}">${word}</option>`
+                            }
+                        })
                      cloze_question_form += `</select>`
                                          }
                                          else { //fill in the blank
