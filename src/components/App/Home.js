@@ -1,10 +1,16 @@
-import React from 'react'
+import React from "react";
+import MicRecorder from 'mic-recorder-to-mp3';
+//import {RecordView} from './RecordView'
+import RecordView from './RecordView.js'
 
-function Home() {
- 
+const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+
+export default function Home() {
+  
   return (
-    <h1>Home</h1>
-  )
+    <>
+      <div>HOME</div>
+      <RecordView />
+      </>
+  );
 }
-
-export default Home
