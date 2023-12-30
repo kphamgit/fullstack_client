@@ -7,7 +7,7 @@ export const Radio = () => {
     const dispatch = useDispatch()
     const question = useSelector((state) => state.question.value)
 
-    console.log(" radio question=", question)
+    //console.log(" radio question=", question)
 
   const onOptionChange = (e) => {
     console.log(e.target.value)
@@ -17,6 +17,7 @@ export const Radio = () => {
   return (
     <div>
     <div>
+    <p style={{color:'blue'}}>{question.content}</p>
     <input type="radio" value="choice1" name ="choice1" id="choice1" onChange={onOptionChange}/>
     &nbsp;
     {question.radio.choice_1_text && (

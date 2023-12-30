@@ -19,6 +19,12 @@ import Home from './Home';
 //import Category from '../Category/Category';
 import Logout from '../Login/Logout';
 
+const styles={
+  body: {
+    margin:0,
+    padding:0
+  },
+}
 
   export const Context = React.createContext()
 

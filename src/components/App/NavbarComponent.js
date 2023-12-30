@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 function NavbarComponent({categories}) {
   const rootpath = useSelector((state) => state.rootpath.value)
+  const username = useSelector((state) => state.username.value)
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
@@ -34,7 +35,7 @@ function NavbarComponent({categories}) {
              <li key={cat.id}><NavBarButton title={cat.name} subcategories={cat.sub_categories}/>
               </li>
               )}
-              <Button variant="Link" onClick={logout}>Log out</Button>
+              <Button variant="Link" onClick={logout}>{username} Log out</Button>
               </Nav>
             </Container>
           </Navbar>

@@ -13,9 +13,9 @@ function QuestionAttempt({format}) {
  
   return (
     <div>
-  
       <div dangerouslySetInnerHTML={{ __html: question.instruction }}></div>
       <p style={{color:'brown'}}>{question.prompt}</p>
+      
       <div>
       {question.audio_src && <audio src={question.audio_src} controls />}
       </div> 

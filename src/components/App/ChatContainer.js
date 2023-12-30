@@ -4,12 +4,15 @@ import ChatBoxReciever, { ChatBoxSender } from './ChatBox';
 import InputText from './InputText';
 import { useSelector } from 'react-redux';
 
-export default function ChatContainer(props) {
+export default function ChatContainer() {
   const rootpath = useSelector((state) => state.rootpath.value)
+  const username = useSelector((state) => state.username.value)
     //console.log("hererererere username from props"+props.username)
+
     let socketio  = socketIOClient(rootpath)
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
     const [chats , setChats] = useState([])
-    const [user, setUser] = useState(localStorage.getItem("user"))
+    //const [user, setUser] = useState(localStorage.getItem("user"))
     const messagesEndRef = useRef(null)
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -21,33 +24,39 @@ export default function ChatContainer(props) {
 
     useEffect(()=> {
         socketio.on('chat', senderChats => {
+          console.log(" in socket ON Chat")
             setChats(senderChats)
         })
     })
 
     function sendChatToSocket(chat){
         //alert("send...")
-        console.log(" username = ",props.username)
+        console.log(" in sendChatToSocket username = ", username)
         socketio.emit("chat" , chat)
     }
 
-    
     function addMessage(chat){
-        console.log("LAST chat= ",chat)
+        console.log("AddMessage ENTRY. chat= ",chat)
+        //is an javascript object: {message: "my message"}
         //use spread operator to add property "user" to chat object
-        const newChat = {...chat , user:"basic"}
+        const newChat = {...chat , user: username}
         console.log("newChat = ", newChat)
+        //newChat = {message: "my message", user: "kpham"}
+        console.log("AddMessage BEFORE send chat to socket [...chats, newChat] = ",[...chats, newChat])
         setChats([...chats , newChat])
+        console.log("AddMessage BEFORE send chat to socket . chats = ",chats)
+        
         sendChatToSocket([...chats , newChat])
     }
    
-    function ChatsList(){
-      console.log(" in chat list user = "+user)
+    function ChatsList() {
+      //console.log(" in chat list username = "+username)
         return( <div style={{ height:'25vh' , overflow:'scroll' , overflowX:'hidden' }}>
               {
                  chats.map((chat, index) => {
-                  if(chat.user === user) return <ChatBoxSender  key={index} message={chat.message}  user={chat.user} />
-                  return <ChatBoxReciever key={index} message={chat.message} user={props.username} />
+                  {console.log (" loop chat.use = "+chat.user)}
+                  if(chat.user === username) return <ChatBoxSender  key={index} message={chat.message}  user={chat.user} />
+                  return <ChatBoxReciever key={index} message={chat.message} user={username} />
               })
               }
                <div ref={messagesEndRef} />
