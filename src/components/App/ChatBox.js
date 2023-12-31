@@ -4,12 +4,11 @@ import {Avatar , Image} from 'antd'
 export default function ChatBoxReciever({user, message}) {
   return (
     <div  style={{display:'flex', justifyContent:'flex-start' , flexDirection:'row'}} >
-      Receiver
-            <p style={{padding:5 , backgroundColor:'#dcf8c6', borderRadius: 10 , maxWidth: "60%" }} >
-                <strong style={{fontSize:13}} >
+            <p style={{padding:3 , backgroundColor:'#dcf8c6', borderRadius: 5 , maxWidth: "100%" }} >
+                <strong style={{fontSize:12}} >
                        {user} 
                 </strong> 
-                {message}
+                &nbsp;{message}
             </p>
 
     </div>
@@ -18,13 +17,12 @@ export default function ChatBoxReciever({user, message}) {
 
 export function ChatBoxSender({user, message}) {
     return (
-      <div  style={{display:'flex', paddingRight:5  ,justifyContent:'flex-end' , flexDirection:'row'}} >
-        Sender
-              <p style={{padding:5 , backgroundColor:'#dcf8c6', borderRadius: 10 , maxWidth: "60%" }} >
-                  <strong style={{fontSize:13}} >
+      <div  style={{display:'flex', paddingRight:3  ,justifyContent:'flex-start' , flexDirection:'row'}} >
+              <p style={{padding:3 , backgroundColor:'#dcf8c6', borderRadius:5 , maxWidth: "100%" }} >
+                  <strong style={{fontSize:12}} >
                          {user} 
                   </strong> 
-                  {message}
+                  &nbsp;{message}
               </p>
   
       </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect } from "react";
-import MicRecorder from 'mic-recorder-to-mp3';
 //import {RecordView} from './RecordView'
 import RecordView from './RecordView.js'
 //import ChatContainer from "./ChatContainer.js";
@@ -10,32 +9,33 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from "react-redux";
 import { clear } from  '../../redux/subcategory';
+import io from "socket.io-client";
+//import { useSelector } from "react-redux";
 
-const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+//const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-const styles={
-  body: {
-    margin:0,
-    padding:0
-  },
-}
-
-
+const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000';
+//console.log("URRRRRRRRRRRRRL "+URL)
+const socket = io.connect(URL, {
+    autoConnect: false
+  });
 
 export default function Home() {
+  //const rootpath = useSelector((state) => state.rootpath.value)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(clear())
   })
   return (
     <>
-      <Container style ={ { backgroundColor: 'yellow'} }>
+      <Container style ={ { backgroundColor: '#f5f4e4'} }>
         <Row>HOME</Row>
       <Row>
-        <Col style={{backgroundColor: "red"}} xs={10}>Col1</Col>
-        <Col style={{backgroundColor: "green"}} xs={2}>col 2<ChatHome /></Col>
+        <Col style={{backgroundColor: "#f5ebe4"}} xs={10}></Col>
+        <Col style={{backgroundColor: "#c7f0d9"}} xs={2}><ChatHome socket={socket} /></Col>
       </Row>
-      <Row><RecordView /></Row>
+      <Row><RecordView socket={socket} /></Row>
     </Container>
       </>
   );

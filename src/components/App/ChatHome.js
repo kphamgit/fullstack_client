@@ -8,13 +8,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ChatBoxReciever, { ChatBoxSender } from './ChatBox';
 
-
+/*
 const socket = io.connect("http://localhost:5000", {
     autoConnect: false
   });
+*/
 
-
-function ChatHome1() {
+function ChatHome({socket}) {
 
     const [chats , setChats] = useState([])
     const username = useSelector((state) => state.username.value)
@@ -70,12 +70,12 @@ function ChatHome1() {
     
     function ChatsList() {
       //console.log(" in chat list username = "+username)
-        return( <div style={{ height:'25vh' , overflow:'scroll' , overflowX:'hidden' }}>
+        return( <div style={{ height:'35vh' , overflow:'scroll' , overflowX:'hidden' }}>
               {
                  chats.map((chat, index) => {
                   {console.log (" loop chat message = "+chat.message)}
                   if(chat.user === username) return <ChatBoxSender  key={index} message={chat.message}  user={chat.user} />
-                  return <ChatBoxReciever key={index} message={chat.message} user={username} />
+                  return <ChatBoxReciever key={index} message={chat.message} user={chat.user} />
               })
               }
                <div ref={messagesEndRef} />
@@ -90,4 +90,4 @@ function ChatHome1() {
   );
 }
 
-export default ChatHome1
+export default ChatHome

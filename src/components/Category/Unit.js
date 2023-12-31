@@ -7,7 +7,7 @@ export default function Unit(props) {
    
     return(
       <>
-      <h4>{props.content.name}</h4>
+      <strong>{props.content.name}</strong>
       {props.content.quizzes && <ListGroup>
       {props.content.quizzes.map((quiz) =>  
             (<ListGroup.Item key = {quiz.id}>

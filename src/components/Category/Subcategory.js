@@ -8,6 +8,11 @@ import { useDispatch } from 'react-redux';
 import { setSubcategory } from '../../redux/subcategory';
 import { Route, Routes } from 'react-router-dom';
 import QuizAttempt from '../App/QuizAttempt';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
 //import { BrowserRouter } from 'react-router-dom';
 export default function Subcategory({id, name}) {
 
@@ -37,8 +42,9 @@ export default function Subcategory({id, name}) {
       <Routes>
         <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={"uname"} />} />
         </Routes>
-        
-
+        <Container>
+          <Row>
+            <Col style={{backgroundColor: "#f5ebe4"}}>
    {post.units && <ul>
         {post.units.map((unit) =>  
               (<ListGroup key = {unit.id}>
@@ -47,6 +53,9 @@ export default function Subcategory({id, name}) {
               )
           )}
       </ul>}
+      </Col>
+      </Row>
+      </Container>
       </>
   );
 }
