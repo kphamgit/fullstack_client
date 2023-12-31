@@ -9,7 +9,7 @@ import { setRootPath } from '../../redux/rootpath';
 
 async function loginUser(rootpath, credentials) {
 
- let url =  rootpath + '/' + 'sessions'
+ let url =  `${rootpath}/sessions`
  return fetch(url, {
    method: 'POST',
    headers: {
