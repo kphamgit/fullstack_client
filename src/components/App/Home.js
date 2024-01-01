@@ -3,13 +3,14 @@ import { useEffect } from "react";
 //import {RecordView} from './RecordView'
 import RecordView from './RecordView.js'
 //import ChatContainer from "./ChatContainer.js";
-import ChatHome from "./ChatHome.js";
+//import ChatHome from "./ChatHome.js";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from "react-redux";
 import { clear } from  '../../redux/subcategory';
 import io from "socket.io-client";
+import ChatPage from "./ChatPage.js";
 //import { useSelector } from "react-redux";
 
 //const Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -29,11 +30,11 @@ export default function Home() {
   })
   return (
     <>
-      <Container style ={ { backgroundColor: '#f5f4e4'} }>
-        <Row>HOME</Row>
+      <Container style ={ { backgroundColor: 'blue'} }>
+        <Row style ={ { backgroundColor: 'green' }} >HOME</Row>
       <Row>
-        <Col style={{backgroundColor: "#f5ebe4"}} xs={10}></Col>
-        <Col style={{backgroundColor: "#c7f0d9"}} xs={2}><ChatHome socket={socket} /></Col>
+        <Col style ={ {height: "70vh", backgroundColor: 'brown' }} xs={9}></Col>
+        <Col style={{ height: "70vh", backgroundColor: "red"}} xs={3}><ChatPage socket={socket} /></Col>
       </Row>
       <Row><RecordView socket={socket} /></Row>
     </Container>
