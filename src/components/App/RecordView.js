@@ -144,6 +144,7 @@ export default function RecordView({socket, studentGroup})  {
               <div><audio id = "bichphuong" src="" controls="controls" /></div> 
               <div><audio id = "thienkim" src="" controls="controls" /></div> 
               <div><audio id = "quocminh" src="" controls="controls" /></div>
+              <div><audio id = "khanhyen" src="" controls="controls" /></div>
               <div><audio id = "nhatminh" src="" controls="controls" /></div> 
               </>
             )
