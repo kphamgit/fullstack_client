@@ -38,18 +38,6 @@ function QuestionAttempt({format}) {
 
     </div>
   )
-/*
-  switch (format) {
-    case 1:
-      return <ClozeQuestionAttempt />
-    case 3:
-      return <ButtonSelectQuestionAttempt />
-    case 6:
-      return <WordsScrambler />
-    default:
-      return <div>Question Attempt: Question_format error!</div>;
-  }
-  */
 }
 
 export default QuestionAttempt

@@ -8,7 +8,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-export default function RecordView({socket})  {
+export default function RecordView({socket, studentGroup})  {
  
   const [isBlocked, setIsBlocked] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
@@ -17,6 +17,7 @@ export default function RecordView({socket})  {
   const [myblob, setMyBlob] = useState([0])
   const [receivedBlobURL, setReceivedBlobURL] = useState('')
   const username = useSelector((state) => state.username.value)
+  //const [studentGroup, setStudentGroup] = useState('intermediate')
 
   const isTeacher = (username === 'kpham');
 
@@ -52,10 +53,12 @@ export default function RecordView({socket})  {
   useEffect(() => {
     if (username == 'kpham') {
     socket.on('recording', arg => {
-       console.log(" in socket ON Chat Recording arg.blob = ",arg.blob)     
+       //console.log(" in socket ON Chat Recording arg.blob = ",arg.username)     
+       let audio_tag = document.getElementById(arg.username)
        const the_blob = new Blob([arg.blob], {type:'audio/mp3'});
        const ablobURL = URL.createObjectURL(the_blob)
-       setReceivedBlobURL(ablobURL)
+       audio_tag.src = URL.createObjectURL(the_blob)
+       //setReceivedBlobURL(ablobURL)
 
         //setChats(senderChats)
         //setChats([...chats , senderChats])
@@ -116,8 +119,9 @@ export default function RecordView({socket})  {
   return (
     <>
     <div>
+      
              <div>
-                <span>{transcript}</span>
+                <span style={{color:'white'}}>{transcript}</span>
               </div>
           <button 
               style={{backgroundColor: isRecording ? "green" : "red"  }} 
@@ -129,8 +133,32 @@ export default function RecordView({socket})  {
           <button onClick={send} disabled={hasbeenSent} >Send</button>
           <br />
           <audio src={blobURL} controls="controls" />
-          {isTeacher && <audio src={receivedBlobURL} controls="controls" />}
-
+          {isTeacher && (
+            <div>
+            {studentGroup === 'intermediate' ? (
+              <>
+              <div><audio id = "basic" src="" controls="controls" /></div>
+              <div><audio id = "linhdan" src="" controls="controls" /></div> 
+              <div><audio id = "lockim" src="" controls="controls" /></div> 
+              <div><audio id = "giabinh" src="" controls="controls" /></div>
+              <div><audio id = "bichphuong" src="" controls="controls" /></div> 
+              <div><audio id = "thienkim" src="" controls="controls" /></div> 
+              <div><audio id = "quocminh" src="" controls="controls" /></div>
+              <div><audio id = "nhatminh" src="" controls="controls" /></div> 
+              </>
+            )
+             :
+             (
+              <>
+              <div><audio id = "basic" src="" controls="controls" /></div>
+              <div><audio id = "nguyenkhang" src="" controls="controls" /></div>
+              <div><audio id = "honghoa" src="" controls="controls" /></div>
+              <div><audio id = "dinhchuong" src="" controls="controls" /></div>
+              </>
+             )
+            }
+            </div>
+          )}
     </div>
     </>
   );

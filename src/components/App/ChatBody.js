@@ -7,9 +7,11 @@ const ChatBody = ({messages}) => {
 
     const messagesEndRef = useRef(null)
     const scrollToBottom = () => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth",  block: 'nearest', inline: 'start'  })
+      messagesEndRef.current?.scrollIntoView({ block: 'nearest', inline: 'start'  })
     }    
     
+  //messagesEndRef.current?.scrollIntoView({ behavior: "smooth",  block: 'nearest', inline: 'start'  })
+
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
@@ -30,7 +32,7 @@ const ChatBody = ({messages}) => {
       <div className={styles.message__container}>
         {messages.map((message) =>
             <div className={styles.message__chats} key={message.id}>
-                <p ref={messagesEndRef}>{message.text}</p>
+                <p ref={messagesEndRef}>{message.name}: {message.text}</p>
              
             </div>
         )}
