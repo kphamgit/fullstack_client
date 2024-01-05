@@ -8,10 +8,6 @@ import { Radio } from './Radio';
 import WordsScrambler from './WordsScrambler'
 import ReactPlayer from 'react-player';
 import QuestionResponseLive from './QuestionResponseLive';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import LiveScoreBoard from './LiveScoreBoard';
 
 function LiveQuestionAttempt({socket}) {
 
@@ -73,7 +69,7 @@ function LiveQuestionAttempt({socket}) {
             socket.off("next_live_question")
         }   
     })
-    const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000';
+    const URL = process.env.NODE_ENV === 'production' ? "https://www.tienganhtuyhoa.com" : 'http://localhost:5000';
     //console.log("URL="+URL)
     const getNextQuestion = () => {
         if (questionInfo.length == 0) {
@@ -90,9 +86,6 @@ function LiveQuestionAttempt({socket}) {
             alert("Quiz id and question number must be separated by a comma")
         }
     }
-
-      let students_basic = ["basic","linhdan", "lockim", "giabinh", "khanhyen", "thienkim", "quocminh", "nhatminh", "bichphuong"]
-      let students_intermediate = ['basic','nguyenkhang', 'honghoa', 'dinhchuong']
 
       
         const renderCurrentQA = (question) => {
