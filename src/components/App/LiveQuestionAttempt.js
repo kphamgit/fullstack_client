@@ -23,6 +23,7 @@ function LiveQuestionAttempt({socket}) {
     const [totalScoreReceived, setTotalScoreReceived] = useState(0)
     const [showResponse, setShowResponse] = useState(false)
     
+    const rootpath = useSelector((state) => state.rootpath.value)
    
     useEffect(() => {
         socket.on('live_score', arg => {
@@ -48,8 +49,8 @@ function LiveQuestionAttempt({socket}) {
 
     useEffect(() => {
         socket.on('next_live_question', arg => {
-            //console.log("next live question received arg=",arg)
-            var url = URL + '/api/quizzes/' + arg.quiz_id + '/get_question/' + arg.question_number
+            console.log("next live question received arg="+rootpath)
+            var url = rootpath + '/api/quizzes/' + arg.quiz_id + '/get_question/' + arg.question_number
             axios.get(url).then((response) => {
                 //console.log(' Next button... response data=',response.data)
                 if (response.data.end_of_quiz) {
@@ -69,7 +70,7 @@ function LiveQuestionAttempt({socket}) {
             socket.off("next_live_question")
         }   
     })
-    const URL = process.env.NODE_ENV === 'production' ? "https://www.tienganhtuyhoa.com" : 'http://localhost:5000';
+    //const URL = process.env.NODE_ENV === 'production' ? "https://www.tienganhtuyhoa.com" : 'http://localhost:5000';
     //console.log("URL="+URL)
     const getNextQuestion = () => {
         if (questionInfo.length == 0) {
