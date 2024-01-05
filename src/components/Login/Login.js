@@ -5,7 +5,8 @@ import './Login.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setName } from '../../redux/username';
 import { setTokenValue } from '../../redux/token';
-import { setRootPath } from '../../redux/rootpath';
+//import { setRootPath } from '../../redux/rootpath';
+import { setUser } from '../../redux/user';
 
 async function loginUser(rootpath, credentials) {
 
@@ -24,6 +25,7 @@ export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const rootpath = useSelector((state) => state.rootpath.value)
+
   const dispatch = useDispatch()
 
   const handleSubmit = async e => {
@@ -40,6 +42,7 @@ export default function Login() {
     else {
       dispatch(setTokenValue(data.token));
       dispatch(setName(username))
+      dispatch(setUser(data.user))
       sessionStorage.setItem('user', username)
     }
   }

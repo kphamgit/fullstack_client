@@ -1,6 +1,6 @@
-import { faL } from '@fortawesome/free-solid-svg-icons';
+//import { faL } from '@fortawesome/free-solid-svg-icons';
 import MicRecorder from 'mic-recorder-to-mp3';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 //import {Dictaphone} from './Dictaphone'
 //import  Dictaphone  from './Dictaphone.js';
@@ -15,7 +15,7 @@ export default function RecordView({socket, studentGroup})  {
   const [hasbeenSent, setHasBeenSent] = useState(false)
   const [blobURL, setBlobURL] = useState('')
   const [myblob, setMyBlob] = useState([0])
-  const [receivedBlobURL, setReceivedBlobURL] = useState('')
+  //const [receivedBlobURL, setReceivedBlobURL] = useState('')
   const username = useSelector((state) => state.username.value)
   //const [studentGroup, setStudentGroup] = useState('intermediate')
 
@@ -30,11 +30,17 @@ export default function RecordView({socket, studentGroup})  {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();  
 
+/*
+  useEffect(() => {
+    if (finalTranscript !== '') {
+     console.log('Got final result:', finalTranscript);
+    }
+    }, [interimTranscript, finalTranscript]);
 
-  //console.log("XXXXXXXXXXXXXXXXXXXXMMMMMMMMM "+isTeacher)
-  //const startRecognition = useRef(null)
-  //const stopRecognition = useRef(null)
-
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+      }
+      */
   useEffect( () => {
     navigator.getUserMedia({ audio: true },
       () => {
@@ -51,21 +57,19 @@ export default function RecordView({socket, studentGroup})  {
 
   
   useEffect(() => {
-    if (username == 'kpham') {
+    if (username === 'kpham') {
     socket.on('recording', arg => {
        //console.log(" in socket ON Chat Recording arg.blob = ",arg.username)     
        let audio_tag = document.getElementById(arg.username)
        const the_blob = new Blob([arg.blob], {type:'audio/mp3'});
-       const ablobURL = URL.createObjectURL(the_blob)
        audio_tag.src = URL.createObjectURL(the_blob)
        //setReceivedBlobURL(ablobURL)
-
         //setChats(senderChats)
         //setChats([...chats , senderChats])
     })
       return () => {
           //event registration cleanup
-          console.log("cleaned up recording")
+          //console.log("cleaned up recording")
           socket.off("recording")
         };
       }
@@ -79,7 +83,6 @@ export default function RecordView({socket, studentGroup})  {
         .start()
         .then(() => {
            setIsRecording(true);
-           //startRecognition.current();
            resetTranscript()
            listenContinuously()
         }).catch((e) => console.error(e));
@@ -96,9 +99,7 @@ export default function RecordView({socket, studentGroup})  {
         setBlobURL(blobURL)
         setMyBlob(blob)
         setHasBeenSent(false)
-        //stopRecognition.current();
-        //socket.emit('recording', blob);
-        console.log("STOPPING ")
+        //console.log("STOPPING ")
         SpeechRecognition.stopListening()
         //this.setState({ blobURL, isRecording: false });
       }).catch((e) => console.log(e));
@@ -110,17 +111,22 @@ export default function RecordView({socket, studentGroup})  {
   };
   //speech recognition
   const listenContinuously = () => {
+    //console.log("listening continuously")
     SpeechRecognition.startListening({
       continuous: true,
       language: 'en-US',
     });
   };
 
+  let students_intermediate = ["basic","linhdan", "lockim", "giabinh", "khanhyen", "thienkim", "quocminh"]
+  let students_big = ['basic','nguyenkhang', 'honghoa', 'dinhchuong']
+
   return (
     <>
     <div>
       
-             <div>
+             <div style={{color:'white'}}>
+                <p>{listening && 'Listening...'}</p>
                 <span style={{color:'white'}}>{transcript}</span>
               </div>
           <button 
@@ -136,25 +142,24 @@ export default function RecordView({socket, studentGroup})  {
           {isTeacher && (
             <div>
             {studentGroup === 'intermediate' ? (
-              <>
-              <div><audio id = "basic" src="" controls="controls" /></div>
-              <div><audio id = "linhdan" src="" controls="controls" /></div> 
-              <div><audio id = "lockim" src="" controls="controls" /></div> 
-              <div><audio id = "giabinh" src="" controls="controls" /></div>
-              <div><audio id = "bichphuong" src="" controls="controls" /></div> 
-              <div><audio id = "thienkim" src="" controls="controls" /></div> 
-              <div><audio id = "quocminh" src="" controls="controls" /></div>
-              <div><audio id = "khanhyen" src="" controls="controls" /></div>
-              <div><audio id = "nhatminh" src="" controls="controls" /></div> 
+              <> 
+              {students_intermediate.map((student, index) =>  
+                (<div key = {index}>
+                   <div><audio id = {student} src="" controls="controls" /></div> 
+                </div> 
+                )
+            )}
               </>
             )
              :
              (
               <>
-              <div><audio id = "basic" src="" controls="controls" /></div>
-              <div><audio id = "nguyenkhang" src="" controls="controls" /></div>
-              <div><audio id = "honghoa" src="" controls="controls" /></div>
-              <div><audio id = "dinhchuong" src="" controls="controls" /></div>
+             {students_big.map((student, index) =>  
+                (<div key = {index}>
+                   <div><audio id = {student} src="" controls="controls" /></div> 
+                </div> 
+                )
+            )}
               </>
              )
             }

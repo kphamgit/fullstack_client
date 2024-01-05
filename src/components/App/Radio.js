@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { setAnswer } from "../../redux/answer";
 import { useSelector } from "react-redux";
 
-export const Radio = () => {
+export const Radio = ({question}) => {
     const dispatch = useDispatch()
-    const question = useSelector((state) => state.question.value)
+    //const question = useSelector((state) => state.question.value)
 
     //console.log(" radio question=", question)
 

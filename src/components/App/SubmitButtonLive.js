@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-//import {setValue} from '../../redux/attemptResponse'
+import {setValue} from '../../redux/attemptResponse'
 import styled from 'styled-components'
 import getClozeQuestionUserAnswer from './GetClozeQuestionUAnswer'
 //import { setEndOfQuiz } from '../../redux/endofquiz'
@@ -13,7 +13,7 @@ color:white;
 padding:5px 15px;
 `
 
-function SubmitButton1({socket, question, setTheScore, toggleShowSubmit }) {
+function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, toggleShowResponse, setResponse }) {
 
   const username = useSelector((state) => state.username.value)
   const rootpath = useSelector((state) => state.rootpath.value)
@@ -39,28 +39,18 @@ function SubmitButton1({socket, question, setTheScore, toggleShowSubmit }) {
           user_answer = temp_arr.join('/')
           //console.log("QQQQQQQQQQQQ",user_answer)
         }
- 
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)
         var url = rootpath + `/api/question_attempts/process_attempt_live/${question.id}`
         const firstRequest = await axios.post(url,{user_answer: user_answer})
-        const data = firstRequest.data
-        console.log(" data1",data)
-        socket.emit('live_score', {score: data.score, user: username})
-        setTheScore(data.score)
+        const response_data = firstRequest.data
+        console.log(" response data = ",response_data)
+        //dispatch(setValue(data))
+        setResponse(response_data)
+        socket.emit('live_score', {score: response_data.score, user: username})
+        setTheScore(response_data.score)
         toggleShowSubmit(false)
-        
-     
-        /*
-        axios.post(url,{user_answer: user_answer}
-            ).then((response) => {
-            console.log(' Submit... response data=',response.data)
-            dispatch(setValue(response.data))
-            //{user_answer: user_answer}
-            //console.log("5) in QuizAtt response data = ", response.data)
-            childToParent(false)
-          });
-          */
+        toggleShowResponse(true)
     }
 
   return (
@@ -71,4 +61,4 @@ function SubmitButton1({socket, question, setTheScore, toggleShowSubmit }) {
   )
 }
 
-export default SubmitButton1
+export default SubmitButtonLive

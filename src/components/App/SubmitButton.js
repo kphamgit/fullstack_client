@@ -38,13 +38,12 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
           user_answer = temp_arr.join('/')
           //console.log("QQQQQQQQQQQQ",user_answer)
         }
- 
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)
         var url1 = rootpath + '/api/question_attempts/' + question_attempt_id + '/process_attempt'
         const firstRequest = await axios.post(url1,{user_answer: user_answer})
         const data1 = firstRequest.data
-        console.log(" data1",data1)
+        //console.log(" data1",data1)
         dispatch(setValue(data1))
         childToParent(false)
         console.log("data1 question number"+data1.question_number)
@@ -52,21 +51,12 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
         //if (!data1) {
         var url2 = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + next_question_number
         const secondRequest = await axios.get(url2)
-        console.log("CCCCCCCC",secondRequest.data)
+        //console.log("CCCCCCCC",secondRequest.data)
         if (secondRequest.data.end_of_quiz) {
           console.log(" END OF QUIX")
             dispatch(setEndOfQuiz(true))
         }
-        /*
-        axios.post(url,{user_answer: user_answer}
-            ).then((response) => {
-            console.log(' Submit... response data=',response.data)
-            dispatch(setValue(response.data))
-            //{user_answer: user_answer}
-            //console.log("5) in QuizAtt response data = ", response.data)
-            childToParent(false)
-          });
-          */
+      
     }
 
   return (

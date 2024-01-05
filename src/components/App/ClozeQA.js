@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-function ClozeQuestionAttempt() {
+function ClozeQuestionAttempt({question}) {
  
     //console.log(" in ClozeQuestionAttempt component")
-    const question = useSelector((state) => state.question.value)
+    //const question = useSelector((state) => state.question.value)
     const [clozehtml, setClozehmtl] = useState('')
     useEffect( () => {
         setClozehmtl(format_cloze_question_content(question))
@@ -76,7 +76,6 @@ function ClozeQuestionAttempt() {
 
   return (
     <>
-    <div>Question: {question.question_number}</div>
     <pre></pre>
     <div dangerouslySetInnerHTML={{ __html: clozehtml }}></div>
     </>

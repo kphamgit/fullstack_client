@@ -8,6 +8,7 @@ import tokenReducer from './token.js'
 import rootpathReducer from './rootpath.js'
 import subcategoryReducer from "./subcategory.js"
 import endofquizReducer from "./endofquiz.js"
+import userReducer from "./user.js"
 
 export default configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export default configureStore({
         token:tokenReducer,
         rootpath: rootpathReducer,
         subcategory: subcategoryReducer,
-        endofquiz: endofquizReducer
+        endofquiz: endofquizReducer,
+        user: userReducer
     }
 })

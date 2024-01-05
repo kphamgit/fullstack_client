@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css"
 
-function ButtonSelectQuestionAttempt() {
+function ButtonSelectQuestionAttempt({question}) {
 
-const question = useSelector((state) => state.question.value)
+//const question = useSelector((state) => state.question.value)
 
     const dispatch = useDispatch()
     //content.map((item, index) => {

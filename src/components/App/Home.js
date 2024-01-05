@@ -13,6 +13,7 @@ import io from "socket.io-client";
 import ChatPage from "./ChatPage.js";
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
 import { useSelector } from "react-redux";
+import LiveScoreBoard from "./LiveScoreBoard.js";
 
 //import { useSelector } from "react-redux";
 
@@ -34,20 +35,18 @@ export default function Home() {
     dispatch(clear())
   })
 
-
-
   return (
     <>
-      <Container style ={ { backgroundColor: 'blue'} }>
-        <Row style ={ { backgroundColor: 'green' }} >HOME</Row>
+      <Container style ={ { backgroundColor: 'brown'} }>
       <Row>
-        
-        <Col style ={ {height: "70vh", backgroundColor: 'brown' }} xs={9}>
-         
+        <Col style ={ {height: "70vh", backgroundColor: '#e6d3c3' }} xs={9}>
+          <LiveQuestionAttempt socket={socket} />
         </Col>
-        <Col style={{ height: "70vh", backgroundColor: "red"}} xs={3}><ChatPage socket={socket} /></Col>
+        <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
+              <ChatPage socket={socket} />
+        </Col>
       </Row>
-      
+   
       { username === 'kpham' && 
       <Row>
         <select onChange={e => setStudentGroup(e.target.value)}>

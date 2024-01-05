@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from "react";
 import { Reorder } from "framer-motion"
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
 const LI = {
   text: 'black',
@@ -9,9 +9,9 @@ const LI = {
   primary: 'rebeccapurple',
 };
 
-function WordsScrambler() {
+function WordsScrambler({question}) {
   
-  const question = useSelector((state) => state.question.value)
+  //const question = useSelector((state) => state.question.value)
     var marray = question.content.split('/')
     var listItems = []
     marray.forEach( (element, index) => {
