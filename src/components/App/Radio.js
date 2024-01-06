@@ -23,6 +23,8 @@ export const Radio = ({question}) => {
   }
   //${question.radio.choice_1_text}
   return (
+    <>
+    <div>{question.content}</div>
     <Form>
       {['radio'].map((type) => (
         <div key={`${type}`} className="mb-3">
@@ -63,5 +65,6 @@ export const Radio = ({question}) => {
         </div>
       ))}
     </Form>
+    </>
   );
 };

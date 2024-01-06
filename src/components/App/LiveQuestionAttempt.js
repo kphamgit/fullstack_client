@@ -10,6 +10,7 @@ import ReactPlayer from 'react-player';
 import QuestionResponseLive from './QuestionResponseLive';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
+import WordsSelect from './WordsSelect';
 
 function LiveQuestionAttempt({socket}) {
 
@@ -101,6 +102,8 @@ function LiveQuestionAttempt({socket}) {
                      return <Radio question={question}/>
                  case 6:
                    return <WordsScrambler question={question}/>
+                 case 8:
+                   return <WordsSelect question={question} />
                  default:
                    return null
                }

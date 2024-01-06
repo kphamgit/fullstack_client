@@ -5,6 +5,7 @@ import { Radio } from './Radio';
 import WordsScrambler from './WordsScrambler';
 import { useSelector } from 'react-redux'
 import ReactPlayer from 'react-player';
+import WordsSelect from './WordsSelect';
 
 function QuestionAttempt() {
 
@@ -20,6 +21,8 @@ function QuestionAttempt() {
           return <Radio  question={question} />
       case 6:
         return <WordsScrambler question={question} />
+      case 8:
+          return <WordsSelect question={question} />
       default:
         return null
     }
@@ -34,7 +37,6 @@ function QuestionAttempt() {
       {question.audio_src && <audio src={question.audio_src} controls />}
       </div> 
       {question.video_src && <ReactPlayer url={question.video_src} controls />}
-
       { question &&
         <>
         {  renderCurrentQA(question)  }

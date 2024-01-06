@@ -1,7 +1,7 @@
 import React from 'react'
 import WordsScrambler from './WordsScrambler'
 import { setAnswer } from '../../redux/answer.js'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css"
 
