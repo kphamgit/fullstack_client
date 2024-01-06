@@ -23,8 +23,12 @@ export default function getClozeQuestionUserAnswer() {
       else {
         user_answer = marray[0]
       }
+      return user_answer
+    }
+    else {
+      return ''
     }
  // }
 
-    return user_answer
+   
   }

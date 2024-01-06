@@ -27,9 +27,20 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
     //console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
     const process_question_attempt = async () => {
-        if (question.format == 1)
+        if (question.format === 1) {
           user_answer = getClozeQuestionUserAnswer()
-        else if (question.format == 6) {
+          if (user_answer.length === 0) {
+            alert("Please enter input")
+            return false
+          }
+        }
+        else if (question.format === 3) {
+          if (user_answer.length === 0 ) {
+            alert("Please select an option")
+            return false
+          }
+        }
+        else if (question.format === 6) {
           const manswer = document.getElementsByClassName('word_scrambler_items')
           //console.log("BBBBBBBBBBBBBBBBBBBBBBBBB")
           var temp_arr = []
@@ -42,9 +53,13 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
           user_answer = temp_arr.join('/')
           //console.log("QQQQQQQQQQQQ",user_answer)
         }
-        else if (question.format == 8) {
-          console.log("XXXXXXXXXXXXX",answerarray)
+        else if (question.format === 8) {
+          //console.log("XXXXXXXXXXXXX",answerarray)
           user_answer = answerarray.join('/')
+          if (user_answer.length === 0) {
+            alert("Please select word(s)")
+            return false
+          }
         }
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)

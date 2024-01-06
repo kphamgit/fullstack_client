@@ -35,7 +35,6 @@ export default function Login() {
       password
     });
     
-    console.log(" in Login.js token data =",data)
     if(!data.token) { 
       console.log("Login.js token returned UNDEFINED (error)")
     }

@@ -25,9 +25,20 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
     //console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
     const process_question_attempt = async () => {
-        if (question_format == 1)
+        if (question_format === 1) {
           user_answer = getClozeQuestionUserAnswer()
-        else if (question_format == 6) {
+          if (user_answer.length === 0) {
+            alert("Please enter input")
+           return false
+          }
+        }
+        else if (question_format === 3) {
+          if (user_answer.length === 0 ) {
+            alert("Please select an option")
+            return false
+          }
+        }
+        else if (question_format === 6) {
           const manswer = document.getElementsByClassName('word_scrambler_items')
           //console.log("BBBBBBBBBBBBBBBBBBBBBBBBB")
           var temp_arr = []
@@ -40,9 +51,13 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
           user_answer = temp_arr.join('/')
           //console.log("QQQQQQQQQQQQ",user_answer)
         }
-        else if (question_format == 8) {
+        else if (question_format === 8) {
           //console.log("XXXXXXXXXXXXX",answerarray)
           user_answer = answerarray.join('/')
+          if (user_answer.length === 0) {
+            alert("Please select word(s)")
+            return false
+          }
         }
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)
@@ -52,14 +67,14 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
         //console.log(" data1",data1)
         dispatch(setValue(data1))
         childToParent(false)
-        console.log("data1 question number"+data1.question_number)
+        //console.log("data1 question number"+data1.question_number)
         const next_question_number = data1.question_number + 1
         //if (!data1) {
         var url2 = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + next_question_number
         const secondRequest = await axios.get(url2)
         //console.log("CCCCCCCC",secondRequest.data)
         if (secondRequest.data.end_of_quiz) {
-          console.log(" END OF QUIX")
+          //console.log(" END OF QUIX")
             dispatch(setEndOfQuiz(true))
         }
       
