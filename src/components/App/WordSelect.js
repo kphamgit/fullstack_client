@@ -1,41 +1,45 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAnswer } from '../../redux/answer.js'
+import { setAnswerArray } from '../../redux/answerarray.js'
 
-function WordSelect({pair}) {
+function WordSelect({pair, addWordToAnswer, removeWordFromAnswer}) {
     const [clickCount, setClickCount] = useState(0)
     const [isHover, setIsHover] = useState(false);
     const dispatch = useDispatch()
     
-    const answer = useSelector((state) => state.answer.value)
+    const answerarray = useSelector((state) => state.answerarray.value)
 
    const handleMouseEnter = () => {
       setIsHover(true);
-      //console.log("hover true")
    };
    const handleMouseLeave = () => {
       setIsHover(false);
-      //console.log("hover false")
    };
    const wordStyle = {
-       backgroundColor: isHover ? 'yellow' : (
-        clickCount%2 == 0 ? '#e6d3c3' : 'lightblue'
-       ),
-       padding: 0.5
+       backgroundColor: (
+         clickCount%2 == 0 ? '#e6d3c3' : 'lightblue'
+        ),
+       textDecoration: isHover && "underline #4b85bf" ,
+       textDecorationThickness:  isHover && '2px',
+       textDecorationSkipInk: 'none',
+       padding: 0.5,
+       userSelect: 'none'
 
    };
 
-   
-    const handleClick = (s) => {
-      
+    const handleClick = (word) => {
         let new_clickCount = clickCount + 1
         setClickCount(new_clickCount)
-        
-        let aggregate_answer = answer + '/' + s
-        dispatch(setAnswer(aggregate_answer))
+        if (clickCount%2 == 0) {
+            dispatch(setAnswerArray([...answerarray, word]))
+        }
+        else {
+            let word_index = answerarray.findIndex(e => e === word )
+            dispatch(setAnswerArray(answerarray.filter((word, idx) => idx !== word_index)) )
+        }
+ 
     }
     
-
         return (
             <>
         <span onClick={() => handleClick(pair.word)}
@@ -44,8 +48,11 @@ function WordSelect({pair}) {
         onMouseLeave={handleMouseLeave}
     >
     {pair.word}
-    { ((pair.next_word !== '.') && (pair.next_word !== ',') && (pair.next_word !== '!')  && (pair.next_word !== '?') )  && <span>&nbsp;</span>}
-    </span>  
+    </span>
+    { ((pair.next_word !== '.') && (pair.next_word !== ',') 
+            && (pair.next_word !== '!')  
+             && (pair.next_word !== '?') )  
+                && <span>&nbsp;</span>} 
     </>
         )
     

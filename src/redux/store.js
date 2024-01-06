@@ -9,12 +9,14 @@ import rootpathReducer from './rootpath.js'
 import subcategoryReducer from "./subcategory.js"
 import endofquizReducer from "./endofquiz.js"
 import userReducer from "./user.js"
+import answerarrayReducer from './answerarray.js'
 
 export default configureStore({
     reducer: {
         username: usernameReducer,
         question_attempt_reponse: questionattemptresponseReducer,
         answer: answerReducer,
+        answerarray: answerarrayReducer,
         question: questionReducer,
         question_attempt_id: questionAttemptIdReducer,
         token:tokenReducer,

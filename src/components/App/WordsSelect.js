@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import WordSelect from './WordSelect';
-import { useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
+import { setAnswer, clear } from '../../redux/answer';
+import { clearAnswerArray } from '../../redux/answerarray'
 
 function WordsSelect({question}) {
-    const answer = useSelector((state) => state.answer.value)
     const [words, setWords] = useState([])
-    const sentence = 'The sky is blue, and I am happy. Is the grass green? The stop sign is red!'
+    const sentence = 'The sky is blue, and I am student happy. Is the grass green? The stop sign is red!'
+    const[tempAnswer, setTempAnswer] = useState([])
+   
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(clear())
+        dispatch(clearAnswerArray())
+    },[dispatch])
 
     useEffect(() => {
     const temp_arr = sentence.split(' ');
@@ -34,35 +42,46 @@ function WordsSelect({question}) {
         }
     })
 
+
     let my_arr1 = []
     for (var i=0; i < my_arr.length; i++) { 
         let word = my_arr[i]
         let pair = {}
         if (i < (my_arr.length-1)) {
-            //let next_word = my_arr[i+1]
             pair.word = word
             pair.next_word = my_arr[i+1]
         }
         else {
             pair.word = word
-            pair.next_word = "non"
+            //pair.next_word = "non"
         }
         my_arr1.push(pair)
     }
-
     setWords(my_arr1)
     },[])
     
+
+    function addAWordToAnswer(word) {
+        setTempAnswer(tempAnswer => [...tempAnswer, word])
+        let temp_str = tempAnswer.join('/')
+        dispatch(setAnswer(temp_str))
+     }
+
+     function removeAWordFromAnswer(word) {
+        setTempAnswer(tempAnswer.splice(tempAnswer.findIndex(e => e === word ),1))
+        let temp_str = tempAnswer.join('/')
+        dispatch(setAnswer(temp_str))
+     }
+
     return (
         <>
         <div>
             {
                 words.map((pair, index) => {
-                    return <WordSelect key = {index} pair ={pair} />
+                    return <WordSelect key = {index} pair ={pair} addWordToAnswer={addAWordToAnswer} removeWordFromAnswer={removeAWordFromAnswer}/>
                 })
             }
         </div>
-        <div style={{color:"red"}}>{answer}</div>
         </>
     );
 

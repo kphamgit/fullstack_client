@@ -17,7 +17,7 @@ function ButtonSelectQuestionAttempt({question}) {
     //const answer = useSelector((state) => state.answer.value)
 
     const update_answer = (answer) => {
-        console.log("XXXXXXXXX"+answer)
+        //console.log("XXXXXXXXX"+answer)
         dispatch(setAnswer(answer))
     }
     const items = question.content.split('/')
@@ -27,7 +27,7 @@ function ButtonSelectQuestionAttempt({question}) {
     <ul>
     {items.map(item => 
            
-              <Button style={{margin:"5px"}} variant="success" key={item} onClick={() => update_answer(item)}>{item}</Button>
+              <Button style={{margin:"5px"}} variant="primary" key={item} onClick={() => update_answer(item)}>{item}</Button>
               
       )}
       </ul>

@@ -19,6 +19,7 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
 
   const username = useSelector((state) => state.username.value)
   const rootpath = useSelector((state) => state.rootpath.value)
+  const answerarray = useSelector((state) => state.answerarray.value)
   
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
     //const dispatch = useDispatch()
@@ -40,6 +41,10 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
           }
           user_answer = temp_arr.join('/')
           //console.log("QQQQQQQQQQQQ",user_answer)
+        }
+        else if (question.format == 8) {
+          console.log("XXXXXXXXXXXXX",answerarray)
+          user_answer = answerarray.join('/')
         }
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)

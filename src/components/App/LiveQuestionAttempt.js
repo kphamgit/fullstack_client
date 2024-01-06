@@ -22,7 +22,6 @@ function LiveQuestionAttempt({socket}) {
     const [attemptResponse, setAttemptResponse] = useState('')
     //console.log("USER ************* = ",user)
     const [showSubmit, setShowSubmit] = useState(false)
-   // const [scoreReceived, setScoreReceived] = useState('')
     const [totalScoreReceived, setTotalScoreReceived] = useState(0)
     const [showResponse, setShowResponse] = useState(false)
     
@@ -30,8 +29,6 @@ function LiveQuestionAttempt({socket}) {
    
     useEffect(() => {
         socket.on('live_score', arg => {
-            //console.log("live score received from server arg",arg)
-            //console.log("MMMMMMMM"+(totalScoreReceived + arg.score))
             let total = totalScoreReceived + arg.score
             let el = document.getElementById(arg.user)
             setTotalScoreReceived(totalScoreReceived + arg.score)
@@ -40,19 +37,12 @@ function LiveQuestionAttempt({socket}) {
         })
 
         return () => {
-            //event registration cleanup
-            //console.log("cleaned up live_score")
             socket.off("live_score")
         }   
     })
 
     useEffect(() => {
-        console.log("in useEffect attemptResponse", attemptResponse)
-    },[attemptResponse])
-
-    useEffect(() => {
         socket.on('next_live_question', arg => {
-            console.log("next live question received rootpath="+rootpath+ "user role="+user.role)
             var url = rootpath + '/api/quizzes/' + arg.quiz_id + '/get_question/' + arg.question_number
             axios.get(url).then((response) => {
                 //console.log(' Next button... response data=',response.data)

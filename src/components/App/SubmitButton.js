@@ -18,7 +18,9 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
   
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
     const dispatch = useDispatch()
+    const answerarray = useSelector((state) => state.answerarray.value)
     var user_answer =  useSelector((state) => state.answer.value)
+    
     //var endofquiz =  useSelector((state) => state.endofquiz.value)
     //console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
@@ -37,6 +39,10 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
           }
           user_answer = temp_arr.join('/')
           //console.log("QQQQQQQQQQQQ",user_answer)
+        }
+        else if (question_format == 8) {
+          //console.log("XXXXXXXXXXXXX",answerarray)
+          user_answer = answerarray.join('/')
         }
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)

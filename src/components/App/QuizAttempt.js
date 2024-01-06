@@ -62,7 +62,7 @@ export default function QuizAttempt(props) {
      
         <Container>
       <Row>
-        <Col xs={10}>
+        <Col style={{backgroundColor:'#e6d3c3'}} xs={10}>
         {showquestionattempt ? <QuestionAttempt /> : <QuestionResponse response_content={question_attempt_response}/>}
         {showquestionattempt ? (
             <SubmitButton quiz_attempt_id={quizattemptid} question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> 

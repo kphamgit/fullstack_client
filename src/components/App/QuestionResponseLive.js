@@ -4,8 +4,6 @@ import React from 'react'
 
 function QuestionResponseLive({response_content}) {
 
-  console.log(response_content)
-
   return (
     <>
     <div>
