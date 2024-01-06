@@ -19,8 +19,8 @@ function SubmitButton({quiz_attempt_id, question_attempt_id, question_format, ch
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
     const dispatch = useDispatch()
     var user_answer =  useSelector((state) => state.answer.value)
-    var endofquiz =  useSelector((state) => state.endofquiz.value)
-    console.log(" Submit END OF QUIX"+endofquiz)
+    //var endofquiz =  useSelector((state) => state.endofquiz.value)
+    //console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
     const process_question_attempt = async () => {
         if (question_format == 1)

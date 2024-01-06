@@ -8,6 +8,8 @@ import { Radio } from './Radio';
 import WordsScrambler from './WordsScrambler'
 import ReactPlayer from 'react-player';
 import QuestionResponseLive from './QuestionResponseLive';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form'
 
 function LiveQuestionAttempt({socket}) {
 
@@ -49,7 +51,7 @@ function LiveQuestionAttempt({socket}) {
 
     useEffect(() => {
         socket.on('next_live_question', arg => {
-            console.log("next live question received arg="+rootpath)
+            console.log("next live question received rootpath="+rootpath+ "user role="+user.role)
             var url = rootpath + '/api/quizzes/' + arg.quiz_id + '/get_question/' + arg.question_number
             axios.get(url).then((response) => {
                 //console.log(' Next button... response data=',response.data)
@@ -110,9 +112,13 @@ function LiveQuestionAttempt({socket}) {
     
     { user.role === "teacher" && 
     <div>
-        <button onClick={getNextQuestion}>Get Question</button>
-        <div><input type="text" onChange={e => setQuestionInfo(e.target.value)} /></div>
+        
+        <div>
+        <Form.Control as="input" className="w-30" placeholder="Enter quiz_id and question number separated by a comma" htmlSize='10' onChange={e => setQuestionInfo(e.target.value)} />
+        <Button variant="success" onClick={getNextQuestion}>Get Question</Button>
+        </div>
     </div>}
+    <br />
     { question &&
         <>
         <div>Question: { question.question_number}</div>
@@ -125,7 +131,7 @@ function LiveQuestionAttempt({socket}) {
             {  renderCurrentQA(question)  }
          </>
 }
-{ showSubmit ?
+{ (showSubmit && user.role == 'student') ?
     <SubmitButtonLive style={{backgroundColor:'white'}} socket={socket} question={question} setTheScore={setScore} toggleShowSubmit={setShowSubmit} toggleShowResponse={setShowResponse} setResponse={setAttemptResponse}/> 
     : (showResponse && (showResponse && <QuestionResponseLive response_content={attemptResponse}/>))
     }

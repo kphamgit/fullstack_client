@@ -2,58 +2,66 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setAnswer } from "../../redux/answer";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
+import Form from 'react-bootstrap/Form';
 
 export const Radio = ({question}) => {
     const dispatch = useDispatch()
+    const [selectedOption, setSelectedOption] = useState('option1')
+    const [topping, setTopping] = useState("Medium")
+
+   // useEffect(() => {
+    //  console.log("EEE")
+    //},[selectedOption])
     //const question = useSelector((state) => state.question.value)
 
     //console.log(" radio question=", question)
 
   const onOptionChange = (e) => {
-    console.log(e.target.value)
     dispatch(setAnswer(e.target.value))
   }
   //${question.radio.choice_1_text}
   return (
-    <div>
-    <div>
-    <p style={{color:'blue'}}>{question.content}</p>
-    <input type="radio" value="choice1" name ="choice1" id="choice1" onChange={onOptionChange}/>
-    &nbsp;
-    {question.radio.choice_1_text && (
-    <label htmlFor="choice1">
-      {question.radio.choice_1_text}
-    </label>
-    )}
-  </div>
-  <div >
-    <input type="radio" value="choice2" name ="choice2" id="choice2" onChange={onOptionChange} />
-    &nbsp;
-    {question.radio.choice_2_text && (
-    <label htmlFor="choice2">
-      {question.radio.choice_2_text}
-    </label>
-    )}
-  </div>
-  <div >
-    <input type="radio" value="choice3" name ="choice3" id="choice3" onChange={onOptionChange} />
-    &nbsp;
-    {question.radio.choice_3_text && (
-    <label htmlFor="choice3">
-      {question.radio.choice_3_text}
-    </label>
-    )}
-  </div>
-
-  {question.radio.choice_4_text && (
-  <div >
-    <input type="radio" value="choice4" name ="choice4" id="choice4" onChange={onOptionChange} />
-    &nbsp;
-    <label htmlFor="choice4">
-      {question.radio.choice_4_text}
-    </label>
-  </div>
-  )}
-  </div>
+    <Form>
+      {['radio'].map((type) => (
+        <div key={`${type}`} className="mb-3">
+          <Form.Check
+            label={question.radio.choice_1_text}
+            name="choice"
+            value="choice1"
+            type={type}
+            id={`${type}-1`}
+            onChange={onOptionChange}
+          />
+          <Form.Check
+            label={question.radio.choice_2_text}
+            name="choice"
+            value="choice2"
+            type={type}
+            id={`${type}-2`}
+            onChange={onOptionChange}
+          />
+            <Form.Check
+            label={question.radio.choice_3_text}
+            name="choice"
+            value="choice3"
+            type={type}
+            id={`${type}-2`}
+            onChange={onOptionChange}
+          />
+          {question.radio.choice_4_text && (
+          <Form.Check
+            label={question.radio.choice_4_text}
+            name="choice"
+            value="choice4"
+            type={type}
+            id={`${type}-3`}
+            onChange={onOptionChange}
+          />
+          )}
+        </div>
+      ))}
+    </Form>
   );
 };

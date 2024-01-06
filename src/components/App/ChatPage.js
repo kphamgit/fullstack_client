@@ -26,7 +26,9 @@ const ChatPage = ({ socket }) => {
     return (
       <div className= {styles.chat}>
         <div className={styles.chat__main}>
+         
             <LiveScoreBoard className={styles.scoreboard}/>
+           
           <ChatBody  messages={messages}  />
           <p></p>
           <ChatFooter socket={socket} />

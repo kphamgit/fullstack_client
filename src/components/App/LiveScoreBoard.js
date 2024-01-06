@@ -1,5 +1,4 @@
 import React from 'react'
-import Table from 'react-bootstrap/Table';
 
 function TableRow({rowContent}) {
     let row = rowContent
@@ -28,9 +27,8 @@ function LiveScoreBoard() {
         ['honghoa', 'dinhchuong']
     ];
 
-  return (
-        <table>
-       
+  return ( 
+        <table> 
             <tbody>
                 {students_basic.map((rowContent, rowID) => (
                     <TableRow
@@ -39,6 +37,7 @@ function LiveScoreBoard() {
                 ))}
             </tbody>
         </table>
+     
   );
 }
 
