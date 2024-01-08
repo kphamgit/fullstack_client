@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from "react";
 import { Reorder } from "framer-motion"
 //import { useSelector } from 'react-redux';
@@ -13,11 +13,24 @@ function WordsScrambler({question}) {
   
   //const question = useSelector((state) => state.question.value)
     var marray = question.content.split('/')
+    shuffle(marray)
     var listItems = []
     marray.forEach( (element, index) => {
         listItems.push({name: element, id: index})
     });
     //console.log("XXXXXXXXXXXX",listItems)
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }   
+
+   // useEffect( () => {
+      
+   // },[])
+    
 
     const [items, setItems] = useState(listItems);
     const itemStyle =  {

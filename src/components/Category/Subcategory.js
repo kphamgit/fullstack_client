@@ -23,22 +23,21 @@ export default function Subcategory({id, name}) {
   })
  
   const [post, setPost] = useState([]);
-  //console.log(" 1) in subcate... id ="+id)
-  //console.log("in sub_cat ENTRY")
+  const [sortedUnits, setSortedUnits] = useState([])
+ 
   const url = `${rootpath}/api/sub_categories/${id}`
-  //console.log(" 2) in subcate... url ="+url)
+
   useEffect(() => {
     //console.log(" 3) in sub_cat useEffect. About to call axios")
     axios.get(url).then((response) => {
-      //console.log('subcat returned from axios call')
-      //console.log(' 4) subcat useEffect get response data=',response.data)
       setPost(response.data);
+      response.data.units.sort( (a,b) => { return a.unit_number - b.unit_number; } )
+  
     });
   }, [url]);
   //
   return(
     <>
-    
       <Routes>
         <Route path="/quiz_attempts/take_quiz/:quiz_id" element = {<QuizAttempt username={"uname"} />} />
         </Routes>

@@ -14,6 +14,7 @@ import ChatPage from "./ChatPage.js";
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
 import { useSelector } from "react-redux";
 import LiveScoreBoard from "./LiveScoreBoard.js";
+import RecordViewTeacher from "./RecordViewTeacher.js";
 
 //import { useSelector } from "react-redux";
 
@@ -46,16 +47,13 @@ export default function Home() {
               <ChatPage socket={socket} />
         </Col>
       </Row>
-   
-      { username === 'kpham' && 
-      <Row>
-        <select onChange={e => setStudentGroup(e.target.value)}>
-        <option value="intermediate">Intermediate</option>
-        <option value="big_english">Big English</option>
-        </select>
-      </Row>
-      }
-      <Row><RecordView socket={socket} studentGroup={studentGroup}/></Row>
+        <Row>
+          { username === 'kpham' ? 
+           <RecordViewTeacher socket={socket} studentGroup={studentGroup}/>
+           :
+           <RecordView socket={socket} studentGroup={studentGroup}/>
+          }
+        </Row>
     </Container>
       </>
   );

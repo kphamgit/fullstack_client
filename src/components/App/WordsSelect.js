@@ -6,7 +6,6 @@ import { clearAnswerArray } from '../../redux/answerarray'
 
 function WordsSelect({question}) {
     const [words, setWords] = useState([])
-    const sentence = 'The sky is blue, and I am student happy. Is the grass green? The stop sign is red!'
     const[tempAnswer, setTempAnswer] = useState([])
    
     const dispatch = useDispatch()
@@ -17,7 +16,7 @@ function WordsSelect({question}) {
     },[dispatch])
 
     useEffect(() => {
-    const temp_arr = sentence.split(' ');
+    const temp_arr = question.sentence.split(' ');
     let my_arr = []
     
     temp_arr.forEach( word => { 
@@ -58,7 +57,7 @@ function WordsSelect({question}) {
         my_arr1.push(pair)
     }
     setWords(my_arr1)
-    },[])
+    },[question.sentence])
     
 
     function addAWordToAnswer(word) {

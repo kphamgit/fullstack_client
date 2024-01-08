@@ -2,21 +2,22 @@
 import MicRecorder from 'mic-recorder-to-mp3';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-//import {Dictaphone} from './Dictaphone'
-//import  Dictaphone  from './Dictaphone.js';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-export default function RecordView({socket})  {
+export default function RecordViewTeacher({socket, studentGroup})  {
  
   const [isBlocked, setIsBlocked] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [hasbeenSent, setHasBeenSent] = useState(false)
   const [blobURL, setBlobURL] = useState('')
   const [myblob, setMyBlob] = useState([0])
-  
+  //const [receivedBlobURL, setReceivedBlobURL] = useState('')
   const username = useSelector((state) => state.username.value)
+  //const [studentGroup, setStudentGroup] = useState('intermediate')
+
+  const isTeacher = (username === 'kpham');
 
   const {
     transcript,
@@ -51,6 +52,21 @@ export default function RecordView({socket})  {
       },
     );
   },[isBlocked])
+
+  
+  useEffect(() => {
+    socket.on('recording', arg => {
+       //console.log(" in socket ON Chat Recording arg.blob = ",arg.username)     
+       let audio_tag = document.getElementById(arg.username)
+       const the_blob = new Blob([arg.blob], {type:'audio/mp3'});
+       audio_tag.src = URL.createObjectURL(the_blob)
+    })
+      return () => {
+          //event registration cleanup
+          //console.log("cleaned up recording")
+          socket.off("recording")
+        };
+  }, [socket, username]);
 
   const start = () => {
     if (isBlocked) {
@@ -95,10 +111,13 @@ export default function RecordView({socket})  {
     });
   };
 
+  let students_intermediate = ["basic","linhdan", "lockim", "giabinh", "khanhyen", "thienkim", "quocminh"]
+  let students_big = ['basic','nguyenkhang', 'honghoa', 'dinhchuong']
+
   return (
     <>
     <div>
-          <div style={{color:'white'}}>
+             <div style={{color:'white'}}>
                 <p>{listening && 'Listening...'}</p>
                 <span style={{color:'white'}}>{transcript}</span>
               </div>
@@ -112,6 +131,30 @@ export default function RecordView({socket})  {
           <button onClick={send} disabled={hasbeenSent} >Send</button>
           <br />
           <audio src={blobURL} controls="controls" />
+            <div>
+            {studentGroup === 'intermediate' ? (
+              <> 
+              {students_intermediate.map((student, index) =>  
+                (<div key = {index}>
+                   <div><audio id = {student} src="" controls="controls" /></div> 
+                </div> 
+                )
+            )}
+              </>
+            )
+             :
+             (
+              <>
+             {students_big.map((student, index) =>  
+                (<div key = {index}>
+                   <div><audio id = {student} src="" controls="controls" /></div> 
+                </div> 
+                )
+            )}
+              </>
+             )
+            }
+            </div>
     </div>
     </>
   );

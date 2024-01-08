@@ -11,13 +11,6 @@ export const Radio = ({question}) => {
     const [selectedOption, setSelectedOption] = useState('option1')
     const [topping, setTopping] = useState("Medium")
 
-   // useEffect(() => {
-    //  console.log("EEE")
-    //},[selectedOption])
-    //const question = useSelector((state) => state.question.value)
-
-    //console.log(" radio question=", question)
-
   const onOptionChange = (e) => {
     dispatch(setAnswer(e.target.value))
   }
@@ -25,6 +18,7 @@ export const Radio = ({question}) => {
   return (
     <>
     <div>{question.content}</div>
+    <br />
     <Form>
       {['radio'].map((type) => (
         <div key={`${type}`} className="mb-3">
