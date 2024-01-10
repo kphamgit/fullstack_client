@@ -19,9 +19,8 @@ function NextButton({quiz_attempt_id, next_question_number, childToParent }) {
     const dispatch = useDispatch()
     const [endofquiz, setEndofquiz] = useState(false)
     const get_next_question = () => {
-        var url = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + next_question_number
+        var url = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/creat_next_question_attempt/' + next_question_number
         axios.get(url).then((response) => {
-            //console.log(' Next button... response data=',response.data)
             if (response.data.end_of_quiz) {
                     setEndofquiz(true)
             }

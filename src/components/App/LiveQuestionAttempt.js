@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import ClozeQuestionAttempt from './ClozeQA';
 import SubmitButtonLive from './SubmitButtonLive';
@@ -11,9 +11,12 @@ import QuestionResponseLive from './QuestionResponseLive';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import WordsSelect from './WordsSelect';
+import RecordQuestionAttempt from './RecordQA';
+import { SocketContext } from './Home';
 
-function LiveQuestionAttempt({socket}) {
+function LiveQuestionAttempt() {
 
+    const socket = useContext(SocketContext);
     const [question, setQuestion] = useState(null)
     const [questionInfo, setQuestionInfo] = useState('')
     const [score, setScore] = useState(0)
@@ -94,6 +97,8 @@ function LiveQuestionAttempt({socket}) {
                    return <WordsScrambler question={question}/>
                  case 8:
                    return <WordsSelect question={question} />
+                 case 9:
+                    return <RecordQuestionAttempt question={question} />
                  default:
                    return null
                }

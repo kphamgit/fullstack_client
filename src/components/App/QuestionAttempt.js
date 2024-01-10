@@ -6,11 +6,13 @@ import WordsScrambler from './WordsScrambler';
 import { useSelector } from 'react-redux'
 import ReactPlayer from 'react-player';
 import WordsSelect from './WordsSelect';
+import RecordQuestionAttempt from './RecordQA';
 
 function QuestionAttempt() {
 
   const question = useSelector((state) => state.question.value)
  
+  console.log("IN HEEEEEEEEEEEEE")
   const renderCurrentQA = (question) => {
     switch (question.format) {
       case 1:
@@ -23,6 +25,8 @@ function QuestionAttempt() {
         return <WordsScrambler question={question} />
       case 8:
           return <WordsSelect question={question} />
+      case 9:
+            return <RecordQuestionAttempt question={question} />
       default:
         return null
     }

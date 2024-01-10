@@ -26,6 +26,8 @@ const socket = io.connect(URL, {
     autoConnect: false
   });
 
+  export const SocketContext = React.createContext();
+
 export default function Home() {
   //const rootpath = useSelector((state) => state.rootpath.value)
   const [studentGroup, setStudentGroup] = useState('intermediate')
@@ -35,26 +37,41 @@ export default function Home() {
   useEffect(() => {
     dispatch(clear())
   })
+  
+    useEffect(() => {
+        // no-op if the socket is already connected
+        console.log(" ChatPage connecting to server")
+        socket.connect();
+        /*
+        return () => {
+          socket.disconnect();
+        };
+        */
+    },[]);
+    
 
   return (
     <>
-      <Container style ={ { backgroundColor: 'brown'} }>
+    <SocketContext.Provider value={socket}>
+    <Container style ={ { backgroundColor: 'brown'} }>
       <Row>
         <Col style ={ {height: "70vh", backgroundColor: '#e6d3c3' }} xs={9}>
-          <LiveQuestionAttempt socket={socket} />
+          <LiveQuestionAttempt  />
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
-              <ChatPage socket={socket} />
+              <ChatPage  />
         </Col>
       </Row>
         <Row>
           { username === 'kpham' ? 
-           <RecordViewTeacher socket={socket} studentGroup={studentGroup}/>
+           <RecordViewTeacher  studentGroup={studentGroup}/>
            :
-           <RecordView socket={socket} studentGroup={studentGroup}/>
+           <RecordView studentGroup={studentGroup}/>
           }
         </Row>
     </Container>
+    </SocketContext.Provider>
+      
       </>
   );
 }

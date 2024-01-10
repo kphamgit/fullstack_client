@@ -1,13 +1,15 @@
 //import { faL } from '@fortawesome/free-solid-svg-icons';
 import MicRecorder from 'mic-recorder-to-mp3';
-import { useEffect, useState } from 'react';
+import { useEffect, useState , useContext} from 'react';
 import { useSelector } from 'react-redux';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { SocketContext } from './Home';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-export default function RecordViewTeacher({socket, studentGroup})  {
+export default function RecordViewTeacher({studentGroup})  {
  
+  const socket = useContext(SocketContext);
   const [isBlocked, setIsBlocked] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [hasbeenSent, setHasBeenSent] = useState(false)

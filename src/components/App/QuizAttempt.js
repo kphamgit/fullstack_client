@@ -41,9 +41,9 @@ export default function QuizAttempt(props) {
     const url = rootpath + "/api/quiz_attempts/find_create/" + quizid + '/' + user
     
     useEffect(() => {
-        //console.log(" 3) in QuizAttempt useEffect.********************** About to call axios")
+        console.log(" 3) in QuizAttempt useEffect.About to call axios to find/create quiz attempt")
         axios.get(url).then((response) => {
-          //console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
+          console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
           dispatch(setEndOfQuiz(false))
           dispatch(setQuestion(response.data.question))
           dispatch(setId(response.data.question_attempt_id))
