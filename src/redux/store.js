@@ -10,6 +10,7 @@ import subcategoryReducer from "./subcategory.js"
 import endofquizReducer from "./endofquiz.js"
 import userReducer from "./user.js"
 import answerarrayReducer from './answerarray.js'
+import showquestionattemptReducer from "./showquestionattempt.js"
 
 export default configureStore({
     reducer: {
@@ -23,6 +24,7 @@ export default configureStore({
         rootpath: rootpathReducer,
         subcategory: subcategoryReducer,
         endofquiz: endofquizReducer,
+        showquestionattempt: showquestionattemptReducer,
         user: userReducer
     }
 })

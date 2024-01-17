@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ButtonSelectQuestionAttempt from './ButtonSelectQA';
 import ClozeQuestionAttempt from './ClozeQA';
 import { Radio } from './Radio';
@@ -8,25 +8,26 @@ import ReactPlayer from 'react-player';
 import WordsSelect from './WordsSelect';
 import RecordQuestionAttempt from './RecordQA';
 
-function QuestionAttempt() {
-
+//function QuestionAttempt({quiz_attempt_id, question_attempt_id, toggleShowQuestionAttempt}) {
+function QuestionAttempt(props) {
+  //console.log(quiz_attempt_id + "ccc"+question_attempt_id)
   const question = useSelector((state) => state.question.value)
+  //console.log("UUUUUUUUUUUU",question)
  
-  console.log("IN HEEEEEEEEEEEEE")
   const renderCurrentQA = (question) => {
     switch (question.format) {
       case 1:
-        return <ClozeQuestionAttempt question={question} />
+        return <ClozeQuestionAttempt question_format = {1} {...props} />
       case 3:
-        return <ButtonSelectQuestionAttempt question={question}  />
-      case 4:
-          return <Radio  question={question} />
+        return <ButtonSelectQuestionAttempt question_format = {3} {...props} />
+      case 4: 
+          return <Radio  question_format = {4} {...props}/>
       case 6:
-        return <WordsScrambler question={question} />
+        return <WordsScrambler question_format = {6} {...props} />
       case 8:
-          return <WordsSelect question={question} />
+          return <WordsSelect question_format = {8} {...props} />
       case 9:
-            return <RecordQuestionAttempt question={question} />
+            return <RecordQuestionAttempt question_format = {9} {...props}  />
       default:
         return null
     }

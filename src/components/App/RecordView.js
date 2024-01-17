@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 //import  Dictaphone  from './Dictaphone.js';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { SocketContext } from './Home';
+import Form from 'react-bootstrap/Form';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -17,6 +18,7 @@ export default function RecordView()  {
   const [hasbeenSent, setHasBeenSent] = useState(false)
   const [blobURL, setBlobURL] = useState('')
   const [myblob, setMyBlob] = useState([0])
+  const [language, setLanguage] = useState('en-US')
   
   const username = useSelector((state) => state.username.value)
 
@@ -59,12 +61,12 @@ export default function RecordView()  {
       console.log('Permission Denied');
     } else {
       Mp3Recorder
-        .start()
-        .then(() => {
-           setIsRecording(true);
-           resetTranscript()
-           listenContinuously()
-        }).catch((e) => console.error(e));
+      .start()
+      .then(() => {
+         setIsRecording(true);
+         resetTranscript()
+         listenContinuously()
+      }).catch((e) => console.error(e));
     }
   };
 
@@ -93,13 +95,19 @@ export default function RecordView()  {
     //console.log("listening continuously")
     SpeechRecognition.startListening({
       continuous: true,
-      language: 'en-US',
+      language: language
     });
   };
 
   return (
     <>
     <div>
+        <div style={{width:"20%"}}>
+        <Form.Select aria-label="Default select example" value={language} onChange={(e) => setLanguage(e.currentTarget.value)} >
+      <option value="en-US">English</option>
+      <option value="vi-VN">Vietnamese</option>
+    </Form.Select>
+        </div>
           <div style={{color:'white'}}>
                 <p>{listening && 'Listening...'}</p>
                 <span style={{color:'white'}}>{transcript}</span>

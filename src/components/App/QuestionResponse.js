@@ -8,17 +8,18 @@ function QuestionResponse(props) {
 
   return (
     <>
-    
     <div>
-    {props.response_content.question_attempt_results.error_flag ? "Sorry" : "Correct"
+    { props.response_content.question_attempt_results.error_flag ? "Sorry" : "Correct"
 
      }
      </div>
     
-     { props.response_content.question_attempt_results.error_flag == true &&
+     { 
+      props.response_content.question_attempt_results.error_flag === true &&
       <div>The correct answer is:
          <pre>{props.response_content.question_attempt_results.correct_answer} </pre>
-      </div> }
+      </div> 
+      }
     </>
   )
 }

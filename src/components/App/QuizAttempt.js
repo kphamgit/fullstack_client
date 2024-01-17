@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import QuestionAttempt from './QuestionAttempt.js'
 import QuestionResponse from "./QuestionResponse.js";
-import SubmitButton from "./SubmitButton.js";
+//import SubmitButton from "./SubmitButton.js";
 import NextButton from "./NextButton.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setQuestion } from "../../redux/question.js";
@@ -13,6 +13,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { setEndOfQuiz } from '../../redux/endofquiz'
+import { setShowQuestionAttempt } from "../../redux/showquestionattempt.js";
 
 
 export default function QuizAttempt(props) {
@@ -25,7 +26,8 @@ export default function QuizAttempt(props) {
     const question_attempt_id = useSelector((state) => state.question_attempt_id.value)
     
     const [quizattemptid, setQuizattemptid] = useState('')
-    const [showquestionattempt, setShowquestionattempt] = useState(true)
+    //const [showquestionattempt, setShowquestionattempt] = useState(true)
+    const showquestionattempt = useSelector((state) => state.showquestionattempt.value)
 
     const dispatch = useDispatch()
 
@@ -36,39 +38,32 @@ export default function QuizAttempt(props) {
     const user = sessionStorage.getItem('user')
 
     const end_of_quiz = useSelector((state) => state.endofquiz.value)
-    //console.log(" quiz attempt end of quiz"+end_of_quiz)
     
     const url = rootpath + "/api/quiz_attempts/find_create/" + quizid + '/' + user
     
     useEffect(() => {
-        console.log(" 3) in QuizAttempt useEffect.About to call axios to find/create quiz attempt")
+        //console.log(" 3) in QuizAttempt useEffect.About to call axios to find/create quiz attempt")
         axios.get(url).then((response) => {
-          console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
+          //console.log('  QuizAtt in useEffect after calling axios response data=',response.data)
           dispatch(setEndOfQuiz(false))
           dispatch(setQuestion(response.data.question))
+          dispatch(setShowQuestionAttempt(true))
           dispatch(setId(response.data.question_attempt_id))
-          
           setQuizattemptid(response.data.quiz_attempt_id)
+
  
         });
       },[url, dispatch]);
-
-    const childToParent = (childdata) => {
-      setShowquestionattempt(childdata);
-    }
  
     return(
         <>
-     
         <Container>
       <Row>
         <Col style={{backgroundColor:'#e6d3c3'}} xs={10}>
-        {showquestionattempt ? <QuestionAttempt /> : <QuestionResponse response_content={question_attempt_response}/>}
-        {showquestionattempt ? (
-            <SubmitButton quiz_attempt_id={quizattemptid} question_attempt_id={question_attempt_id} question_format={question.format} childToParent={childToParent}/> 
-            )
-            : ( 
-              end_of_quiz ? <div>END OF QUIZ</div> : <NextButton quiz_attempt_id={quizattemptid} next_question_number={question.question_number +1} childToParent ={childToParent}  />
+        {showquestionattempt ? <QuestionAttempt quiz_attempt_id={quizattemptid} question_attempt_id={question_attempt_id} /> : <QuestionResponse response_content={question_attempt_response}/>}
+        {!showquestionattempt &&
+            ( 
+              end_of_quiz ? <div>END OF QUIZ</div> : <NextButton quiz_attempt_id={quizattemptid} next_question_number={question.question_number +1} />
             )
         }
         </Col>

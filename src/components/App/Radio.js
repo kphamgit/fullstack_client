@@ -1,20 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAnswer } from "../../redux/answer";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import Form from 'react-bootstrap/Form';
+import SubmitButton from "./SubmitButton";
 
-export const Radio = ({question}) => {
+export const Radio = (props) => {
     const dispatch = useDispatch()
-    const [selectedOption, setSelectedOption] = useState('option1')
-    const [topping, setTopping] = useState("Medium")
+    const question = useSelector((state) => state.question.value)
+
+    console.log("BBBBBBBBBB question number"+question.question_number)
 
   const onOptionChange = (e) => {
+    console.log("XXXXXXXXXXXXXXXXXX"+e.target.value)
     dispatch(setAnswer(e.target.value))
   }
-  //${question.radio.choice_1_text}
+  
   return (
     <>
     <div>{question.content}</div>
@@ -24,41 +24,44 @@ export const Radio = ({question}) => {
         <div key={`${type}`} className="mb-3">
           <Form.Check
             label={question.radio.choice_1_text}
-            name="choice"
+            name="radio"
             value="choice1"
             type={type}
-            id={`${type}-1`}
+            id={`${type}_choice_1`}
             onChange={onOptionChange}
           />
           <Form.Check
             label={question.radio.choice_2_text}
-            name="choice"
+            name="radio"
             value="choice2"
             type={type}
-            id={`${type}-2`}
+            id={`${type}_choice_2`}
             onChange={onOptionChange}
           />
             <Form.Check
             label={question.radio.choice_3_text}
-            name="choice"
+            name="radio"
             value="choice3"
             type={type}
-            id={`${type}-2`}
+            id={`${type}_choice_3`}
             onChange={onOptionChange}
           />
           {question.radio.choice_4_text && (
           <Form.Check
             label={question.radio.choice_4_text}
-            name="choice"
+            name="radio"
             value="choice4"
             type={type}
-            id={`${type}-3`}
+            id={`${type}_choice_4`}
             onChange={onOptionChange}
           />
           )}
         </div>
       ))}
     </Form>
+    <div><SubmitButton
+        {...props}
+    /></div>
     </>
   );
 };

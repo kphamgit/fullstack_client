@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from "react";
 import { Reorder } from "framer-motion"
-//import { useSelector } from 'react-redux';
+import SubmitButton from './SubmitButton';
+import { useSelector } from 'react-redux';
 
 const LI = {
   text: 'black',
@@ -9,9 +10,9 @@ const LI = {
   primary: 'rebeccapurple',
 };
 
-function WordsScrambler({question}) {
+function WordsScrambler(props) {
   
-  //const question = useSelector((state) => state.question.value)
+    const question = useSelector((state) => state.question.value)
     var marray = question.content.split('/')
     shuffle(marray)
     var listItems = []
@@ -46,6 +47,7 @@ function WordsScrambler({question}) {
     
   }
     return (
+      <>
       <Reorder.Group axis = 'x' 
         values={items} 
         onReorder={setItems} 
@@ -59,6 +61,10 @@ function WordsScrambler({question}) {
           </Reorder.Item>
         ))}
       </Reorder.Group>
+      <div><SubmitButton
+        {...props}
+    /></div>
+      </>
     );
 }
 

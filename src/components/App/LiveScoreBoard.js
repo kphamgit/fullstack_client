@@ -31,7 +31,7 @@ function LiveScoreBoard() {
         <table> 
             <tbody>
                 {students_basic.map((rowContent, rowID) => (
-                    <TableRow
+                    <TableRow key={rowID}
                         rowContent={rowContent}
                     />
                 ))}

@@ -69,7 +69,7 @@ function LiveQuestionAttempt() {
     //const URL = process.env.NODE_ENV === 'production' ? "https://www.tienganhtuyhoa.com" : 'http://localhost:5000';
     //console.log("URL="+URL)
     const getNextQuestion = () => {
-        if (questionInfo.length == 0) {
+        if (questionInfo.length === 0) {
             alert("Please enter quiz id and question number separated by a comma")
         }
         else if (questionInfo.indexOf(',') >= 0 ) {
@@ -129,7 +129,7 @@ function LiveQuestionAttempt() {
             {  renderCurrentQA(question)  }
          </>
 }
-{ (showSubmit && user.role == 'student') ?
+{ (showSubmit && user.role === 'student') ?
     <SubmitButtonLive style={{backgroundColor:'white'}} socket={socket} question={question} setTheScore={setScore} toggleShowSubmit={setShowSubmit} toggleShowResponse={setShowResponse} setResponse={setAttemptResponse}/> 
     : (showResponse && (showResponse && <QuestionResponseLive response_content={attemptResponse}/>))
     }

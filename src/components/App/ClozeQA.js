@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import SubmitButton from './SubmitButton'
 
-function ClozeQuestionAttempt({question}) {
- 
-    //console.log(" in ClozeQuestionAttempt component")
-    //const question = useSelector((state) => state.question.value)
+function ClozeQuestionAttempt(props) {
+    
+    const question = useSelector((state) => state.question.value)
     const [clozehtml, setClozehmtl] = useState('')
     useEffect( () => {
         setClozehmtl(format_cloze_question_content(question))
-    },[question])
+    },[question ])
     
     function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -72,12 +72,13 @@ function ClozeQuestionAttempt({question}) {
          return cloze_question_form
 }
 
-
-
   return (
     <>
     <pre></pre>
     <div dangerouslySetInnerHTML={{ __html: clozehtml }}></div>
+    <div><SubmitButton
+         {...props}
+    /></div>
     </>
   )
 }

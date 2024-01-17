@@ -58,9 +58,10 @@ export default function RecordViewTeacher({studentGroup})  {
   
   useEffect(() => {
     socket.on('recording', arg => {
-       //console.log(" in socket ON Chat Recording arg.blob = ",arg.username)     
-       let audio_tag = document.getElementById(arg.username)
+       console.log(" in socket ON Chat Recording arg username = ",arg.username)     
+       let audio_tag = document.getElementById('audio_'+arg.username)
        const the_blob = new Blob([arg.blob], {type:'audio/mp3'});
+       console.log( URL.createObjectURL(the_blob))
        audio_tag.src = URL.createObjectURL(the_blob)
     })
       return () => {
@@ -138,7 +139,9 @@ export default function RecordViewTeacher({studentGroup})  {
               <> 
               {students_intermediate.map((student, index) =>  
                 (<div key = {index}>
-                   <div><audio id = {student} src="" controls="controls" /></div> 
+                   <div>{student}
+                   <span><audio id = {`audio_${student}`} src="" controls="controls" /></span>
+                   </div> 
                 </div> 
                 )
             )}

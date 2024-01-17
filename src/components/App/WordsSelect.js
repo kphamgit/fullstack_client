@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import WordSelect from './WordSelect';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAnswer, clear } from '../../redux/answer';
 import { clearAnswerArray } from '../../redux/answerarray'
+import SubmitButton from './SubmitButton';
 
-function WordsSelect({question}) {
+function WordsSelect(props) {
     const [words, setWords] = useState([])
     const[tempAnswer, setTempAnswer] = useState([])
-   
+    const question = useSelector((state) => state.question.value)
+   //console.log("VVVVVVVVVVVVVV",question)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -16,7 +18,7 @@ function WordsSelect({question}) {
     },[dispatch])
 
     useEffect(() => {
-    const temp_arr = question.sentence.split(' ');
+    const temp_arr = question.content.split(' ');
     let my_arr = []
     
     temp_arr.forEach( word => { 
@@ -57,7 +59,7 @@ function WordsSelect({question}) {
         my_arr1.push(pair)
     }
     setWords(my_arr1)
-    },[question.sentence])
+    },[question.content])
     
 
     function addAWordToAnswer(word) {
@@ -81,6 +83,9 @@ function WordsSelect({question}) {
                 })
             }
         </div>
+        <div><SubmitButton
+        {...props}
+    /></div>
         </>
     );
 
