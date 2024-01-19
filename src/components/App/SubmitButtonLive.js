@@ -26,6 +26,11 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
     var user_answer =  useSelector((state) => state.answer.value)
     //console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
+
+    
+    //const process_question_attempt = async () => {
+     //   alert("here")
+    //}
     const process_question_attempt = async () => {
         if (question.format === 1) {
           user_answer = getClozeQuestionUserAnswer()
@@ -78,7 +83,7 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
   return (
     <>
     <div>&nbsp;</div>
-    <Button variant="success" onClick={() => process_question_attempt()}>Submit</Button>
+    <Button variant="success" onClick={() => process_question_attempt()}>Submit Live</Button>
     </>
   )
 }

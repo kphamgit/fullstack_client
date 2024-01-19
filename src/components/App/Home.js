@@ -12,6 +12,7 @@ import { clear } from  '../../redux/subcategory';
 import io from "socket.io-client";
 import ChatPage from "./ChatPage.js";
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
+import LiveQuestionAttemptTeacher from "./LiveQuestionAttempt.js";
 import { useSelector } from "react-redux";
 import LiveScoreBoard from "./LiveScoreBoard.js";
 import RecordViewTeacher from "./RecordViewTeacher.js";
@@ -37,7 +38,8 @@ export default function Home() {
   useEffect(() => {
     dispatch(clear())
   })
-  
+
+
     useEffect(() => {
         // no-op if the socket is already connected
         console.log(" ChatPage connecting to server")
@@ -56,7 +58,11 @@ export default function Home() {
     <Container style ={ { backgroundColor: 'brown'} }>
       <Row>
         <Col style ={ {height: "70vh", backgroundColor: '#e6d3c3' }} xs={9}>
-          <LiveQuestionAttempt  />
+        { username === 'kpham' ?
+        <LiveQuestionAttemptTeacher  />
+        :
+        <LiveQuestionAttempt  />
+        }
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
               <ChatPage  />

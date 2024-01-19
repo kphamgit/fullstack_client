@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import QuestionAttempt from './QuestionAttempt.js'
@@ -8,7 +8,8 @@ import QuestionResponse from "./QuestionResponse.js";
 import NextButton from "./NextButton.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setQuestion } from "../../redux/question.js";
-import {setId} from "../../redux/question_att_id.js"
+import {setQuestionAttemptId} from "../../redux/question_att_id.js"
+import {setQuizAttemptId} from "../../redux/quiz_att_id.js"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -23,9 +24,8 @@ export default function QuizAttempt(props) {
     const question_attempt_response = useSelector((state) => state.question_attempt_reponse.value)
    
     const question = useSelector((state) => state.question.value)
-    const question_attempt_id = useSelector((state) => state.question_attempt_id.value)
     
-    const [quizattemptid, setQuizattemptid] = useState('')
+    //const [quizattemptid, setQuizattemptid] = useState('')
     //const [showquestionattempt, setShowquestionattempt] = useState(true)
     const showquestionattempt = useSelector((state) => state.showquestionattempt.value)
 
@@ -48,22 +48,21 @@ export default function QuizAttempt(props) {
           dispatch(setEndOfQuiz(false))
           dispatch(setQuestion(response.data.question))
           dispatch(setShowQuestionAttempt(true))
-          dispatch(setId(response.data.question_attempt_id))
-          setQuizattemptid(response.data.quiz_attempt_id)
-
- 
+          dispatch(setQuestionAttemptId(response.data.question_attempt_id))
+          //setQuizattemptid(response.data.quiz_attempt_id)
+          dispatch(setQuizAttemptId(response.data.quiz_attempt_id))
         });
       },[url, dispatch]);
  
-    return(
+      return(
         <>
         <Container>
       <Row>
         <Col style={{backgroundColor:'#e6d3c3'}} xs={10}>
-        {showquestionattempt ? <QuestionAttempt quiz_attempt_id={quizattemptid} question_attempt_id={question_attempt_id} /> : <QuestionResponse response_content={question_attempt_response}/>}
+        {showquestionattempt ? <QuestionAttempt /> : <QuestionResponse response_content={question_attempt_response}/>}
         {!showquestionattempt &&
             ( 
-              end_of_quiz ? <div>END OF QUIZ</div> : <NextButton quiz_attempt_id={quizattemptid} next_question_number={question.question_number +1} />
+              end_of_quiz ? <div>END OF QUIZ</div> : <NextButton next_question_number={question.question_number +1} />
             )
         }
         </Col>

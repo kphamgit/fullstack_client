@@ -10,9 +10,16 @@ const LI = {
   primary: 'rebeccapurple',
 };
 
-function WordsScrambler(props) {
+function WordsScrambler({live_flag}) {
   
-    const question = useSelector((state) => state.question.value)
+  const question = useSelector(state => {
+    if (live_flag)
+        return state.live_question.value
+    else {
+        return state.question.value
+    }
+ })
+    //const question = useSelector((state) => state.question.value)
     var marray = question.content.split('/')
     shuffle(marray)
     var listItems = []
@@ -27,11 +34,6 @@ function WordsScrambler(props) {
         [array[i], array[j]] = [array[j], array[i]];
       }
     }   
-
-   // useEffect( () => {
-      
-   // },[])
-    
 
     const [items, setItems] = useState(listItems);
     const itemStyle =  {
@@ -61,9 +63,11 @@ function WordsScrambler(props) {
           </Reorder.Item>
         ))}
       </Reorder.Group>
+      { !live_flag &&
       <div><SubmitButton
-        {...props}
+        question_format={6}
     /></div>
+      }
       </>
     );
 }

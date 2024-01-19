@@ -9,13 +9,13 @@ export const mySlice = createSlice({
   name: 'questionattemptidreducer',
   initialState,
   reducers: {
-    setId: (state, action) => {
+    setQuestionAttemptId: (state, action) => {
       state.value = action.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setId } = mySlice.actions
+export const { setQuestionAttemptId } = mySlice.actions
 
 export default mySlice.reducer

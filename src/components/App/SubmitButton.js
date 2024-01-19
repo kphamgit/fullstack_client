@@ -13,9 +13,13 @@ color:white;
 padding:5px 15px;
 `
 
-    function SubmitButton({question_format, quiz_attempt_id, question_attempt_id}) {
- 
+    //function SubmitButton({question_format, quiz_attempt_id, question_attempt_id}) {
+  function SubmitButton({question_format}) {
+    //console.log("In SubmitButton question format"+question_format)
   const rootpath = useSelector((state) => state.rootpath.value)
+  const question_attempt_id = useSelector((state) => state.question_attempt_id.value)
+  const quiz_attempt_id = useSelector((state) => state.quiz_attempt_id.value)
+
   //const username = useSelector((state) => state.username.value)
   //
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
@@ -30,7 +34,7 @@ padding:5px 15px;
       
         if (question_format === 1) {
           user_answer = getClozeQuestionUserAnswer()
-          console.log("YYYYYYYYYYYY user answer"+user_answer)
+          //console.log("YYYYYYYYYYYY user answer"+user_answer)
           if (user_answer.length === 0) {
             alert("Please enter input")
            return false

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAnswerArray } from '../../redux/answerarray.js'
 
-function WordSelect({pair, addWordToAnswer, removeWordFromAnswer}) {
+function WordSelect({pair}) {
     const [clickCount, setClickCount] = useState(0)
     const [isHover, setIsHover] = useState(false);
     const dispatch = useDispatch()

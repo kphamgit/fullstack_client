@@ -5,10 +5,18 @@ import { setAnswer, clear } from '../../redux/answer';
 import { clearAnswerArray } from '../../redux/answerarray'
 import SubmitButton from './SubmitButton';
 
-function WordsSelect(props) {
+function WordsSelect(live_flag) {
+    if (!live_flag) alert("NOT LIVE")
     const [words, setWords] = useState([])
     const[tempAnswer, setTempAnswer] = useState([])
-    const question = useSelector((state) => state.question.value)
+    //const question = useSelector((state) => state.question.value)
+    const question = useSelector(state => {
+        if (live_flag)
+            return state.live_question.value
+        else {
+            return state.question.value
+        }
+     })
    //console.log("VVVVVVVVVVVVVV",question)
     const dispatch = useDispatch()
 
@@ -83,9 +91,11 @@ function WordsSelect(props) {
                 })
             }
         </div>
+        { !live_flag &&
         <div><SubmitButton
-        {...props}
+        question_format={8}
     /></div>
+        }
         </>
     );
 

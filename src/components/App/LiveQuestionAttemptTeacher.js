@@ -13,16 +13,16 @@ import Form from 'react-bootstrap/Form'
 import WordsSelect from './WordsSelect';
 import RecordQuestionAttempt from './RecordQA';
 import { SocketContext } from './Home';
-//import { setQuestion } from '../../redux/question';
+import { setQuestion } from '../../redux/question';
 import { setLiveQuestion } from '../../redux/livequestion';
 
-function LiveQuestionAttempt() {
+function LiveQuestionAttemptTeacher() {
 
     const socket = useContext(SocketContext);
     const [questionInfo, setQuestionInfo] = useState('')
     const [score, setScore] = useState(0)
     const user = useSelector((state) => state.user.value)
-    const question = useSelector((state) => state.live_question.value )
+    const live_question = useSelector((state) => state.live_question.value )
     const dispatch = useDispatch()
     const [attemptResponse, setAttemptResponse] = useState('')
     const [showSubmit, setShowSubmit] = useState(false)
@@ -31,6 +31,7 @@ function LiveQuestionAttempt() {
     
     const rootpath = useSelector((state) => state.rootpath.value)
    
+    /*
     useEffect(() => {
         socket.on('live_score', arg => {
             let total = totalScoreReceived + arg.score
@@ -44,8 +45,9 @@ function LiveQuestionAttempt() {
             socket.off("live_score")
         }   
     })
+    */
 
-    
+    /*
     useEffect(() => {
         socket.on('next_live_question', arg => {
             var url = rootpath + '/api/quizzes/' + arg.quiz_id + '/get_question/' + arg.question_number
@@ -57,7 +59,6 @@ function LiveQuestionAttempt() {
                 }
                 else {
                     dispatch(setLiveQuestion(response.data.question))
-                    //setQuestion(response.data.question)
                     setShowSubmit(true)
                 }
             });
@@ -68,53 +69,44 @@ function LiveQuestionAttempt() {
             socket.off("next_live_question")
         }   
     })
-    
+    */
+
     //const URL = process.env.NODE_ENV === 'production' ? "https://www.tienganhtuyhoa.com" : 'http://localhost:5000';
     //console.log("URL="+URL)
     //this function is used only by teacher
-
-        const renderCurrentQA = (question) => {
-               switch (question.format) {
-                 case 1:
-                   return <ClozeQuestionAttempt live_flag={true} />
-                 case 3:
-                   return <ButtonSelectQuestionAttempt live_flag={true}/>
-                 case 4:
-                     return <Radio live_flag={true}/>
-                 case 6:
-                   return <WordsScrambler live_flag={true}/>
-                 case 8:
-                   return <WordsSelect live_flag={true} />
-                 case 9:
-                    return <RecordQuestionAttempt live_flag={true} />
-                 default:
-                   return null
-               }
-             }
-           
+    const getNextQuestion = () => {
+        if (questionInfo.length === 0) {
+            alert("Please enter quiz id and question number separated by a comma")
+        }
+        else if (questionInfo.indexOf(',') >= 0 ) {
+            //let next_question_info = document.getElementById("next_question_info")
+            let quiz_id = questionInfo.split(',')[0].trim()
+            let question_number = questionInfo.split(',')[1].trim()
+            //console.log("XXXXXX"+quiz_id+"YYYYY"+question_number+"ZZZZZZZZZZZZZ")
+            socket.emit("next_live_question", {quiz_id : quiz_id, question_number: question_number})
+        }
+        else {
+            alert("Quiz id and question number must be separated by a comma")
+        }
+        
+    }
 
   return (
     <>
-    <br />
-    { question &&
-        <>
-        <div>Question: { question.question_number}</div>
-        <div dangerouslySetInnerHTML={{ __html: question.instruction }}></div>
-            <p style={{color:'brown'}}>{question.prompt}</p>    
+    
+    { user.role === "teacher" && 
+    <div>
+        
         <div>
-        {question.audio_src && <audio src={question.audio_src} controls />}
-        </div> 
-            {question.video_src && <ReactPlayer url={question.video_src} controls />}
-            {  renderCurrentQA(question)  }
-         </>
-}
-{ showSubmit ?
-    <SubmitButtonLive style={{backgroundColor:'white'}} socket={socket} question={question} setTheScore={setScore} toggleShowSubmit={setShowSubmit} toggleShowResponse={setShowResponse} setResponse={setAttemptResponse}/> 
-    : (showResponse && (showResponse && <QuestionResponseLive response_content={attemptResponse}/>))
-    }
+        <Form.Control as="input" className="w-30" placeholder="Enter quiz_id and question number separated by a comma" htmlSize='10' onChange={e => setQuestionInfo(e.target.value)} />
+        <Button variant="success" onClick={getNextQuestion}>Get Question</Button>
+        </div>
+    </div>}
+    <br />
    
+
     </>
   )
 }
 
-export default LiveQuestionAttempt
+export default LiveQuestionAttemptTeacher

@@ -4,14 +4,14 @@ import { setAnswer } from "../../redux/answer";
 import Form from 'react-bootstrap/Form';
 import SubmitButton from "./SubmitButton";
 
-export const Radio = (props) => {
+export const Radio = (live_flag) => {
     const dispatch = useDispatch()
     const question = useSelector((state) => state.question.value)
-
-    console.log("BBBBBBBBBB question number"+question.question_number)
+    
+    //console.log("BBBBBBBBBB question number"+question.question_number)
 
   const onOptionChange = (e) => {
-    console.log("XXXXXXXXXXXXXXXXXX"+e.target.value)
+    //console.log("XXXXXXXXXXXXXXXXXX"+e.target.value)
     dispatch(setAnswer(e.target.value))
   }
   
@@ -59,9 +59,11 @@ export const Radio = (props) => {
         </div>
       ))}
     </Form>
+    { !live_flag &&
     <div><SubmitButton
-        {...props}
+        question_format={4}
     /></div>
+    }
     </>
   );
 };

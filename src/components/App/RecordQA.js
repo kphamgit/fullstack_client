@@ -1,8 +1,8 @@
 //import { faL } from '@fortawesome/free-solid-svg-icons';
 import MicRecorder from 'mic-recorder-to-mp3';
-import { useEffect, useState , useContext } from 'react';
-import { useSelector , useDispatch} from 'react-redux';
-import { SocketContext } from './Home';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+//import { SocketContext } from './Home';
 import axios from 'axios'
 //import SubmitButton2 from './SubmitButton2';
 import SubmitButtonRecordQA from './SubmitButtonRecordQA';
@@ -10,18 +10,19 @@ import SubmitButtonRecordQA from './SubmitButtonRecordQA';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-export default function RecordQA1({question, ...props})  {
+export default function RecordQA()  {
   //ClozeQuestionAttempt({question, ...props}) {
 
- 
-  const socket = useContext(SocketContext);
+  const question = useSelector((state) => state.question.value)
+    
+  //const socket = useContext(SocketContext);
   const [isBlocked, setIsBlocked] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [hasbeenSent, setHasBeenSent] = useState(false)
   const [blobURL, setBlobURL] = useState('')
   const [myblob, setMyBlob] = useState([0])
 
-  const dispatch = useDispatch()
+  //const dispatch = useDispatch()
   
   const rootpath = useSelector((state) => state.rootpath.value)
   const username = useSelector((state) => state.username.value)
@@ -87,9 +88,9 @@ export default function RecordQA1({question, ...props})  {
     var url = rootpath + '/api/uploads/do_upload_single_gcloud'
     //console.log("XXXXXXXXXXXXXXXXXXXXXXXx"+url)
     //console.log("YYYYYYYYYYYYYYYYYYYYYYY form data:")
-    for (var pair of formData.entries()) {
+    //for (var pair of formData.entries()) {
         //console.log(pair[0]+ ', ' + pair[1]); 
-     }
+    // }
      
     const config = {
       headers: {
@@ -111,9 +112,6 @@ export default function RecordQA1({question, ...props})  {
    // setHasBeenSent(true)
   };
   
-  function testt() {
-    //alert("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-  }
   return (
     <>
     <div>
@@ -125,13 +123,11 @@ export default function RecordQA1({question, ...props})  {
           </button>
           &nbsp;&nbsp;
           <button onClick={stop} disabled={!isRecording}>Stop</button>
-          &nbsp;&nbsp;
-          <button onClick={send} disabled={hasbeenSent} >Send</button>
           <br />
           <audio src={blobURL} controls="controls" />
     </div>
     <div><SubmitButtonRecordQA 
-        sendblob={send} {...props} 
+        sendblob={send} 
     /></div>
     </>
   );

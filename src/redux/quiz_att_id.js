@@ -2,23 +2,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  value: null,
+  value: '',
 }
 
 export const mySlice = createSlice({
-  name: 'questionreducer',
+  name: 'quizattemptidreducer',
   initialState,
   reducers: {
-    clear: (state) => {
-      state.value = null
-    },
-    setQuestion: (state, action) => {
+    setQuizAttemptId: (state, action) => {
       state.value = action.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { clear, setQuestion } = mySlice.actions
+export const { setQuizAttemptId } = mySlice.actions
 
 export default mySlice.reducer
