@@ -5,12 +5,14 @@ import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css"
 import SubmitButton from './SubmitButton.js'
 
-function ButtonSelectQuestionAttempt(live_flag) {
+function ButtonSelectQuestionAttempt({live_flag}) {
 
+    console.log("xxxxxxxxx",live_flag)
     //const question = useSelector((state) => state.question.value)
     const question = useSelector(state => {
-      if (live_flag)
+      if(live_flag) {
           return state.live_question.value
+      }
       else {
           return state.question.value
       }

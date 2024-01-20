@@ -5,7 +5,14 @@ import SubmitButton from './SubmitButton'
 import format_cloze_question_content from './formatClozeQuestion'
 
 function ClozeQuestionAttempt({live_flag}) {
-    const question = useSelector((state) => state.question.value)
+    const question = useSelector(state => {
+      if(live_flag) {
+          return state.live_question.value
+      }
+      else {
+          return state.question.value
+      }
+   })
     const [clozehtml, setClozehmtl] = useState('')
     useEffect( () => {
             setClozehmtl(format_cloze_question_content(question))

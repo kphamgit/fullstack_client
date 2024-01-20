@@ -12,9 +12,8 @@ import { clear } from  '../../redux/subcategory';
 import io from "socket.io-client";
 import ChatPage from "./ChatPage.js";
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
-import LiveQuestionAttemptTeacher from "./LiveQuestionAttempt.js";
+import LiveQuestionAttemptTeacher from "./LiveQuestionAttemptTeacher.js";
 import { useSelector } from "react-redux";
-import LiveScoreBoard from "./LiveScoreBoard.js";
 import RecordViewTeacher from "./RecordViewTeacher.js";
 
 //import { useSelector } from "react-redux";

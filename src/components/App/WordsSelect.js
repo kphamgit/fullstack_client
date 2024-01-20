@@ -5,8 +5,8 @@ import { setAnswer, clear } from '../../redux/answer';
 import { clearAnswerArray } from '../../redux/answerarray'
 import SubmitButton from './SubmitButton';
 
-function WordsSelect(live_flag) {
-    if (!live_flag) alert("NOT LIVE")
+function WordsSelect({live_flag}) {
+    //if (!live_flag) alert("NOT LIVE")
     const [words, setWords] = useState([])
     const[tempAnswer, setTempAnswer] = useState([])
     //const question = useSelector((state) => state.question.value)

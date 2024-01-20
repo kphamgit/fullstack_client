@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import QuestionAttempt from './QuestionAttempt.js'
+import QuestionAttempt1 from './QuestionAttempt1.js'
 import QuestionResponse from "./QuestionResponse.js";
 //import SubmitButton from "./SubmitButton.js";
 import NextButton from "./NextButton.js";
@@ -59,12 +60,22 @@ export default function QuizAttempt(props) {
         <Container>
       <Row>
         <Col style={{backgroundColor:'#e6d3c3'}} xs={10}>
-        {showquestionattempt ? <QuestionAttempt /> : <QuestionResponse response_content={question_attempt_response}/>}
-        {!showquestionattempt &&
-            ( 
-              end_of_quiz ? <div>END OF QUIZ</div> : <NextButton next_question_number={question.question_number +1} />
-            )
+          
+        {console.log({question}) }
+      
+        {question && 
+          ( showquestionattempt ?
+            <QuestionAttempt /> : 
+            <>
+            <QuestionResponse response_content={question_attempt_response}/>
+            { end_of_quiz ?  <div>END OF QUIZ</div> 
+               : 
+                <NextButton next_question_number={question.question_number +1} />
+            }
+            </>
+          )
         }
+      
         </Col>
         <Col xs={2}></Col>
       </Row>

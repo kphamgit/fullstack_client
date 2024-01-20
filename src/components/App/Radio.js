@@ -4,9 +4,16 @@ import { setAnswer } from "../../redux/answer";
 import Form from 'react-bootstrap/Form';
 import SubmitButton from "./SubmitButton";
 
-export const Radio = (live_flag) => {
+export const Radio = ({live_flag}) => {
     const dispatch = useDispatch()
-    const question = useSelector((state) => state.question.value)
+    const question = useSelector(state => {
+      if(live_flag) {
+          return state.live_question.value
+      }
+      else {
+          return state.question.value
+      }
+   })
     
     //console.log("BBBBBBBBBB question number"+question.question_number)
 

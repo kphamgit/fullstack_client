@@ -16,7 +16,7 @@ function QuestionAttempt() {
       case 1:
         return <ClozeQuestionAttempt live_flag={false} />
         case 3:
-          return <ButtonSelectQuestionAttempt  live_flag={false} />
+          return <ButtonSelectQuestionAttempt live_flag={false} />
         case 4: 
             return <Radio live_flag={false} />
         case 6:
@@ -24,7 +24,7 @@ function QuestionAttempt() {
         case 8:
             return <WordsSelect live_flag={false} />
         case 9:
-              return <RecordQuestionAttempt live_flag={false} question={question}/>
+              return <RecordQuestionAttempt />
       default:
         return null
     }

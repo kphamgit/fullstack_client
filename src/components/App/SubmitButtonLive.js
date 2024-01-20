@@ -83,7 +83,7 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
   return (
     <>
     <div>&nbsp;</div>
-    <Button variant="success" onClick={() => process_question_attempt()}>Submit Live</Button>
+    <Button variant="success" onClick={() => process_question_attempt()}>Submit</Button>
     </>
   )
 }
