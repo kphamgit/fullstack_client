@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import QuestionAttempt from './QuestionAttempt.js'
-import QuestionAttempt1 from './QuestionAttempt1.js'
 import QuestionResponse from "./QuestionResponse.js";
 //import SubmitButton from "./SubmitButton.js";
 import NextButton from "./NextButton.js";
