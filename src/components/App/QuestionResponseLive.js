@@ -1,9 +1,10 @@
 import React from 'react'
-
+import { useSelector } from 'react-redux'
 
 
 function QuestionResponseLive({response_content}) {
-
+  const question = useSelector((state) => state.question.value)
+  if (question.format === 6 )
   return (
     <>
     <div>

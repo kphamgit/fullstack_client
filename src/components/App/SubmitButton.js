@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import {setValue} from '../../redux/attemptResponse'
+import {setAttemptResponse} from '../../redux/attemptResponse'
 import styled from 'styled-components'
 import getClozeQuestionUserAnswer from './GetClozeQuestionUAnswer'
 import { setEndOfQuiz } from '../../redux/endofquiz'
@@ -82,8 +82,7 @@ padding:5px 15px;
         var url1 = rootpath + '/api/question_attempts/' + question_attempt_id + '/process_attempt'
         const firstRequest = await axios.post(url1,{user_answer: user_answer})
         const data1 = firstRequest.data
-        //console.log(" data1",data1)
-        dispatch(setValue(data1))
+        dispatch(setAttemptResponse(data1))
         //toggleShowQuestionAttempt(false)
         dispatch(setShowQuestionAttempt(false))
         //console.log("data1 question number"+data1.question_number)

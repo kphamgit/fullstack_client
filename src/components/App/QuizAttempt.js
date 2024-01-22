@@ -59,9 +59,7 @@ export default function QuizAttempt(props) {
         <Container>
       <Row>
         <Col style={{backgroundColor:'#e6d3c3'}} xs={10}>
-          
-        {console.log({question}) }
-      
+        
         {question && 
           ( showquestionattempt ?
             <QuestionAttempt /> : 

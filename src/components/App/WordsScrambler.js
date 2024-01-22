@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useState } from "react";
 import { Reorder } from "framer-motion"
 import SubmitButton from './SubmitButton';
@@ -19,6 +19,7 @@ function WordsScrambler({live_flag}) {
         return state.question.value
     }
  })
+ //console.log("XXXXXXXXXXXX",question.words_scramble_direction)
     //const question = useSelector((state) => state.question.value)
     var marray = question.content.split('/')
     shuffle(marray)
@@ -46,30 +47,54 @@ function WordsScrambler({live_flag}) {
       justifyContent: "center",
       padding: "10px 10px 10px 10px",
       background: "cyan"
-    
   }
-    return (
-      <>
-      <Reorder.Group axis = 'x' 
-        values={items} 
-        onReorder={setItems} 
-        style={{display:"flex", flexDirection:"row"}}
-        >
-        {items.map((item) => (
-          // Change the li to Reorder.Item and add value prop
-        
-          <Reorder.Item className="word_scrambler_items" style={ itemStyle}  key={item.id} value={item}>
-            {item.name}
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
-      { !live_flag &&
-      <div><SubmitButton
-        question_format={6}
-    /></div>
-      }
-      </>
-    );
+  
+    if (question.words_scramble_direction === 'x') {
+      return (
+        <>
+        <Reorder.Group axis = 'x' 
+          values={items} 
+          onReorder={setItems} 
+          style={{display:"flex", flexDirection:"row"}}
+          >
+          {items.map((item) => (
+            // Change the li to Reorder.Item and add value prop
+            <Reorder.Item className="word_scrambler_items" style={ itemStyle}  key={item.id} value={item}>
+              {item.name}
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+        { !live_flag &&
+        <div><SubmitButton
+          question_format={6}
+      /></div>
+        }
+        </>
+      );
+    }
+    else {
+      return (
+        <>
+        <Reorder.Group axis = 'y' 
+          values={items} 
+          onReorder={setItems} 
+          >
+          {items.map((item) => (
+            // Change the li to Reorder.Item and add value prop
+            <Reorder.Item className="word_scrambler_items" style={ itemStyle}  key={item.id} value={item}>
+              {item.name}
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+        { !live_flag &&
+        <div><SubmitButton
+          question_format={6}
+      /></div>
+        }
+        </>
+      );
+    }
+   
 }
 
 export default WordsScrambler

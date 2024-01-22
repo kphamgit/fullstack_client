@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import {setValue} from '../../redux/attemptResponse'
+import {setAttemptResponse} from '../../redux/attemptResponse'
 import styled from 'styled-components'
 import { setEndOfQuiz } from '../../redux/endofquiz'
 import { setShowQuestionAttempt } from '../../redux/showquestionattempt'
@@ -24,19 +24,17 @@ padding:5px 15px;
     const process_question_attempt = async () => {
 
             user_answer= []
-            
+  
         //console.log("in process question atempt questionattempt = ", questionattempt)
         //console.log("in process question atempt user answer = ", user_answer)
         var url1 = rootpath + '/api/question_attempts/' + question_attempt_id + '/process_attempt'
         const firstRequest = await axios.post(url1,{user_answer: user_answer})
-        const data1 = firstRequest.data
         //console.log(" data1",data1)
-        dispatch(setValue(data1))
+        dispatch(setAttemptResponse(firstRequest.data))
         //toggleShowQuestionAttempt(false)
         dispatch(setShowQuestionAttempt(false))
         //console.log("data1 question number"+data1.question_number)
-        const next_question_number = data1.question_number + 1
-        //if (!data1) {
+        const next_question_number = firstRequest.data.question_number + 1
         var url2 = rootpath + '/api/quiz_attempts/' + quiz_attempt_id + '/get_next_question/' + next_question_number
         const secondRequest = await axios.get(url2)
         //console.log("data from second request CCCCCCCC",secondRequest.data)
