@@ -11,10 +11,12 @@ import { useDispatch } from "react-redux";
 import { clear } from  '../../redux/subcategory';
 import io from "socket.io-client";
 import ChatPage from "./ChatPage.js";
+import styled from 'styled-components'
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
 import LiveQuestionAttemptTeacher from "./LiveQuestionAttemptTeacher.js";
 import { useSelector } from "react-redux";
 import RecordViewTeacher from "./RecordViewTeacher.js";
+//import Button from "react-bootstrap/Button"
 
 //import { useSelector } from "react-redux";
 
@@ -26,12 +28,20 @@ const socket = io.connect(URL, {
     autoConnect: false
   });
 
+  const Button = styled.button`
+background-color:blue;
+color:white;
+padding:5px 15px;
+`
   export const SocketContext = React.createContext();
 
 export default function Home() {
   //const rootpath = useSelector((state) => state.rootpath.value)
-  const [studentGroup, setStudentGroup] = useState('intermediate')
-  const username = useSelector((state) => state.username.value)
+  //const [studentGroup, setStudentGroup] = useState('')
+  //const username = useSelector((state) => state.username.value)
+  const user = useSelector((state) => state.user.value)
+
+  const [showRecordView, setShowRecordView] = useState(false)
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -41,7 +51,7 @@ export default function Home() {
 
     useEffect(() => {
         // no-op if the socket is already connected
-        console.log(" ChatPage connecting to server")
+        //console.log(" ChatPage connecting to server")
         socket.connect();
         /*
         return () => {
@@ -50,6 +60,10 @@ export default function Home() {
         */
     },[]);
     
+    function toggleRecordView() {
+      //console.log("HERE")
+      setShowRecordView(true)
+    }
 
   return (
     <>
@@ -57,22 +71,29 @@ export default function Home() {
     <Container style ={ { backgroundColor: 'brown'} }>
       <Row>
         <Col style ={ {height: "70vh", backgroundColor: '#e6d3c3' }} xs={9}>
-        { username === 'kpham' ?
+        { user.role === 'teacher' ?
         <LiveQuestionAttemptTeacher  />
         :
         <LiveQuestionAttempt  />
         }
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
-              <ChatPage  />
+              <ChatPage />
         </Col>
       </Row>
         <Row>
-          { username === 'kpham' ? 
-           <RecordViewTeacher  studentGroup={studentGroup}/>
+          { user.role === 'teacher' ? 
+           <RecordViewTeacher />
            :
-           <RecordView studentGroup={studentGroup}/>
+           <div>
+           <Button  onClick={() => toggleRecordView()}>Show Record</Button>
+           </div>
           }
+        </Row>
+        <Row>
+        { showRecordView &&
+           <RecordView />
+        }
         </Row>
     </Container>
     </SocketContext.Provider>

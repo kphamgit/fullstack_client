@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 import styles from "./ChatPage.module.css";
 import LiveScoreBoard from './LiveScoreBoard';
 import { SocketContext } from './Home';
+import { useSelector } from 'react-redux';
 
 
 const ChatPage = () => {
 
   const socket = useContext(SocketContext);
     const [messages, setMessages] = useState([]);
+    const user = useSelector((state) => state.user.value)
+
 
     useEffect(() => {
        socket.on('chat', (data) => setMessages([...messages, data]));
@@ -30,9 +33,9 @@ const ChatPage = () => {
     return (
       <div className= {styles.chat}>
         <div className={styles.chat__main}>
-         
-            <LiveScoreBoard className={styles.scoreboard}/>
-           
+         { user.role === 'student' &&
+            <LiveScoreBoard class_id = {user.class_id} className={styles.scoreboard}/>
+         } 
           <ChatBody  messages={messages}  />
           <p></p>
           <ChatFooter socket={socket} />

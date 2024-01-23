@@ -100,7 +100,7 @@ padding:5px 15px;
   return (
     <>
     <div>&nbsp;</div>
-    <Button  onClick={() => process_question_attempt()}>Submit</Button>
+    <Button onClick={() => process_question_attempt()}>Submit</Button>
     </>
   )
 }

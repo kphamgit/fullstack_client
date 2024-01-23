@@ -21,6 +21,7 @@ export default function RecordView()  {
   const [language, setLanguage] = useState('en-US')
   
   const username = useSelector((state) => state.username.value)
+  //const user = useSelector((state) => state.user.value)
 
   const {
     transcript,

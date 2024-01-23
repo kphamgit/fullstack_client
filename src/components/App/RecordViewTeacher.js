@@ -4,10 +4,12 @@ import { useEffect, useState , useContext} from 'react';
 import { useSelector } from 'react-redux';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { SocketContext } from './Home';
+import Form from 'react-bootstrap/Form';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-export default function RecordViewTeacher({studentGroup})  {
+//export default function RecordViewTeacher()  {
+  export default function RecordViewTeacher()  {
  
   const socket = useContext(SocketContext);
   const [isBlocked, setIsBlocked] = useState(false)
@@ -17,9 +19,9 @@ export default function RecordViewTeacher({studentGroup})  {
   const [myblob, setMyBlob] = useState([0])
   //const [receivedBlobURL, setReceivedBlobURL] = useState('')
   const username = useSelector((state) => state.username.value)
-  //const [studentGroup, setStudentGroup] = useState('intermediate')
+  const [studentGroup, setStudentGroup] = useState('')
 
-  const isTeacher = (username === 'kpham');
+  //const isTeacher = (username === 'kpham');
 
   const {
     transcript,
@@ -114,11 +116,30 @@ export default function RecordViewTeacher({studentGroup})  {
     });
   };
 
-  let students_intermediate = ["basic","linhdan", "lockim", "giabinh", "khanhyen", "thienkim", "quocminh"]
-  let students_big = ['basic','nguyenkhang', 'honghoa', 'dinhchuong']
+  const get_students = (class_id) => {
+    //console.log(" in get students class_id"+class_id)
+    if (class_id === '1') {
+        return ['basic1','nguyenkhang', 'honghoa', 'dinhchuong']
+    }
+    else if (class_id === '2') {
+        return ["basic2","linhdan", "lockim", "giabinh", "khanhyen", "thienkim", "quocminh"]
+    }
+    else if (class_id === '3') {
+      return ['tramanh', 'nguyenchuong']
+    }
+    else {
+        return []
+    }
+}
 
   return (
     <>
+    <Form.Select aria-label="Default select class" onChange={(e) => setStudentGroup(e.target.value)} >
+      <option>Select class</option>
+      <option value="1">Big English</option>
+      <option value="2">Students</option>
+      <option value="3">English Class</option>
+    </Form.Select>
     <div>
              <div style={{color:'white'}}>
                 <p>{listening && 'Listening...'}</p>
@@ -135,30 +156,14 @@ export default function RecordViewTeacher({studentGroup})  {
           <br />
           <audio src={blobURL} controls="controls" />
             <div>
-            {studentGroup === 'intermediate' ? (
-              <> 
-              {students_intermediate.map((student, index) =>  
+              {get_students(studentGroup).map((student, index) =>  
                 (<div key = {index}>
-                   <div>{student}
+                   <div style={{color:'yellow'}} ><span>{student}</span>
                    <span><audio id = {`audio_${student}`} src="" controls="controls" /></span>
                    </div> 
                 </div> 
                 )
             )}
-              </>
-            )
-             :
-             (
-              <>
-             {students_big.map((student, index) =>  
-                (<div key = {index}>
-                   <div><audio id = {student} src="" controls="controls" /></div> 
-                </div> 
-                )
-            )}
-              </>
-             )
-            }
             </div>
     </div>
     </>

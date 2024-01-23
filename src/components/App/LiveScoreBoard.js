@@ -13,24 +13,39 @@ function TableRow({rowContent}) {
             </tr>
         );
 }
-function LiveScoreBoard() {
+function LiveScoreBoard({class_id}) {
+    //console.log(class_id)
+    const get_students = (my_class_id) => {
+        if (my_class_id === 1) {
+            return [
+                ['basic1','nguyenkhang'],
+                ['honghoa', 'dinhchuong']
+             
+            ]
+        }
+        else if (my_class_id === 2 ) {
+            return [
+                ["basic2","linhdan"],
+                ["lockim", "giabinh"],
+                ["bichphuong", "khanhyen"],
+                ["thienkim", "quocminh"], 
+                ["nhatminh"]
+            ]
+        }
+        else if (my_class_id === 3) {
+            return [
+                ["basic3","tramanh","nguyenchuong"]
+            ]
+        }
+        else {
+            return []
+        }
+    }
     
-    let students_basic = [
-        ["basic","linhdan"],
-        ["lockim", "giabinh"],
-        ["bichphuong", "khanhyen"],
-        ["thienkim", "quocminh"], 
-        ["nhatminh"]
-    ];
-    let students_intermediate = [
-        ['basic','nguyenkhang'],
-        ['honghoa', 'dinhchuong']
-    ];
-
   return ( 
         <table> 
             <tbody>
-                {students_basic.map((rowContent, rowID) => (
+                {get_students(class_id).map((rowContent, rowID) => (
                     <TableRow key={rowID}
                         rowContent={rowContent}
                     />
