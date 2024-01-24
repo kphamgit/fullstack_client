@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 
 
 function QuestionResponseLive({response_content}) {
-  const question = useSelector((state) => state.question.value)
-  if (question.format === 6 )
+  const question = useSelector((state) => state.live_question.value)
+  //if (question.format === 6 )
   return (
     <>
     <div>
