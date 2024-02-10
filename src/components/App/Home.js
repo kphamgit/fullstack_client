@@ -85,15 +85,8 @@ export default function Home() {
           { user.role === 'teacher' ? 
            <RecordViewTeacher />
            :
-           <div>
-           <Button  onClick={() => toggleRecordView()}>Show Record</Button>
-           </div>
-          }
-        </Row>
-        <Row>
-        { showRecordView &&
            <RecordView />
-        }
+          }
         </Row>
     </Container>
     </SocketContext.Provider>
