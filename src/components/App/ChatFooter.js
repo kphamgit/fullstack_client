@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import styles from "./ChatPage.module.css";
 
 const ChatFooter = ({socket}) => {
   const [message, setMessage] = useState('');
@@ -20,16 +21,16 @@ const ChatFooter = ({socket}) => {
   };
 
   return (
-    <div className="chat__footer">
+    <div className={styles.chat__footer}>
       <form className="form" onSubmit={handleSendMessage}>
-        <input
+        <textarea
           type="text"
           placeholder="Write message"
-          className="message"
+          className={styles.message}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <div><button className="sendBtn">Send</button></div>
+        <div><button className={styles.sendBtn}>Send</button></div>
       </form>
     </div>
   );

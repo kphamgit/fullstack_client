@@ -13,6 +13,7 @@ import userReducer from "./user.js"
 import answerarrayReducer from './answerarray.js'
 import showquestionattemptReducer from "./showquestionattempt.js"
 import liveQuestionReducer from "./livequestion.js"
+import studentScoresReducer from "./studentscores.js"
 
 export default configureStore({
     reducer: {
@@ -29,6 +30,7 @@ export default configureStore({
         subcategory: subcategoryReducer,
         endofquiz: endofquizReducer,
         showquestionattempt: showquestionattemptReducer,
-        user: userReducer
+        user: userReducer,
+        studentscores: studentScoresReducer
     }
 })

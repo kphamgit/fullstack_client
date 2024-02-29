@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { SocketContext } from './Home';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-//export default function RecordViewTeacher()  {
   export default function RecordViewTeacher()  {
  
   const socket = useContext(SocketContext);
@@ -17,9 +17,11 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
   const [hasbeenSent, setHasBeenSent] = useState(false)
   const [blobURL, setBlobURL] = useState('')
   const [myblob, setMyBlob] = useState([0])
-  //const [receivedBlobURL, setReceivedBlobURL] = useState('')
+  const rootpath = useSelector((state) => state.rootpath.value)
   const username = useSelector((state) => state.username.value)
-  const [studentGroup, setStudentGroup] = useState('')
+  const [studentGroup, setStudentGroup] = useState('1')
+  const [studentnames, setStudentNames] = useState([])
+  
 
   //const isTeacher = (username === 'kpham');
 
@@ -43,6 +45,18 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
         return <span>Browser doesn't support speech recognition.</span>;
       }
       */
+
+      useEffect(() => {
+        //console.log("in useEffect LiveScoreBoard")
+        async function fetchData() {
+          // You can await here
+            const url = rootpath + `/api/classes/${studentGroup}`
+            const response = await axios.get(url)
+            setStudentNames(response.data)
+        }
+        fetchData()
+      },[studentGroup])
+
   useEffect( () => {
     navigator.getUserMedia({ audio: true },
       () => {
@@ -60,10 +74,10 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
   
   useEffect(() => {
     socket.on('recording', arg => {
-       console.log(" in socket ON Chat Recording arg username = ",arg.username)     
+       //console.log(" in socket ON Chat Recording arg username = ",arg.username)     
        let audio_tag = document.getElementById('audio_'+arg.username)
        const the_blob = new Blob([arg.blob], {type:'audio/mp3'});
-       console.log( URL.createObjectURL(the_blob))
+       //console.log( URL.createObjectURL(the_blob))
        audio_tag.src = URL.createObjectURL(the_blob)
     })
       return () => {
@@ -116,22 +130,6 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
     });
   };
 
-  const get_students = (class_id) => {
-    //console.log(" in get students class_id"+class_id)
-    if (class_id === '1') {
-        return ['basic1','nguyenkhang', 'honghoa', 'dinhchuong']
-    }
-    else if (class_id === '2') {
-        return ["basic2","linhdan", "lockim", "giabinh", "khanhyen", "thienkim", "quocminh"]
-    }
-    else if (class_id === '3') {
-      return ['tramanh', 'nguyenchuong']
-    }
-    else {
-        return []
-    }
-}
-
   return (
     <>
     <Form.Select aria-label="Default select class" onChange={(e) => setStudentGroup(e.target.value)} >
@@ -156,7 +154,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
           <br />
           <audio src={blobURL} controls="controls" />
             <div>
-              {get_students(studentGroup).map((student, index) =>  
+              {studentnames.map((student, index) =>  
                 (<div key = {index}>
                    <div style={{color:'yellow'}} ><span>{student}</span>
                    <span><audio id = {`audio_${student}`} src="" controls="controls" /></span>

@@ -6,7 +6,6 @@ import getClozeQuestionUserAnswer from './GetClozeQuestionUAnswer'
 //import { setEndOfQuiz } from '../../redux/endofquiz'
 import Button from "react-bootstrap/Button"
 
-
 /*
 const Button = styled.button`
 background-color:brown;
@@ -15,18 +14,18 @@ padding:5px 15px;
 `
 */
 
-function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, toggleShowResponse, setResponse }) {
-
+function SubmitButtonLive({socket, livequestionnumber, question, setTheScore, toggleShowSubmit, toggleShowResponse, setResponse }) {
+  
   const username = useSelector((state) => state.username.value)
   const rootpath = useSelector((state) => state.rootpath.value)
   const answerarray = useSelector((state) => state.answerarray.value)
+  //const question = useSelector((state) => state.live_question.value )
   
   //const question_attempt_reponse = useSelector((state) => state.question_attempt_reponse.value)
     //const dispatch = useDispatch()
     var user_answer =  useSelector((state) => state.answer.value)
     //console.log(" Submit END OF QUIX"+endofquiz)
     //console.log("UUUUUUUUUUUUUUUUU answer ="+user_answer)
-
     
     //const process_question_attempt = async () => {
      //   alert("here")
@@ -66,15 +65,15 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
             return false
           }
         }
-        //console.log("in process question atempt questionattempt = ", questionattempt)
+        //console.log("in process question atempt question = ", question)
         //console.log("in process question atempt user answer = ", user_answer)
         var url = rootpath + `/api/question_attempts/process_attempt_live/${question.id}`
-        const firstRequest = await axios.post(url,{user_answer: user_answer})
+        const firstRequest = await axios.post(url,{question: question, user_answer: user_answer})
         const response_data = firstRequest.data
-        //console.log(" response data = ",response_data)
+        //console.log(" Submit button response data = ",response_data)
         //dispatch(setValue(data))
         setResponse(response_data)
-        socket.emit('live_score', {score: response_data.score, user: username})
+        socket.emit('live_score', {livequestionnumber: livequestionnumber, score: response_data.score, user: username})
         setTheScore(response_data.score)
         toggleShowSubmit(false)
         toggleShowResponse(true)
@@ -83,7 +82,9 @@ function SubmitButtonLive({socket, question, setTheScore, toggleShowSubmit, togg
   return (
     <>
     <div>&nbsp;</div>
+    <div style={{width:"30px"}}>
     <Button variant="success" onClick={() => process_question_attempt()}>Submit</Button>
+    </div>
     </>
   )
 }

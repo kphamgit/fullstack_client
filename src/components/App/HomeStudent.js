@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 //import {RecordView} from './RecordView'
 import RecordView from './RecordView.js'
 //import ChatContainer from "./ChatContainer.js";
@@ -9,7 +9,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from "react-redux";
 import { clear } from  '../../redux/subcategory.js';
-import io from "socket.io-client";
+//import io from "socket.io-client";
+import ChatPage from "./ChatPage.js";
 import styled from 'styled-components'
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
 //import EmitQuizQuestionTeacher from "./EmitQuizQuestion.js"
@@ -18,8 +19,7 @@ import EmitQuestion from "./EmitQuestion.js"
 import { useSelector } from "react-redux";
 import RecordViewTeacher from "./RecordViewTeacher.js";
 import LiveScoreBoard from "./LiveScoreBoard.js";
-import HomeTeacher from "./HomeTeacher.js";
-import HomeStudent from "./HomeStudent.js";
+import { SocketContext } from "./Home.js";
 
 import styles from "./ChatPage.module.css";
 
@@ -30,54 +30,58 @@ import styles from "./ChatPage.module.css";
 //const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000';
-//the following code DOES NOT make a connection. It just prevents
-//an immediate connection
-const socket = io.connect(URL, {
-   autoConnect: false
-});
+//console.log("URRRRRRRRRRRRRL "+URL)
+//const socket = io.connect(URL, {
+   // autoConnect: false
+ // });
 
   const Button = styled.button`
 background-color:blue;
 color:white;
 padding:5px 15px;
 `
-export const SocketContext = React.createContext();
+  //export const SocketContext = React.createContext();
 
-export default function Home() {
+export default function HomeStudent() {
+  //const rootpath = useSelector((state) => state.rootpath.value)
+  //const [studentGroup, setStudentGroup] = useState('')
+  //const username = useSelector((state) => state.username.value)
   const user = useSelector((state) => state.user.value)
-  //const [showRecordView, setShowRecordView] = useState(false)
+  const socket = useContext(SocketContext);
+  const [showRecordView, setShowRecordView] = useState(false)
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(clear())
   })
 
-  useEffect(() => {
-    // no-op if the socket is already connected
-    //console.log(" ChatPage connecting to server")
-    socket.connect();
-    /* comment this out so that when the Home component dismounts, i.e, user
-        go to another link, socket won't get disconnected.
-        Leave to code here just for reference/learning
-    return () => {
-      socket.disconnect();
-    };
-    */
-},[]);
+    function toggleRecordView() {
+      //console.log("HERE")
+      setShowRecordView(true)
+    }
 
   return (
     <>
     <SocketContext.Provider value={socket}>
-    <Container style ={ { backgroundColor: 'orange'} }>
-      <Row>
-        <Col>
-        { user.role === 'teacher' ?
-        <HomeTeacher />
-        :
-        <HomeStudent />
-        }
+    <Container style ={ { backgroundColor: '#f2caa7'} }>
+      <Row style ={ { backgroundColor: 'red', height:"70vh" }}>
+        <Col style ={ { backgroundColor: '#f2caa7' }} xs={9}>
+          <Row style={{height:"75%"}}>
+          <LiveQuestionAttempt  />
+          </Row>
+          <Row style={{height: "25%", backgroundColor: "lightgray"}}>
+          
+            <LiveScoreBoard class_id = {user.class_id} className={styles.scoreboard}/>
+        
+       </Row>
+        </Col>
+        <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
+              <ChatPage />
         </Col>
       </Row>
+        <Row>
+           <RecordView />
+        </Row>
     </Container>
     </SocketContext.Provider>
       

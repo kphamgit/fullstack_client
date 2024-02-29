@@ -7,6 +7,7 @@
       }
 
     export default function format_cloze_question_content(question) {
+        console.log("UUUUUQQQQQQQQQQQQQQQQQQQQQQ", question)
         let cloze_question_form = ''
          let isDropdown = false;
              var regExp = /\[.*?\]/g

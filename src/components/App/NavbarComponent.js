@@ -31,13 +31,14 @@ function NavbarComponent({categories}) {
               <Navbar.Brand style={{color:"orange"}} href="#home">English Tuyhoa</Navbar.Brand>
               <Nav className="me-auto">
               <Nav.Link as={Link} to="/" style={{color:"orange"}}>Home</Nav.Link>
+              <Button style={{color:"orange"}} variant="Link" onClick={logout}>{username} Log out</Button>
               {categories.map(cat => 
              <li key={cat.id}><NavBarButton title={cat.name} subcategories={cat.sub_categories}/>
               </li>
-              )}
-              <Button style={{color:"orange"}} variant="Link" onClick={logout}>{username} Log out</Button>
+              )}  
               </Nav>
             </Container>
+         
           </Navbar>
           <Outlet />
         </>

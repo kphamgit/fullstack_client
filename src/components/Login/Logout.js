@@ -34,7 +34,7 @@ export default function Logout () {
     },[])
 
     async function logout() {
-        console.log("in logout")
+        //console.log("in logout")
        
         dispatch(setTokenValue(''))
         fetch(`${rootpath}/logout`)
@@ -47,7 +47,7 @@ export default function Logout () {
 return (
     <>
                 <div>
-               ee
+               
                 </div>
     </>
 )

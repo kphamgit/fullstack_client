@@ -31,16 +31,13 @@ const ChatPage = () => {
     */
 
     return (
-      <div className= {styles.chat}>
-        <div className={styles.chat__main}>
-         { user.role === 'student' &&
-            <LiveScoreBoard class_id = {user.class_id} className={styles.scoreboard}/>
-         } 
+      
+        <div>
           <ChatBody  messages={messages}  />
           <p></p>
           <ChatFooter socket={socket} />
         </div>
-      </div>
+     
     );
   };
   

@@ -2,8 +2,6 @@
 import MicRecorder from 'mic-recorder-to-mp3';
 import { useEffect, useState , useContext } from 'react';
 import { useSelector } from 'react-redux';
-//import {Dictaphone} from './Dictaphone'
-//import  Dictaphone  from './Dictaphone.js';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { SocketContext } from './Home';
 import Form from 'react-bootstrap/Form';
@@ -103,7 +101,7 @@ export default function RecordView()  {
   return (
     <>
     <div>
-        <div style={{width:"20%"}}>
+      <div style={{width:"20%"}}>
         <Form.Select aria-label="Default select example" value={language} onChange={(e) => setLanguage(e.currentTarget.value)} >
       <option value="en-US">English</option>
       <option value="vi-VN">Vietnamese</option>
