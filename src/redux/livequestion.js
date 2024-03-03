@@ -9,7 +9,7 @@ export const mySlice = createSlice({
   name: 'livequestionreducer',
   initialState,
   reducers: {
-    clear: (state) => {
+    clearQuestion: (state) => {
       state.value = ''
     },
     setLiveQuestion: (state, action) => {
@@ -19,6 +19,6 @@ export const mySlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { clear, setLiveQuestion } = mySlice.actions
+export const { clearQuestion, setLiveQuestion } = mySlice.actions
 
 export default mySlice.reducer

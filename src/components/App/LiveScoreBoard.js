@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setStudentScores } from '../../redux/studentscores';
+import { SocketContext } from './Home';
+import ScoreRow from './ScoreRow';
+
 
 function TableRow({rowContent}) {
+    
     let row = rowContent
         return (
             <tr>
                 {row.map((student_name, index) => (
                     <>
                     <td key={index} >&nbsp;{student_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td key={student_name}><span id={student_name}>&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;</td>
+                    <td key={student_name}><ScoreRow student_name={student_name} /></td>
                     </>
  ))}
             </tr>
@@ -41,12 +45,16 @@ function chunk(arr, size) { //this code works , too,
 
  function LiveScoreBoard({class_id}) {
     const [studentnames, setStudentNames] = useState([])
+    const student_scores = useSelector((state) => state.studentscores.value)
     const rootpath = useSelector((state) => state.rootpath.value)
+    const socket = useContext(SocketContext);
     const dispatch = useDispatch()
+
     useEffect(() => {
-        //console.log("in useEffect LiveScoreBoard")
+        
         async function fetchData() {
           // You can await here
+          //console.log("in useEffect LiveScoreBoard")
             const url = rootpath + `/api/classes/${class_id}`
             const response = await axios.get(url)
             //setStudentNames(response.data)
@@ -58,16 +66,20 @@ function chunk(arr, size) { //this code works , too,
             dispatch(setStudentScores(temp))
         }
         fetchData()
-      },[])
+      
+    },[socket, dispatch, class_id])
     
   return ( 
         <table> 
             <tbody>
-                {studentnames.map((rowContent, rowID) => (
-                    <TableRow key={rowID}
-                        rowContent={rowContent}
-                    />
-                ))}
+            <tr>
+                {student_scores.map((row, index) => (
+                    <>
+                    <td key={index} >&nbsp;{row.student_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td key={row.student_name}><ScoreRow student_name={row.student_name} /></td>
+                    </>
+ ))}
+            </tr>
             </tbody>
         </table>
      

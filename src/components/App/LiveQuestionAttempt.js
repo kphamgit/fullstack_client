@@ -13,6 +13,7 @@ import RecordQuestionAttempt from './RecordQA';
 import { SocketContext } from './Home';
 //import { setQuestion } from '../../redux/question';
 import { setLiveQuestion } from '../../redux/livequestion';
+import { clearQuestion } from '../../redux/livequestion';
 import { setStudentScores } from '../../redux/studentscores';
 
 function LiveQuestionAttempt() {
@@ -27,58 +28,24 @@ function LiveQuestionAttempt() {
     const [showSubmit, setShowSubmit] = useState(false)
     const [showResponse, setShowResponse] = useState(false)
     
-    
     const rootpath = useSelector((state) => state.rootpath.value)
    
-    useEffect(() => {
-        socket.on('live_score', arg => {
-            
-            let total_score_for_this_student
-            console.log(" are",arg)
-            
-            studentscores.forEach(item => {
-                if (arg.user === item.student_name) {
-                    total_score_for_this_student = item.score
-                }
-            });
-            console.log(studentscores)
-            
-            //console.log("old total score for this student"+total_score_for_this_student)
-            total_score_for_this_student += parseInt(arg.score)
-            //console.log("new total score for this student"+total_score_for_this_student)
-            const modifiedScores = studentscores.map(obj => {
-                if (obj.student_name === arg.user) {
-                    return { ...obj, score: total_score_for_this_student };
-                }
-                return obj;
-            });
-            
-            //console.log("XXXXXXXXEEEEEEEEEEEEXXX",modifiedScores)
-            dispatch(setStudentScores(modifiedScores))
-            let el = document.getElementById(arg.user)
-            el.innerHTML = `<span style="color:brown">${arg.livequestionnumber}&nbsp;&nbsp;</span><span style="color:green">${arg.score}&nbsp;&nbsp;</span><span>${total_score_for_this_student}</span>`
-            
-        })
-        
-        return () => {
-            socket.off("live_score")
-        }   
-    })
-
-    //useEffect( () => {
-        //console.log("here",question)
-    //},[question])
+    useEffect( () => {
+        //Don't delete this. Update component upon new questin arrival
+        //console.log("update component...",question)???
+    },[question])
 
     useEffect(() => {
         //register "socket.on" event upon component mount
         //or when one of the dependencies changes value
         socket.on('next_live_question', arg => {
-            console.log("next live question = ",arg)
+            //console.log("next live question = ",arg)
             setLiveQuestionNumber(arg.question_number)
             //use spread operator tip to remove a property from an object:
             //remove source property from arg because it won't be needed
             const {source, ...restOfArg} = arg
-            console.log("next live question resetOfArg= ",restOfArg)
+            //console.log("next live question resetOfArg= ",restOfArg)
+            dispatch(clearQuestion())
             if (source === 'live') {
                 dispatch(setLiveQuestion(restOfArg))
                 setShowSubmit(true)
@@ -111,6 +78,7 @@ function LiveQuestionAttempt() {
         }   
     },[rootpath,socket, dispatch])
     
+    
   return (
     <>
     <br />
@@ -122,7 +90,7 @@ function LiveQuestionAttempt() {
         {question.audio_src && <audio src={question.audio_src} controls />}
         </div> 
             {question.video_src && <ReactPlayer url={question.video_src} controls />}
-            <div style = {{backgroundColor:"#f2caa7"}}>
+            <div style = {{backgroundColor:"f2caa7"}}>
             {(() => {
             switch (question.format) {
               case 1:

@@ -24,6 +24,7 @@ async function loginUser(rootpath, credentials) {
 export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [showPassword, setShowPassword] = useState(false);
   const rootpath = useSelector((state) => state.rootpath.value)
 
   const dispatch = useDispatch()
@@ -55,8 +56,21 @@ export default function Login() {
         </label>
         <label>
           <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
+          <input 
+          type={
+            showPassword ? "text" : "password"
+          }
+          onChange={e => setPassword(e.target.value)} />
         </label>
+        <label for="check">&nbsp;Show Password&nbsp;</label>
+                <input
+                    id="check"
+                    type="checkbox"
+                    value={showPassword}
+                    onChange={() =>
+                        setShowPassword((prev) => !prev)
+                    }
+                />
         <div>
           <button type="submit">Submit</button>
         </div>

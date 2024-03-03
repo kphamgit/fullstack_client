@@ -8,6 +8,13 @@ import EmitQuizQuestion from './EmitQuizQuestion';
 
 function EmitQuestion() {
   const [questionsource, setQuestionSource] = useState('quiz')
+  const socket = useContext(SocketContext);
+  
+  function resetScoreBoard() {
+    console.log("HEREEEEEEEEEEEE")
+    socket.emit("reset_scoreboard")
+  }
+  
   return (
     <>
     <div style={{width:"20%"}}>
@@ -24,6 +31,9 @@ function EmitQuestion() {
       :
       <EmitLiveQuestion />
     }
+    </div>
+    <div>
+    <Button variant="success" onClick={resetScoreBoard}>Reset Score</Button>
     </div>
     </>
   )

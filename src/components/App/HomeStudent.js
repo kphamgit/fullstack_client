@@ -70,9 +70,7 @@ export default function HomeStudent() {
           <LiveQuestionAttempt  />
           </Row>
           <Row style={{height: "25%", backgroundColor: "lightgray"}}>
-          
-            <LiveScoreBoard class_id = {user.class_id} className={styles.scoreboard}/>
-        
+            <LiveScoreBoard class_id = {user.class_id} />
        </Row>
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
