@@ -5,18 +5,19 @@ import { setStudentScores } from '../../redux/studentscores';
 import { SocketContext } from './Home';
 import ScoreRow from './ScoreRow';
 
-
 function TableRow({rowContent}) {
-    
     let row = rowContent
         return (
             <tr>
-                {row.map((student_name, index) => (
+                {row.map((student_data, index) => (
                     <>
-                    <td key={index} >&nbsp;{student_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td key={student_name}><ScoreRow student_name={student_name} /></td>
+                    <td key={index}>
+                        <ScoreRow 
+                        student_name={student_data.student_name} 
+                        />
+                    </td>
                     </>
- ))}
+                ))}
             </tr>
         );
 }
@@ -26,63 +27,47 @@ const chunk = (arr, size) =>
   Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
     arr.slice(i * size, i * size + size)
   );
-  /*
-function chunk(arr, size) { //this code works , too,
-    //recursively break arr into chunks 
-    //basically turn arr into a two dimensional array
-    var subArrayCount = arr.length / size;
-    var res = []; 
-    for (var i = 0; i < subArrayCount; i++) {
-        var from = size * i;
-        var to = (size * (1 + i));
-        //console.log(to)
-        var sliced = arr.slice(from, to);
-        res.push(sliced);
-    }   
-    return res;
-}
-*/
+
 
  function LiveScoreBoard({class_id}) {
     const [studentnames, setStudentNames] = useState([])
     const student_scores = useSelector((state) => state.studentscores.value)
+    const [tempArr, setTempArr] = useState([])
+    //const [studentscoresmap, setStudentScoresMap] = useState([]) 
     const rootpath = useSelector((state) => state.rootpath.value)
     const socket = useContext(SocketContext);
     const dispatch = useDispatch()
 
     useEffect(() => {
-        
         async function fetchData() {
           // You can await here
-          //console.log("in useEffect LiveScoreBoard")
             const url = rootpath + `/api/classes/${class_id}`
             const response = await axios.get(url)
-            //setStudentNames(response.data)
-            setStudentNames(chunk(response.data, 2))
-            let temp = []
+            //response.data is an array of strings = [ "nguyenkhang", "honghoa", "dinhchuong" ];
+            //turn response.data into an array of objects with property "student_name"
+            const arr_of_objects = response.data.map(student_name => ({student_name}));
+            //add property "score:0" to this array and save to redux store
+            dispatch(setStudentScores( arr_of_objects.map( item => ({ ...item, score:0 }) )) )
+            //format a 2-dimension students scores array for display
+            let temp_arr = []
             response.data.forEach( (name) => {
-                temp.push({student_name: name, score: 0 })
+                temp_arr.push({student_name: name, score: 0 })
             })
-            dispatch(setStudentScores(temp))
+            setTempArr(chunk(temp_arr,2) )       // 2 students each row
         }
         fetchData()
-      
     },[socket, dispatch, class_id])
     
   return ( 
+        <>
         <table> 
             <tbody>
-            <tr>
-                {student_scores.map((row, index) => (
-                    <>
-                    <td key={index} >&nbsp;{row.student_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td key={row.student_name}><ScoreRow student_name={row.student_name} /></td>
-                    </>
- ))}
-            </tr>
+                {tempArr.map((row, index) => (
+                    <TableRow key={index}  rowContent={row} />
+                ))}
             </tbody>
         </table>
-     
+     </>
   );
 }
 

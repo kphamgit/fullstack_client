@@ -14,7 +14,7 @@ import { SocketContext } from './Home';
 //import { setQuestion } from '../../redux/question';
 import { setLiveQuestion } from '../../redux/livequestion';
 import { clearQuestion } from '../../redux/livequestion';
-import { setStudentScores } from '../../redux/studentscores';
+//import { setStudentScores } from '../../redux/studentscores';
 
 function LiveQuestionAttempt() {
 
@@ -40,6 +40,7 @@ function LiveQuestionAttempt() {
         //or when one of the dependencies changes value
         socket.on('next_live_question', arg => {
             //console.log("next live question = ",arg)
+            //console.log("next live question studentscores=", studentscores)
             setLiveQuestionNumber(arg.question_number)
             //use spread operator tip to remove a property from an object:
             //remove source property from arg because it won't be needed
@@ -76,9 +77,8 @@ function LiveQuestionAttempt() {
             //console.log("event registration cleanup")
             socket.off("next_live_question")
         }   
-    },[rootpath,socket, dispatch])
-    
-    
+    },[rootpath,socket, studentscores, dispatch])
+
   return (
     <>
     <br />
@@ -116,7 +116,6 @@ function LiveQuestionAttempt() {
     <SubmitButtonLive style={{backgroundColor:'white'}} socket={socket} livequestionnumber={livequestionnumber} question={question} setTheScore={setScore} toggleShowSubmit={setShowSubmit} toggleShowResponse={setShowResponse} setResponse={setAttemptResponse}/> 
     : (showResponse && (showResponse && <QuestionResponseLive response_content={attemptResponse}/>))
     }
-   
     </>
   )
 }

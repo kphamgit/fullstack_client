@@ -15,11 +15,12 @@ const styles={
 function ScoreRow({student_name}) {
     const socket = useContext(SocketContext);
     const [clearScoreboard, setClearScoreboard] = useState(false)
-    const [score, setScore] = useState(0)
-    const [totalscore, setTotalScore] = useState(0)
+    const [score, setScore] = useState(null)
+    const [totalscore, setTotalScore] = useState(null)
     const studentscores = useSelector((state) => state.studentscores.value)
     const dispatch = useDispatch()
     const [maxScore, setMaxScore] = useState(false)
+    const [livequestionnumber, setLiveQuestionNumber] = useState(null)
 
     useEffect(() => {
         socket.on('reset_scoreboard', () => {
@@ -35,7 +36,12 @@ function ScoreRow({student_name}) {
     useEffect(() => {
         socket.on('live_score', arg => {
             if(arg.user === student_name) {
+                //console.log("XXXXXXXXXXXXXX",arg)
                 setScore(arg.score)
+                console.log(")))))))"+arg.livequestionnumber)
+                setLiveQuestionNumber(parseInt(arg.livequestionnumber))
+                //studentscores is a two-dimensional array. Convert to one-dimension to use the find function
+                //const one_dimension_arr = [].concat(...studentscores);
                 //find student object for this student in redux store
                 const student_obj = studentscores.find(x => x.student_name === student_name);
                 let total_score_for_this_student = parseInt(student_obj.score) + parseInt(arg.score)
@@ -57,29 +63,33 @@ function ScoreRow({student_name}) {
         }   
     }, [socket, student_name, studentscores, dispatch])
 
-
     useEffect(() => {
-        //find max score. The reduce function returns only one object/student
         const maxObj = studentscores.reduce((p, c) => p.score > c.score ? p : c);
-        //there may be more than one student with max total score
-        // so filter them out
-        const students_with_max_score = studentscores.filter(x => x.score === maxObj.score);
-        //find me in list of students_with_max_score
-        const match = students_with_max_score.find(x => x.student_name === student_name);
-        if (match === undefined) {
-            // I am not in the list
-            setMaxScore(false)
-        }
-        else {
-            setMaxScore(true)
+        if (maxObj.score > 0 ) { //make sure that there's at least a non-zero score
+             //there may be more than one student with max total score
+            // so filter them out
+            const students_with_max_score = studentscores.filter(x => x.score === maxObj.score);
+            //find me in list of students_with_max_score
+            const match = students_with_max_score.find(x => x.student_name === student_name);
+            if (match === undefined) {    //I am not list max score list
+                setMaxScore(false)
+            }
+            else {  //I'm in max score list
+                 setMaxScore(true)
+            }
         }
     },[studentscores, student_name])
 
   return (
     <>
-    <span>{score}&nbsp;&nbsp;
+        <span>{student_name}&nbsp;</span>
+        {livequestionnumber && 
+            <span>{livequestionnumber}&nbsp;&nbsp;</span>
+        }
+        {score &&
+            <span>{score}&nbsp;&nbsp;&nbsp;</span>
+        }
         <span style={ maxScore ? {backgroundColor:"yellow"} : {backgroundColor:"lightgray"}}>{totalscore}</span>
-    </span>
     </>
   )
 }
