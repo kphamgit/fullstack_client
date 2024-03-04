@@ -14,7 +14,7 @@ const styles={
 
 function ScoreRow({student_name}) {
     const socket = useContext(SocketContext);
-    const [clearScoreboard, setClearScoreboard] = useState(false)
+    //const [clearScoreboard, setClearScoreboard] = useState(false)
     const [score, setScore] = useState(null)
     const [totalscore, setTotalScore] = useState(null)
     const studentscores = useSelector((state) => state.studentscores.value)
@@ -24,7 +24,10 @@ function ScoreRow({student_name}) {
 
     useEffect(() => {
         socket.on('reset_scoreboard', () => {
-            setClearScoreboard(true)
+            //setClearScoreboard(true)
+            setScore(null)
+            setTotalScore(null)
+            setLiveQuestionNumber(null)
         })
         return () => {
             //event registration cleanup (happens upon component dismount)
