@@ -1,0 +1,7 @@
+.cardgrid {
+  width: 80vh;
+  display: grid;
+  margin-top: 20px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}

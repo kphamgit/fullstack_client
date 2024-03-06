@@ -20,8 +20,12 @@ import { useSelector } from "react-redux";
 import RecordViewTeacher from "./RecordViewTeacher.js";
 import LiveScoreBoard from "./LiveScoreBoard.js";
 import { SocketContext } from "./Home.js";
+//import SpeechSynthesis from "./SpeechSynthesis.js"
+import MatchGame from "./MatchGame.js";
 
 import styles from "./ChatPage.module.css";
+import TextToCanvas from "./TextToCanvas.js";
+import MatchGameText from "./MatchGameText.js";
 
 //import Button from "react-bootstrap/Button"
 
@@ -66,20 +70,16 @@ export default function HomeStudent() {
     <Container style ={ { backgroundColor: '#f2caa7'} }>
       <Row style ={ { backgroundColor: 'red', height:"70vh" }}>
         <Col style ={ { backgroundColor: '#f2caa7' }} xs={9}>
-          <Row style={{height:"75%"}}>
-          <LiveQuestionAttempt  />
-          </Row>
-          <Row style={{height: "25%", backgroundColor: "lightgray"}}>
-            <LiveScoreBoard class_id = {user.class_id} />
-       </Row>
+        <Row>
+          <MatchGameText />
+        </Row>
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
               <ChatPage />
         </Col>
       </Row>
-        <Row>
-           <RecordView />
-        </Row>
+     
+        
     </Container>
     </SocketContext.Provider>
       

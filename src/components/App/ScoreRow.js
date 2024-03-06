@@ -39,9 +39,7 @@ function ScoreRow({student_name}) {
     useEffect(() => {
         socket.on('live_score', arg => {
             if(arg.user === student_name) {
-                //console.log("XXXXXXXXXXXXXX",arg)
                 setScore(arg.score)
-                console.log(")))))))"+arg.livequestionnumber)
                 setLiveQuestionNumber(parseInt(arg.livequestionnumber))
                 //studentscores is a two-dimensional array. Convert to one-dimension to use the find function
                 //const one_dimension_arr = [].concat(...studentscores);
