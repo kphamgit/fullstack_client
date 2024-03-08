@@ -47,7 +47,7 @@ function TextCard({text, handleChoice, flipped}) {
         ctx.current.fillStyle = '#E1FFC7';
         //var rectHeight=50;
         //let text ="One two three four five six seven five nine ten eleven twelve thirteen";  
-        var maxWidth = 150;
+        var maxWidth = 0;
         var lineHeight = 25;
         var x = 20;
         var y = 35; //distance from viewport origin to baseline of first line
@@ -56,17 +56,16 @@ function TextCard({text, handleChoice, flipped}) {
         //let y = 35 + parseInt(text.index) * 160
         const words =  text.src.split(' ');
         //console.log("text = ",text)
-        ctx.current.fillRect(20,20,170,170);
+        ctx.current.fillRect(0,0,170,170);
         ctx.current.fillStyle = 'blue';
         //drawWords(text, x, y, maxWidth, lineHeight,rectHeight,words)
         drawWords(text.src, x, y, maxWidth, lineHeight)
-        const data_url = canvas.toDataURL('image/jpeg');
+        //const data_url = canvas.toDataURL('image/jpeg');
         //console.log(data_url)
         //wrapText("I am a student and a teacher at the same time",8,9,110,13)
       }, [text]);
 
       const handleClick = (e) => {
-        //console.log("HHHHHHHHHHH")
         handleChoice(text)
       }
     return (
@@ -77,7 +76,7 @@ function TextCard({text, handleChoice, flipped}) {
           <canvas className={styles.front} onClick={handleClick} ref={canvasRef}></canvas>
           <img 
             className = {styles.back}
-            src="/img/cover.jpeg" 
+            src="https://kevinphambucket.s3.amazonaws.com/images/b/basketball.jpeg" 
             onClick={handleClick}
             alt="card back" 
           />
