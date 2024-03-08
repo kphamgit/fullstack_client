@@ -24,20 +24,12 @@ import { SocketContext } from "./Home.js";
 import MatchGame from "./MatchGame.js";
 
 import styles from "./ChatPage.module.css";
-import TextToCanvas from "./TextToCanvas.js";
+//import TextToCanvas from "./TextToCanvas.js";
 import MatchGameText from "./MatchGameText.js";
 
 //import Button from "react-bootstrap/Button"
 
-//import { useSelector } from "react-redux";
-
-//const Mp3Recorder = new MicRecorder({ bitRate: 128 });
-
 const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000';
-//console.log("URRRRRRRRRRRRRL "+URL)
-//const socket = io.connect(URL, {
-   // autoConnect: false
- // });
 
   const Button = styled.button`
 background-color:blue;
@@ -70,16 +62,20 @@ export default function HomeStudent() {
     <Container style ={ { backgroundColor: '#f2caa7'} }>
       <Row style ={ { backgroundColor: 'red', height:"70vh" }}>
         <Col style ={ { backgroundColor: '#f2caa7' }} xs={9}>
-        <Row>
-          <MatchGameText />
+        <Row style={{height:"75%"}}>
+            <LiveQuestionAttempt  />
+        </Row>
+        <Row style={{height: "25%", backgroundColor: "lightgray"}}>
+          <LiveScoreBoard class_id = {user.class_id} />
         </Row>
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
               <ChatPage />
         </Col>
       </Row>
-     
-        
+      <Row>
+          <RecordView />
+      </Row>
     </Container>
     </SocketContext.Provider>
       
