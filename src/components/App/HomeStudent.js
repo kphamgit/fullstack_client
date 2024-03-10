@@ -15,9 +15,9 @@ import styled from 'styled-components'
 import LiveQuestionAttempt from "./LiveQuestionAttempt.js";
 //import EmitQuizQuestionTeacher from "./EmitQuizQuestion.js"
 //import EmitLiveQuestionTeacher from "./EmitLiveQuestion.js";
-import EmitQuestion from "./EmitQuestion.js"
+//import EmitQuestion from "./EmitQuestion.js"
 import { useSelector } from "react-redux";
-import RecordViewTeacher from "./RecordViewTeacher.js";
+//import RecordViewTeacher from "./RecordViewTeacher.js";
 import LiveScoreBoard from "./LiveScoreBoard.js";
 import { SocketContext } from "./Home.js";
 //import SpeechSynthesis from "./SpeechSynthesis.js"
@@ -45,6 +45,7 @@ export default function HomeStudent() {
   const user = useSelector((state) => state.user.value)
   const socket = useContext(SocketContext);
   const [showRecordView, setShowRecordView] = useState(false)
+  const [livequiz, setLiveQuiz] = useState(false)
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -62,11 +63,12 @@ export default function HomeStudent() {
     <Container style ={ { backgroundColor: '#f2caa7'} }>
       <Row style ={ { backgroundColor: 'red', height:"70vh" }}>
         <Col style ={ { backgroundColor: '#f2caa7' }} xs={9}>
+          <div  dangerouslySetInnerHTML={{ __html: user.teacher_message }}></div>
         <Row style={{height:"75%"}}>
-            <LiveQuestionAttempt  />
+            {livequiz && <LiveQuestionAttempt  />}
         </Row>
         <Row style={{height: "25%", backgroundColor: "lightgray"}}>
-          <LiveScoreBoard class_id = {user.class_id} />
+          {livequiz && <LiveScoreBoard class_id = {user.class_id} /> }
         </Row>
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>

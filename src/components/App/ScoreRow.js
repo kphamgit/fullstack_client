@@ -24,6 +24,7 @@ function ScoreRow({student_name}) {
 
     useEffect(() => {
         socket.on('reset_scoreboard', () => {
+            alert("reset scoreboard")
             //setClearScoreboard(true)
             setScore(null)
             setTotalScore(null)
@@ -39,6 +40,7 @@ function ScoreRow({student_name}) {
     useEffect(() => {
         socket.on('live_score', arg => {
             if(arg.user === student_name) {
+                console.log("ZZZZZZZZZZZZZ score"+arg.score)
                 setScore(arg.score)
                 setLiveQuestionNumber(parseInt(arg.livequestionnumber))
                 //studentscores is a two-dimensional array. Convert to one-dimension to use the find function
@@ -87,10 +89,10 @@ function ScoreRow({student_name}) {
         {livequestionnumber && 
             <span>{livequestionnumber}&nbsp;&nbsp;</span>
         }
-        {score &&
+        {
             <span>{score}&nbsp;&nbsp;&nbsp;</span>
         }
-        <span style={ maxScore ? {backgroundColor:"yellow"} : {backgroundColor:"lightgray"}}>{totalscore}</span>
+        <span style={ maxScore ? {backgroundColor:"orange"} : {backgroundColor:"lightgray"}}>{totalscore}</span>
     </>
   )
 }

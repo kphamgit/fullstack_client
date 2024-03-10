@@ -11,10 +11,8 @@ import QuestionResponseLive from './QuestionResponseLive';
 import WordsSelect from './WordsSelect';
 import RecordQuestionAttempt from './RecordQA';
 import { SocketContext } from './Home';
-//import { setQuestion } from '../../redux/question';
 import { setLiveQuestion } from '../../redux/livequestion';
 import { clearQuestion } from '../../redux/livequestion';
-//import { setStudentScores } from '../../redux/studentscores';
 
 function LiveQuestionAttempt() {
 
@@ -30,16 +28,16 @@ function LiveQuestionAttempt() {
     
     const rootpath = useSelector((state) => state.rootpath.value)
    
-    useEffect( () => {
+    //useEffect( () => {
         //Don't delete this. Update component upon new questin arrival
         //console.log("update component...",question)???
-    },[question])
+    //},[question])
 
     useEffect(() => {
         //register "socket.on" event upon component mount
         //or when one of the dependencies changes value
         socket.on('next_live_question', arg => {
-            //console.log("next live question = ",arg)
+            console.log("next live question = ",arg)
             //console.log("next live question studentscores=", studentscores)
             setLiveQuestionNumber(arg.question_number)
             //use spread operator tip to remove a property from an object:
@@ -84,7 +82,7 @@ function LiveQuestionAttempt() {
     <br />
     { question &&
         <>
-        
+        <p>Question: {livequestionnumber}</p>
         <p>{question.prompt}</p>    
         <div>
         {question.audio_src && <audio src={question.audio_src} controls />}

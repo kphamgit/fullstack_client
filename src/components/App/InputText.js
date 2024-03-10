@@ -34,6 +34,7 @@ export default function InputText({addMessage}) {
         //console.log("HHHHHH in addAMessage InputText message=",{message})
         //addMessage which takes an object as parameter, is defined in calling component (ChatHome1)
         //putting a pair of brackets around variable "message" will yield the object "message: value"
+        //where value is the value of variable "message"
         //a new feature in ES6
         addMessage(
             {message})
@@ -41,7 +42,6 @@ export default function InputText({addMessage}) {
     }
 
   function handlerFuntion() {
-    console.log("in here")
     addAMessage()
   }
   return (
