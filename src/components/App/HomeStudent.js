@@ -20,12 +20,12 @@ import { useSelector } from "react-redux";
 //import RecordViewTeacher from "./RecordViewTeacher.js";
 import LiveScoreBoard from "./LiveScoreBoard.js";
 import { SocketContext } from "./Home.js";
-//import SpeechSynthesis from "./SpeechSynthesis.js"
+import SpeechSynthesis from "./SpeechSynthesis.js"
 import MatchGame from "./MatchGame.js";
 
 import styles from "./ChatPage.module.css";
 //import TextToCanvas from "./TextToCanvas.js";
-import MatchGameText from "./MatchGameText.js";
+import MatchGameText from "./MatchGame.js";
 
 //import Button from "react-bootstrap/Button"
 
@@ -45,17 +45,33 @@ export default function HomeStudent() {
   const user = useSelector((state) => state.user.value)
   const socket = useContext(SocketContext);
   const [showRecordView, setShowRecordView] = useState(false)
+  const [showMatchGame, setShowMatchGame] = useState(false)
   const [livequiz, setLiveQuiz] = useState(false)
+  const [showMessage, setShowMessage] = useState(true)
+  const [gameId, setGameId] = useState(null)
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(clear())
   })
 
-    function toggleRecordView() {
-      //console.log("HERE")
-      setShowRecordView(true)
-    }
+  useEffect(() => {
+    //register "socket.on" event upon component mount
+    //or when one of the dependencies changes value
+    socket.on('enable_game', (arg) => {
+        console.log("enabl game arg=",arg)
+        setGameId(arg.game_id)
+        setLiveQuiz(false)
+        setShowMatchGame(true)
+        setShowMessage(false)
+    })
+    socket.on('enable_live_quiz', () => {
+      //console.log("show match game")
+      setLiveQuiz(true)
+      setShowMatchGame(false)
+      setShowMessage(false)
+  })
+  },[socket])
 
   return (
     <>
@@ -63,21 +79,28 @@ export default function HomeStudent() {
     <Container style ={ { backgroundColor: '#f2caa7'} }>
       <Row style ={ { backgroundColor: 'red', height:"70vh" }}>
         <Col style ={ { backgroundColor: '#f2caa7' }} xs={9}>
-          <div  dangerouslySetInnerHTML={{ __html: user.teacher_message }}></div>
-        <Row style={{height:"75%"}}>
-            {livequiz && <LiveQuestionAttempt  />}
-        </Row>
-        <Row style={{height: "25%", backgroundColor: "lightgray"}}>
-          {livequiz && <LiveScoreBoard class_id = {user.class_id} /> }
-        </Row>
+          <Row>
+          {showMessage && <div  dangerouslySetInnerHTML={{ __html: user.teacher_message }}></div>}
+          {showMatchGame && <MatchGame gameId={gameId} />}
+          </Row>
+          { livequiz && <>
+          <Row style={{height:"75%"}}>
+             <LiveQuestionAttempt />
+          </Row>
+          <Row style={{height: "25%", backgroundColor: "lightgray"}}>
+            <LiveScoreBoard class_id = {user.class_id} /> 
+          </Row>
+          </>
+          }
+          <Row style ={ { backgroundColor: 'green', height:"30vh" } } >
+          <RecordView />
+         </Row>
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
               <ChatPage />
         </Col>
       </Row>
-      <Row>
-          <RecordView />
-      </Row>
+      
     </Container>
     </SocketContext.Provider>
       

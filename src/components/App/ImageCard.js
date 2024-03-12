@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './SingleCard.module.css';
+import styles from './MatchCard.module.css';
 
 function SingleCard({card, handleChoice, flipped}) {
 
@@ -13,7 +13,7 @@ function SingleCard({card, handleChoice, flipped}) {
     <img className={styles.front} src={card.src} alt="card front" />
     <img 
         className = {styles.back}
-        src="/img/cover.jpeg" 
+        src="https://kevinphambucket.s3.amazonaws.com/images/b/basketball.jpeg"
         onClick={handleClick}
         alt="card back" 
     />

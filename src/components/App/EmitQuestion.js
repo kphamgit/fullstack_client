@@ -11,7 +11,6 @@ function EmitQuestion() {
   const socket = useContext(SocketContext);
   
   function resetScoreBoard() {
-    console.log("HEREEEEEEEEEEEE")
     socket.emit("reset_scoreboard")
   }
   

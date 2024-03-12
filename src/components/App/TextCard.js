@@ -1,9 +1,16 @@
-import React, {useRef, useEffect} from 'react'
-import styles from './SingleCard.module.css';
+import React, {useRef, useState, useEffect} from 'react'
+import styles from './MatchCard.module.css';
 
 function TextCard({text, handleChoice, flipped}) {
     const canvasRef = useRef();
     let ctx = useRef(null)
+
+    const [ourText, setOurText] = useState("")
+    const msg = new SpeechSynthesisUtterance()
+    msg.volume = 1; // From 0 to 1
+    msg.rate = .8; // From 0.1 to 10
+    //msg.pitch = 2; // From 0 to 2
+    msg.lang = 'en';
 
       useEffect(() => {
         // drawWords(text, x, y, maxWidth, lineHeight)
@@ -41,22 +48,22 @@ function TextCard({text, handleChoice, flipped}) {
         canvas.lineHeight = window.innerHeight
         // get context of the canvas
          ctx.current = canvas.getContext("2d");
-        canvas.width = 170;
-        canvas.height = 170;
+        canvas.width = 130;
+        canvas.height = 130;
         //ctx.current.clearRect(0, 0, canvas.width, canvas.height);
         ctx.current.fillStyle = '#E1FFC7';
         //var rectHeight=50;
         //let text ="One two three four five six seven five nine ten eleven twelve thirteen";  
         var maxWidth = 0;
-        var lineHeight = 25;
-        var x = 20;
-        var y = 35; //distance from viewport origin to baseline of first line
+        var lineHeight = 20;
+        var x = 15;
+        var y = 20; //distance from viewport origin to baseline of first line
                     //default to alphabetic. See document for canvas/text baseline
         //console.log(">>>>>>"+text.index)
         //let y = 35 + parseInt(text.index) * 160
         const words =  text.src.split(' ');
         //console.log("text = ",text)
-        ctx.current.fillRect(0,0,170,170);
+        ctx.current.fillRect(0,0,130,130);
         ctx.current.fillStyle = 'blue';
         //drawWords(text, x, y, maxWidth, lineHeight,rectHeight,words)
         drawWords(text.src, x, y, maxWidth, lineHeight)
@@ -67,6 +74,10 @@ function TextCard({text, handleChoice, flipped}) {
 
       const handleClick = (e) => {
         handleChoice(text)
+        //console.log(text)
+        msg.text = text.src
+        msg.voice = window.speechSynthesis.getVoices()[1];
+        window.speechSynthesis.speak(msg)
       }
     return (
       <>

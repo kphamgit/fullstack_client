@@ -48,6 +48,7 @@ export default function HomeTeacher() {
   const user = useSelector((state) => state.user.value)
   const socket = useContext(SocketContext);
   const [showRecordView, setShowRecordView] = useState(false)
+  const [gameId, setGameId] = useState(null)
 
   const dispatch = useDispatch()
 
@@ -60,6 +61,14 @@ export default function HomeTeacher() {
       setShowRecordView(true)
     }
 
+    const enableGame = () => {
+      socket.emit("enable_game", {game_id: gameId})
+    }
+
+    const enableLiveQuiz = () => {
+      socket.emit("enable_live_quiz")
+    }
+
   return (
     <>
    
@@ -67,6 +76,9 @@ export default function HomeTeacher() {
       <Row>
         <Col style ={ {height: "70vh", backgroundColor: 'green' }} xs={9}>
         <EmitQuestion />
+        <button onClick={enableGame}>Enable Game</button>
+        <input type="text" placeholder="game id" onChange={e => setGameId(e.target.value)} />
+        <button onClick={enableLiveQuiz}>Enable Live Quiz</button>
         </Col>
         <Col style ={ {height: "70vh", backgroundColor: 'orange' }} >
         <ChatPage />
