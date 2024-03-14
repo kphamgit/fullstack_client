@@ -4,6 +4,7 @@ import ImageCard from './ImageCard';
 import TextCard from './TextCard';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useImageSize } from 'react-image-size';
 
 function MatchGame({gameId}) {
   //shuffledImages
@@ -13,16 +14,19 @@ function MatchGame({gameId}) {
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [cardGroup1, setCardGroup1] = useState([])
     const [cardGroup2, setCardGroup2] = useState([])
+    const [dimensions, { loading, error }] = useImageSize('https://kevinphambucket.s3.amazonaws.com/images/s/star_background.jpeg');
+    const [gameName, setGameName] = useState('')
     
     const rootpath = useSelector((state) => state.rootpath.value)
     
     useEffect( () => {
       // Unexpected string concatenation of literals 
-      console.log("XXXXXXXXXXX MatchGame gameId"+gameId)
+      //console.log("XXXXXXXXXXX MatchGame gameId"+gameId)
       var url = rootpath + '/api/matching_games/' + gameId + '/play_fullstack'
       axios.get(url).then((response) => {
-          //console.log(' Next button... response data=',response.data)
+          //console.log(' Get GAME... response data=',response.data)
           if (response.data) {
+                  setGameName(response.data.name)
                   //let myArray1 = response.data.base.split('/').map((str, index) => ({ src: str, matched: false, match_index: index, has_image: false }));
                   let myArray1 = response.data.base.split('/').map((str, index) => {
                       let mystr1
@@ -54,9 +58,11 @@ function MatchGame({gameId}) {
                   setCardGroup2(myArray2)
          }
       });
-    },[rootpath])
+    },[rootpath, gameId])
 
     const shuffleCards = () => {
+      //console.log("in shuffleCards cardGroup1=",cardGroup1)
+      //console.log("in shuffleCards cardGroup2=",cardGroup2)
            const shuffleCards = [...cardGroup1, ...cardGroup2]
             .sort( () => Math.random() - 0.5)
             .map((card, index) => ({ ...card, id: Math.random()}))
@@ -102,6 +108,7 @@ function MatchGame({gameId}) {
 
   return (
     <div className='MathGame'>
+      <h3 style={{color:"brown", fontWeight:"bold"}}>{gameName}</h3>
         <button onClick={shuffleCards}>New Game</button>
         <div className={styles.cardgrid} >
           {cards.map(card => {
@@ -110,6 +117,8 @@ function MatchGame({gameId}) {
                 <ImageCard 
                 key={card.id} 
                 card={card} 
+                width={dimensions?.width}
+                height={dimensions?.height}
                 handleChoice={handleChoice}
                 flipped={card === choiceOne || card === choiceTwo || card.matched}
               />
@@ -117,8 +126,10 @@ function MatchGame({gameId}) {
               else 
               return (
                 <TextCard 
-                key={card.id} 
+                key={card.id}
                 text={card} 
+                width={dimensions?.width}
+                height={dimensions?.height}
                 handleChoice={handleChoice}
                 flipped={card === choiceOne || card === choiceTwo || card.matched}
               />

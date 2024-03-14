@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react'
 import styles from './MatchCard.module.css';
 
-function TextCard({text, handleChoice, flipped}) {
+function TextCard({text, width, height, handleChoice, flipped}) {
     const canvasRef = useRef();
     let ctx = useRef(null)
 
@@ -44,12 +44,16 @@ function TextCard({text, handleChoice, flipped}) {
             y += lineHeight;
         }
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth
+        //canvas.width = window.innerWidth
         canvas.lineHeight = window.innerHeight
         // get context of the canvas
          ctx.current = canvas.getContext("2d");
-        canvas.width = 130;
-        canvas.height = 130;
+         //console.log("XXXXXXXXXXXX aspect ratio"+width/height)
+        const aspect_ratio = width/height
+        //console.log("XXXXXXXXXXXX aspect ratio"+aspect_ratio)
+        //canvas.width = 130;
+        canvas.height = 115;
+        canvas.width = canvas.height * aspect_ratio
         //ctx.current.clearRect(0, 0, canvas.width, canvas.height);
         ctx.current.fillStyle = '#E1FFC7';
         //var rectHeight=50;
@@ -63,14 +67,14 @@ function TextCard({text, handleChoice, flipped}) {
         //let y = 35 + parseInt(text.index) * 160
         const words =  text.src.split(' ');
         //console.log("text = ",text)
-        ctx.current.fillRect(0,0,130,130);
+        ctx.current.fillRect(0,0,width,height);
         ctx.current.fillStyle = 'blue';
         //drawWords(text, x, y, maxWidth, lineHeight,rectHeight,words)
         drawWords(text.src, x, y, maxWidth, lineHeight)
         //const data_url = canvas.toDataURL('image/jpeg');
         //console.log(data_url)
         //wrapText("I am a student and a teacher at the same time",8,9,110,13)
-      }, [text]);
+      }, [text, width, height]);
 
       const handleClick = (e) => {
         handleChoice(text)
@@ -81,13 +85,12 @@ function TextCard({text, handleChoice, flipped}) {
       }
     return (
       <>
-      
         <div className={styles.card}>
           <div className= {flipped ? styles.flipped : ""} >
           <canvas className={styles.front} onClick={handleClick} ref={canvasRef}></canvas>
           <img 
             className = {styles.back}
-            src="https://kevinphambucket.s3.amazonaws.com/images/b/basketball.jpeg" 
+            src="https://kevinphambucket.s3.amazonaws.com/images/s/star_background.jpeg" 
             onClick={handleClick}
             alt="card back" 
           />

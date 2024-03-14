@@ -47,7 +47,7 @@ export default function HomeStudent() {
   const [showRecordView, setShowRecordView] = useState(false)
   const [showMatchGame, setShowMatchGame] = useState(false)
   const [livequiz, setLiveQuiz] = useState(false)
-  const [showMessage, setShowMessage] = useState(true)
+  const [showMessage, setShowMessage] = useState(false)
   const [gameId, setGameId] = useState(null)
 
   const dispatch = useDispatch()
@@ -59,7 +59,7 @@ export default function HomeStudent() {
     //register "socket.on" event upon component mount
     //or when one of the dependencies changes value
     socket.on('enable_game', (arg) => {
-        console.log("enabl game arg=",arg)
+        //console.log("enabl game arg=",arg)
         setGameId(arg.game_id)
         setLiveQuiz(false)
         setShowMatchGame(true)
@@ -72,6 +72,13 @@ export default function HomeStudent() {
       setShowMessage(false)
   })
   },[socket])
+  
+  const toggleRecord = () => {
+    setShowRecordView(!showRecordView)
+  }
+  const toggleTeacherMessage = () => {
+    setShowMessage(!showMessage)
+  }
 
   return (
     <>
@@ -92,9 +99,13 @@ export default function HomeStudent() {
           </Row>
           </>
           }
+          <button onClick={toggleRecord}>Show Record</button>
+          <button onClick={toggleTeacherMessage}>Show Teacher's Message</button>
+          {showRecordView && <>
           <Row style ={ { backgroundColor: 'green', height:"30vh" } } >
           <RecordView />
          </Row>
+          </> }
         </Col>
         <Col style={{ height: "70vh", backgroundColor: "#e0b8c3"}} xs={3}>
               <ChatPage />
