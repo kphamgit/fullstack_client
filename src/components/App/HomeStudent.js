@@ -47,7 +47,7 @@ export default function HomeStudent() {
   const [showRecordView, setShowRecordView] = useState(false)
   const [showMatchGame, setShowMatchGame] = useState(false)
   const [livequiz, setLiveQuiz] = useState(false)
-  const [showMessage, setShowMessage] = useState(false)
+  const [showMessage, setShowMessage] = useState(true)
   const [gameId, setGameId] = useState(null)
 
   const dispatch = useDispatch()
@@ -100,7 +100,6 @@ export default function HomeStudent() {
           </>
           }
           <button onClick={toggleRecord}>Show Record</button>
-          <button onClick={toggleTeacherMessage}>Show Teacher's Message</button>
           {showRecordView && <>
           <Row style ={ { backgroundColor: 'green', height:"30vh" } } >
           <RecordView />

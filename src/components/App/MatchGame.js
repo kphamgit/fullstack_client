@@ -16,6 +16,8 @@ function MatchGame({gameId}) {
     const [cardGroup2, setCardGroup2] = useState([])
     const [dimensions, { loading, error }] = useImageSize('https://kevinphambucket.s3.amazonaws.com/images/s/star_background.jpeg');
     const [gameName, setGameName] = useState('')
+    const [matchCount, setMatchCount] = useState(0)
+
     
     const rootpath = useSelector((state) => state.rootpath.value)
     
@@ -87,7 +89,8 @@ function MatchGame({gameId}) {
             setCards(prevCards => {
               return prevCards.map(card => {
                 if (card.match_index === choiceOne.match_index) {
-                  //console.log("match")
+                  console.log("match!")
+                  setMatchCount((prevMatchcount => prevMatchcount + 1))
                   return {...card, matched: true}
                 }
                 else {
